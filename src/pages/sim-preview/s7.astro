@@ -1,0 +1,65 @@
+---
+// Preview of the S7 personalisation simulation, alone, in the hero's app-window frame (not indexed; T7 places it on the home).
+import S7Personalize from "../../components/sims/S7Personalize.svelte";
+import Base from "../../layouts/Base.astro";
+import { S7_STRINGS } from "../../sim/i18n/s7";
+
+const t = S7_STRINGS.es;
+---
+
+<Base locale="es" path="/sim-preview/s7" title="Vista previa: hazla tuya (S7)" description="Vista previa interna de la simulación de personalización." noindex>
+  <section class="window" aria-label="Demostración de la personalización de PlexusTyping">
+    <div class="bar" aria-hidden="true">
+      <i class="dot"></i><i class="dot"></i><i class="dot"></i>
+      <span class="bar-title"><span class="bar-name">PlexusTyping · </span>demostración</span>
+    </div>
+    <S7Personalize client:visible strings={t} />
+  </section>
+  <p class="caption">{t.caption}</p>
+</Base>
+
+<style>
+  /* The hero's app-window frame (src/components/HomeHero.astro). */
+  .window {
+    position: relative;
+    width: min(65rem, calc(100% - 2 * var(--gutter)));
+    margin: clamp(2rem, 5vw, 3rem) auto 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 1.875rem 5rem light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.45));
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.375rem;
+    padding: 0 1rem;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  /* Left of the island's controls, which sit on the bar's right. */
+  .bar-title {
+    margin-left: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+  .caption {
+    width: min(65rem, calc(100% - 2 * var(--gutter)));
+    margin: 1rem auto 3rem;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+  @media (max-width: 30rem) {
+    .bar-name {
+      display: none;
+    }
+  }
+</style>

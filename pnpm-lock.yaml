@@ -11,9 +11,36 @@ importers:
       '@astrojs/svelte':
         specifier: ^8.1.2
         version: 8.1.2(@types/node@24.19.2)(astro@6.4.8(@types/node@24.19.2)(lightningcss@1.33.0)(rollup@4.68.7)(yaml@2.9.1))(lightningcss@1.33.0)(svelte@5.58.1)(typescript@6.0.3)(yaml@2.9.1)
+      '@fontsource/atkinson-hyperlegible-mono':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/fira-code':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/ibm-plex-mono':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/inconsolata':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/intel-one-mono':
+        specifier: 5.3.0
+        version: 5.3.0
       '@fontsource/jetbrains-mono':
         specifier: 5.3.0
         version: 5.3.0
+      '@fontsource/lexend-deca':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/opendyslexic':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/roboto-mono':
+        specifier: 5.3.0
+        version: 5.3.0
+      '@fontsource/source-code-pro':
+        specifier: 5.3.1
+        version: 5.3.1
       astro:
         specifier: ^6.4.8
         version: 6.4.8(@types/node@24.19.2)(lightningcss@1.33.0)(rollup@4.68.7)(yaml@2.9.1)
@@ -304,8 +331,35 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@fontsource/atkinson-hyperlegible-mono@5.3.0':
+    resolution: {integrity: sha512-7Iha5azCRXJVk4NdxbVdKAE+4p/rMJoW6dslvhktugDFPSp7kxFRGAavBtwtSTrnyNhKXW8w1NHgMnrh/6OshA==}
+
+  '@fontsource/fira-code@5.3.0':
+    resolution: {integrity: sha512-EJL968RJRkakubAj/coU8pSUaeTE5UNoRjtzAr6kGiSZ3jWuN8/AKWHwym/PFUaQL1q7IL/H+EXs4358YhrTBQ==}
+
+  '@fontsource/ibm-plex-mono@5.3.0':
+    resolution: {integrity: sha512-eTgnZjZEGk1QtD3ZstF+Vclo2HLAni8YMy34/DxllwZvyz1lR/1RF/xTiAquOBO7MvqBx8D2Ig2WCPMVfdZu7Q==}
+
+  '@fontsource/inconsolata@5.3.0':
+    resolution: {integrity: sha512-12UZvQzR9rcgFv1Wb2vy9NvMqleh4fVZ9W5Ww/S3CamaRLeUfCkfXersbiqcyCkH82etGTTRyHd5cJYDJ2W27w==}
+
+  '@fontsource/intel-one-mono@5.3.0':
+    resolution: {integrity: sha512-L9lZRv7C20zJ9Jz61aS7L3Lc4Z5laQ+CJIkGmGjwTtYKddMmR6R+tPg6anwlBQnsJNHn2E0hKLeTjSLLoq62eA==}
+
   '@fontsource/jetbrains-mono@5.3.0':
     resolution: {integrity: sha512-fqDfB5I9f1p1TV486aUgB9t8zP84P0O1FtQR5Ol9vjwPy+S+EIGlVYm1cvj2W5shcZMTg2nZFdVMoH5wFu8a1A==}
+
+  '@fontsource/lexend-deca@5.3.0':
+    resolution: {integrity: sha512-qDIfyvRgiF5R/Op3vpFhEzONXliT1zFuun74K22FRMkGAxvPQr8F1VAEw3hQn9BtOZVcNu1qfGEZiJrwa1oUfg==}
+
+  '@fontsource/opendyslexic@5.3.0':
+    resolution: {integrity: sha512-BVYIW/ghc1U2iAghhYTN+GFWiZ3lnCy8Jf2KkZC23aHQHBNcMqKT718zckfqVxRx4qsXJmIMPWvczirRuhmtsg==}
+
+  '@fontsource/roboto-mono@5.3.0':
+    resolution: {integrity: sha512-yhwplHMHW9dCk+1pZuERfcJe+K3rosGVZEoK0XktkxRSqQ9qsipSwwiuW2/8Qmtp9lzu3Ixa/ie4BMH3i8CkZQ==}
+
+  '@fontsource/source-code-pro@5.3.1':
+    resolution: {integrity: sha512-qsJEkwJWXYP/9clmtt3BsIlZ+Lr4cuRgNAgu0vyZdCgESMRMhRkAmEFFHHNM81VdeURqg5D5+Rr3bALDFav78A==}
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -2322,7 +2376,25 @@ snapshots:
   '@esbuild/win32-x64@0.27.7':
     optional: true
 
+  '@fontsource/atkinson-hyperlegible-mono@5.3.0': {}
+
+  '@fontsource/fira-code@5.3.0': {}
+
+  '@fontsource/ibm-plex-mono@5.3.0': {}
+
+  '@fontsource/inconsolata@5.3.0': {}
+
+  '@fontsource/intel-one-mono@5.3.0': {}
+
   '@fontsource/jetbrains-mono@5.3.0': {}
+
+  '@fontsource/lexend-deca@5.3.0': {}
+
+  '@fontsource/opendyslexic@5.3.0': {}
+
+  '@fontsource/roboto-mono@5.3.0': {}
+
+  '@fontsource/source-code-pro@5.3.1': {}
 
   '@img/colour@1.1.0':
     optional: true
