@@ -10,6 +10,7 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
 - S4. SEO (PRD §10): one h1, unique title ≤ 60 and description ≤ 155 characters, canonical + hreflang, JSON-LD per page type (SoftwareApplication, BreadcrumbList, FAQPage, HowTo, TechArticle, WebSite), a direct 40–60 word answer in the first paragraph, internal links between each feature and its documentation.
 - S5. Budgets and safety (PRD 0.1.2 §2, §11, §12, §13): 0 KB JS on documentation pages without a simulation (search loads only when opened); no third-party runtime requests; Astro CSP stays on; WCAG 2.2 AA.
 - S6. Download page (PRD §6.12, §12): artifacts, sizes and SHA-256 sums of the latest GitHub release of `jorgealonsodev/plexustyping`, read at build time with a committed snapshot as fallback (the Docker build in Portainer may have no token or network).
+- S8. "mira las tendencias en seo en 2026, y haz que la web sea lo mas optima posible" / "es importate que el seo on page sea lo mas optimo posible": SEO follows current (late 2026) guidance verified with sources, on top of PRD §10; every page type has an on-page template (title, description, h1–h3, first-paragraph answer, internal links, breadcrumbs, alt text, dates, JSON-LD, Open Graph) enforced by an automated check over the built HTML.
 - S7. Assumption: English mirror (`/en/…`, PRD F6) is a later task of this feature, after the Spanish content is approved; until then English routes exist only for the home.
 
 ## Tasks
@@ -27,3 +28,4 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
 
 - L1 (2026-11-20, user): "hay que hacer las demas paginas"
 - L2 (2026-11-20): latest app release checked with `gh`: v0.1.0, published 2026-11-19T15:31:07Z, assets `plexustyping-0.1.0-linux-x86_64.tar.gz` (12358708 B), `plexustyping_0.1.0_amd64.deb` (12512330 B), `PlexusTyping_0.1.0_x64-setup.exe` (9701277 B), `SHA256SUMS` (299 B). Routes: P0 runs first (shared files); P1 runs in parallel with P0 (disjoint surfaces); P2–P5 fan out after P0. No per-surface direction round: the world is settled and the PRD specifies each page's structure.
+- L3 (2026-11-20, user): "mira las tendencias en seo en 2026, y haz que la web sea lo mas optima posible"; "es importate que el seo on page sea lo mas optimo posible". An Opus research worker gathers sourced 2026 SEO guidance; its checklist feeds P0 (helpers + an automated on-page check) before the page writers start.
