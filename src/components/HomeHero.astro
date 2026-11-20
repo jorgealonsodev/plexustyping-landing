@@ -1,5 +1,7 @@
 ---
 import { type Locale, localizePath } from "../i18n/paths";
+import { ui } from "../i18n/ui";
+import HeroSim from "./HeroSim.svelte";
 
 interface Props {
   locale: Locale;
@@ -46,13 +48,15 @@ const copy = {
   </div>
 </section>
 
-<!-- App window that will host the S1 simulation island (T3). Sized now so the island causes no layout shift. -->
+<!-- App window with the S1 simulation island. Without JavaScript its server-rendered still state is the whole demo. -->
 <section class="window" aria-label={copy.demoLabel}>
   <div class="bar" aria-hidden="true">
     <i class="dot"></i><i class="dot"></i><i class="dot"></i>
     <span class="bar-title">{copy.demoTitle}</span>
   </div>
-  <div class="stage" data-sim-mount="s1"></div>
+  <div class="stage">
+    <HeroSim client:visible strings={ui(locale).heroSim} />
+  </div>
 </section>
 
 <ul class="proof" aria-label={copy.proofLabel}>
@@ -74,7 +78,8 @@ const copy = {
     position: absolute;
     left: 50%;
     top: 14rem;
-    width: min(69rem, 140vw);
+    /* Never wider than the viewport: a wider glow made the page scroll sideways on phones. */
+    width: min(69rem, 100vw);
     height: 39rem;
     transform: translateX(-50%);
     background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 13%, transparent), transparent);
@@ -141,10 +146,6 @@ const copy = {
     padding-right: 3.25rem;
     font-size: 0.8125rem;
     color: var(--muted);
-  }
-  /* Reserved size of the S1 island: stats row, targets line, practice text and keyboard. */
-  .stage {
-    min-height: clamp(18rem, 40vw, 27.5rem);
   }
 
   @media (max-width: 30rem) {

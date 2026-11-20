@@ -1,0 +1,32 @@
+/*
+ * Base styles of the PlexusTyping app: src/app.css at app commit 14f64cf2b9619deca9d99c2dbb3a2358586c5390,
+ * scoped to the demo. Edits, each to keep the app's rules from leaking into the website:
+ * - `:root` becomes `.pt-app` (the demo's app window) and `body`/`#app` (a full-window flex column) its layout;
+ * - `button` becomes `:where(.pt-app) button`, which keeps the app's specificity (0,0,1);
+ * - the app's line-height is the browser default (`normal`), restated because the site sets 1.55;
+ * - `:focus-visible` and the reduced-motion rule are already global on the site (src/styles/global.css).
+ * Colours are the app's tokens in src/styles/tokens.css.
+ */
+.pt-app {
+  --mono: "JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: normal;
+  text-align: start;
+  background: var(--bg);
+  color: var(--text);
+  /* Header, scrolling practice area, keyboard docked at the bottom. */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+:where(.pt-app) button {
+  padding: 0.5rem 1rem;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
