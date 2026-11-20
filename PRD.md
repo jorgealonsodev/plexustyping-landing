@@ -29,7 +29,7 @@ Debe ser **muy rápida** (estática, casi sin JavaScript) y **muy segura** (sin 
 | Seguridad | securityheaders.com y Mozilla Observatory | A+ en ambos |
 | SEO | Páginas indexadas sin errores en Search Console; rich results válidos | 100 % de URLs del sitemap; `SoftwareApplication` válido |
 | Accesibilidad | WCAG 2.2 AA; axe sin violaciones | 0 violaciones |
-| Peso | JS total por página (gzip) | ≤ 35 KB en la home; 0 KB en páginas de documentación sin simulación |
+| Peso | JS total por página (gzip) | ≤ 60 KB en la home (≤ 40 KB antes de hacer scroll); 0 KB en páginas de documentación sin simulación |
 
 ## 3. Audiencia y escenarios
 
@@ -185,7 +185,7 @@ Las simulaciones son el centro de la landing: **enseñan la app funcionando** si
 
 - **Fieles:** reutilizan la lógica real de la app (el motor `TypingSession` en TypeScript, los temas derivados con su guarda de contraste, el cálculo de niveles del mapa de calor), copiada como paquete compartido o importada del repositorio de la app con versión fijada. No se reimplementa a ojo.
 - **Datos sintéticos etiquetados:** textos y estadísticas de ejemplo marcados como «demostración». Ninguna llamada a IA desde la web: los textos «generados con IA» son muestras pregrabadas.
-- **Islas:** cada simulación es una isla que se hidrata solo al entrar en pantalla (`client:visible`), con presupuesto propio (≤ 12 KB gzip cada una salvo el hero, ≤ 20 KB). Sin ellas, la página es completa (HTML estático con una captura y descripción equivalente).
+- **Islas:** cada simulación es una isla que se hidrata solo al entrar en pantalla (`client:visible`), con presupuesto propio (≤ 12 KB gzip cada una salvo el hero, ≤ 20 KB; sin contar el runtime compartido de Svelte, ≤ 17 KB, que se carga una sola vez). Sin ellas, la página es completa (HTML estático con una captura y descripción equivalente).
 - **Accesibles:** operables con teclado, con alternativa textual, pausables, y en reposo con `prefers-reduced-motion` (sin reproducción automática; el usuario la inicia).
 - **Sin sonido automático:** el metrónomo suena solo tras pulsar.
 
@@ -242,7 +242,7 @@ El aspecto se decide con la skill *impeccable* (`~/.pi/agent/skills/impeccable`)
 ## 11. Rendimiento
 
 - **Astro 6** en modo estático; **0 KB de JavaScript por defecto**; las simulaciones son islas que se hidratan al verse.
-- **Presupuestos** (comprobados en CI): HTML de la home ≤ 50 KB gzip; CSS crítico en línea ≤ 14 KB; JS ≤ 35 KB gzip en la home, 0 en documentación sin simulación; imagen LCP ≤ 80 KB; fuentes ≤ 2 archivos en el primer pintado.
+- **Presupuestos** (comprobados en CI): HTML de la home ≤ 50 KB gzip; CSS crítico en línea ≤ 14 KB; JS ≤ 60 KB gzip en la home (≤ 40 KB antes de hacer scroll), 0 en documentación sin simulación; imagen LCP ≤ 80 KB; fuentes ≤ 2 archivos en el primer pintado.
 - **Fuentes:** autoalojadas, WOFF2, solo latin y latin-ext, `font-display: swap` con métricas de fallback ajustadas (sin CLS), precarga solo de la fuente del titular.
 - **Imágenes:** AVIF con WebP de respaldo, `width`/`height` siempre, `loading="lazy"` salvo la LCP (`fetchpriority="high"`).
 - **CDN** con HTTP/3, Brotli, caché inmutable (`max-age=31536000, immutable`) para recursos con hash y revalidación corta para HTML.
@@ -342,5 +342,6 @@ El aspecto se decide con la skill *impeccable* (`~/.pi/agent/skills/impeccable`)
 
 | Versión | Fecha | Cambios |
 |---|---|---|
+| 0.1.2 | 20-11-2026 | Presupuesto de JS revisado tras medir la isla del hero: el runtime de Svelte 5 (≈16 KB) se cuenta aparte y una sola vez; home ≤ 60 KB. Las simulaciones copian el aspecto de la app desde su repositorio con datos pregrabados (sin Rust en el build) |
 | 0.1.1 | 19-11-2026 | §6 contrastado con el código de `feat/unlimited-text`: privacidad exacta de la IA, 15 lenguajes de código, nombres de los modos de error, detalles de historial, metrónomo, teclado, licencias y artefactos; §6.13 «Planeado» |
 | 0.1 | 19-11-2026 | Primer borrador: alcance, contenido completo de la app, documentación, simulaciones, diseño con *impeccable*, SEO 2026 (incluida búsqueda generativa), rendimiento, seguridad, accesibilidad, stack y fases |
