@@ -1,0 +1,86 @@
+---
+// Preview of the S3 "Texto ilimitado" simulation (not indexed): the island in the same app-window panel as
+// the home hero (src/components/HomeHero.astro), until the home assembles it (T7).
+import S3Unlimited from "../../components/sims/S3Unlimited.svelte";
+import Base from "../../layouts/Base.astro";
+import { S3_STRINGS } from "../../sim/i18n/s3";
+
+const t = S3_STRINGS.es;
+---
+
+<Base
+  locale="es"
+  path="/sim-preview/s3"
+  noindex
+  title="Vista previa S3 · Texto ilimitado · PlexusTyping"
+  description="Vista previa de la simulación de texto ilimitado de PlexusTyping."
+>
+  <figure class="preview">
+    <section class="window" aria-label="Demostración de PlexusTyping: texto ilimitado">
+      <div class="bar" aria-hidden="true">
+        <i class="dot"></i><i class="dot"></i><i class="dot"></i>
+        <span class="bar-title">{t.windowTitle}</span>
+      </div>
+      <div class="stage">
+        <S3Unlimited client:visible strings={t} />
+      </div>
+    </section>
+    <figcaption>{t.caption}</figcaption>
+  </figure>
+</Base>
+
+<style>
+  .preview {
+    margin: 0;
+    padding: clamp(1.5rem, 5vw, 3rem) 0;
+  }
+  figcaption {
+    max-width: 46rem;
+    margin: 1rem auto 0;
+    padding: 0 var(--gutter);
+    text-align: center;
+    color: var(--muted);
+  }
+  /* The hero's window panel (src/components/HomeHero.astro). */
+  .window {
+    position: relative;
+    width: min(65rem, calc(100% - 2 * var(--gutter)));
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 1.875rem 5rem light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.45));
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.375rem;
+    padding: 0 1rem;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .bar-title {
+    margin: 0 auto;
+    padding-right: 3.25rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+  /* The "Próxima versión" label and the play button share the bar's right side with the title. */
+  @media (max-width: 40rem) {
+    .dot {
+      display: none;
+    }
+    .bar-title {
+      margin: 0;
+      padding-right: 0;
+    }
+  }
+</style>

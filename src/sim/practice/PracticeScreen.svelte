@@ -6,9 +6,14 @@
   - typing field, live stats, label line, practice text with the bar cursor and keyboard footer:
     src/features/practice/Practice.svelte (markup and <style>).
   The app's behaviour (Tauri IPC, settings store, results, ghost, metronome, unlimited text) is not here:
-  src/components/HeroSim.svelte drives this screen. Edits to the extracted code are marked "Demo edit".
+  src/components/HeroSim.svelte and src/components/sims/* drive this screen. Optional parts, all off by
+  default (the hero uses none): the ghost cursor classes and their style (Practice.svelte, ghost S4), and
+  slots where a demo puts what Practice.svelte shows beside the text (`top`: after the live stats, e.g. the
+  ghost delta; `after`: under the text, e.g. "Generando más texto…"; `results`: Results.svelte in place
+  of the text). Edits to the extracted code are marked "Demo edit".
 -->
 <script lang="ts">
+  import type { Snippet } from "svelte";
   import "../app.css";
   import Keyboard from "../keyboard/Keyboard.svelte";
   import type { Flash, Highlight } from "../keyboard/keys";
@@ -38,6 +43,12 @@
     oninput,
     onkeydown,
     oncompositionend,
+    capture = true,
+    ghostIndex = -1,
+    ghostEnd = false,
+    top,
+    after,
+    results,
   }: {
     view: PracticeView;
     elapsed: number;
@@ -51,9 +62,17 @@
     refreshing?: boolean;
     textId: string;
     field?: HTMLTextAreaElement | undefined;
-    oninput: (e: Event) => void;
-    onkeydown: (e: KeyboardEvent) => void;
-    oncompositionend: () => void;
+    oninput?: (e: Event) => void;
+    onkeydown?: (e: KeyboardEvent) => void;
+    oncompositionend?: () => void;
+    /** Demo edit: replay-only demos have no typing field (nothing to type into). */
+    capture?: boolean;
+    /** Practice.svelte's `ghostIndex` (-1: no ghost) and `ghostEnd` (the record finished). */
+    ghostIndex?: number;
+    ghostEnd?: boolean;
+    top?: Snippet;
+    after?: Snippet;
+    results?: Snippet;
   } = $props();
 
   // Demo edit: Practice.svelte keeps the cursor line in view with scrollIntoView(), which would also scroll
@@ -165,23 +184,28 @@
       </button>
     </header>
 
-    <textarea
-      bind:this={field}
-      class="capture"
-      aria-label="Entrada de mecanografía"
-      aria-describedby={textId}
-      autocomplete="off"
-      {...noAutocorrect}
-      autocapitalize="off"
-      spellcheck="false"
-      {oninput}
-      {onkeydown}
-      {oncompositionend}
-    ></textarea>
+    {#if capture}
+      <textarea
+        bind:this={field}
+        class="capture"
+        aria-label="Entrada de mecanografía"
+        aria-describedby={textId}
+        autocomplete="off"
+        {...noAutocorrect}
+        autocapitalize="off"
+        spellcheck="false"
+        {oninput}
+        {onkeydown}
+        {oncompositionend}
+      ></textarea>
+    {/if}
 
     <!-- Demo edit: a <div class="main">, not <main>: the website already has its main landmark. -->
     <div class="main" bind:this={scroller}>
       <section class="practice">
+        {#if results}
+          {@render results()}
+        {:else}
         <div class="top">
           <dl class="live" aria-label="Estadísticas en vivo">
             <div><dt>PPM</dt><dd>{formatWpm(view.stats.netWpm)}</dd></div>
@@ -189,6 +213,7 @@
             <div><dt>Precisión</dt><dd>{formatPercent(view.stats.accuracy)}</dd></div>
             <div><dt>Tiempo</dt><dd>{formatTime(elapsed)}</dd></div>
           </dl>
+          {@render top?.()}
         </div>
         <p class="kind">
           {source}
@@ -204,9 +229,13 @@
           <p class="text dim" bind:this={proseText}>{#each view.chars as c, i (i)}<span
                 class="ch {view.states[i]}"
                 class:space={c === " "}
-                class:cursor={i === view.cursor}>{c}</span
+                class:cursor={i === view.cursor}
+                class:ghost={i === ghostIndex}
+                class:ghost-end={ghostEnd && i === ghostIndex}>{c}</span
               >{/each}</p>
         </div>
+        {@render after?.()}
+        {/if}
       </section>
     </div>
 
@@ -529,6 +558,18 @@
     background: var(--cur);
     transform: translateY(-50%);
     pointer-events: none;
+  }
+  /* The ghost cursor (S4): a translucent frame; after the last char once the record finished. */
+  .ghost {
+    outline: 0.08em solid color-mix(in srgb, var(--cursor) 45%, transparent);
+    outline-offset: -0.04em;
+  }
+  .ghost-end {
+    outline: none;
+  }
+  .ghost-end::after {
+    content: "";
+    border-right: 0.12em solid color-mix(in srgb, var(--cursor) 45%, transparent);
   }
   .kind {
     margin: 0 0 -0.75rem;
