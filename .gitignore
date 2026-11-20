@@ -3,3 +3,6 @@ dist/
 .astro/
 .env
 .env.*
+
+# Production environment file (local only)
+env-prod
