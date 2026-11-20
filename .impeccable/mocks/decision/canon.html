@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>PlexusTyping canon</title>
+<style>
+  :root {
+    --ground: #1e1e2e; --surface: #313244; --surface-2: #45475a; --mantle: #181825;
+    --text: #cdd6f4; --muted: #6c7086; --blue: #89b4fa; --pink: #f5c2e7; --yellow: #f9e2af;
+    --sans: Inter, "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+    --mono: "JetBrains Mono", "DejaVu Sans Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1440px; height: 900px; overflow: hidden; }
+  body { background: var(--ground); color: var(--text); font-family: var(--sans); position: relative; }
+  body::before { content: ""; position: absolute; left: 50%; top: 260px; width: 1100px; height: 620px; transform: translateX(-50%);
+    background: radial-gradient(closest-side, rgba(137,180,250,.13), rgba(137,180,250,0)); pointer-events: none; }
+
+  nav { height: 76px; padding: 0 56px; display: flex; align-items: center; gap: 40px; position: relative; }
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 22px; letter-spacing: -.01em; }
+  .brand svg { width: 34px; height: 34px; display: block; }
+  .links { display: flex; gap: 32px; font-size: 16px; color: #a6adc8; margin-left: 16px; }
+  .nav-cta { margin-left: auto; background: var(--blue); color: var(--ground); font-weight: 700; font-size: 16px; padding: 11px 22px; border-radius: 10px; }
+
+  header { text-align: center; padding-top: 40px; position: relative; }
+  h1 { font-size: 64px; line-height: 1.05; font-weight: 800; letter-spacing: -.03em; }
+  h1 em { font-style: normal; color: var(--blue); }
+  .sub { margin-top: 18px; font-size: 20px; color: #a6adc8; }
+  .ctas { margin-top: 26px; display: flex; gap: 14px; justify-content: center; }
+  .btn { font-size: 22px; font-weight: 700; padding: 15px 30px; border-radius: 12px; }
+  .btn.primary { background: var(--blue); color: var(--ground); }
+  .btn.ghost { border: 2px solid var(--surface-2); color: var(--text); padding: 13px 28px; }
+
+  .window { position: absolute; left: 50%; top: 424px; width: 1040px; transform: translateX(-50%);
+    background: var(--mantle); border: 1px solid var(--surface); border-radius: 16px; overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.45); }
+  .bar { height: 38px; background: var(--surface); display: flex; align-items: center; padding: 0 16px; gap: 8px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--surface-2); }
+  .bar .t { margin: 0 auto; font-size: 13px; color: var(--muted); padding-right: 52px; }
+  .inner { padding: 30px 44px 34px; }
+  .stats { display: flex; gap: 56px; font-family: var(--mono); }
+  .stat b { display: block; font-size: 36px; font-weight: 700; color: var(--blue); line-height: 1; }
+  .stat:nth-child(2) b { color: var(--pink); }
+  .stat:nth-child(3) b { color: var(--text); }
+  .stat span { display: block; margin-top: 6px; font-size: 13px; color: var(--muted); }
+  .text { margin-top: 30px; font-family: var(--mono); font-size: 26px; line-height: 1.5; letter-spacing: 0; white-space: nowrap; }
+  .text .done { color: var(--text); }
+  .text .todo { color: var(--muted); }
+  .cursor { display: inline-block; width: 3px; height: 1.1em; background: var(--yellow); vertical-align: -0.18em; margin: 0 1px 0 -1px; }
+  .kb { margin-top: 30px; display: flex; gap: 8px; justify-content: center; }
+  .k { width: 64px; height: 60px; border-radius: 9px; background: var(--surface); border-bottom: 3px solid #11111b;
+    font-family: var(--mono); font-size: 22px; color: #a6adc8; display: flex; align-items: center; justify-content: center; position: relative; }
+  .k.wide { width: 104px; font-size: 14px; color: var(--muted); }
+  .k.home::after { content: ""; position: absolute; bottom: 9px; width: 16px; height: 3px; border-radius: 2px; background: var(--pink); }
+  .k.next { background: var(--yellow); color: var(--ground); font-weight: 700; box-shadow: 0 0 0 4px rgba(249,226,175,.18); }
+
+  .features { position: absolute; left: 0; right: 0; bottom: 0; height: 56px; display: flex; justify-content: center; gap: 56px;
+    align-items: center; font-size: 15px; color: #a6adc8; background: linear-gradient(rgba(30,30,46,0), var(--ground) 40%); }
+  .features span::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); margin-right: 10px; vertical-align: 1px; }
+</style>
+</head>
+<body>
+  <nav>
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="plexustyping-logo-title">
+        <title id="plexustyping-logo-title">PlexusTyping</title>
+        <defs>
+          <linearGradient id="k-top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b4cdff"/><stop offset="1" stop-color="#7aa2f7"/></linearGradient>
+          <linearGradient id="k-side" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4f6fa8"/><stop offset="1" stop-color="#2a3b66"/></linearGradient>
+          <radialGradient id="k-dish" cx="0.5" cy="0.35" r="0.75"><stop offset="0" stop-color="#ffffff" stop-opacity="0.35"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect x="16" y="30" width="224" height="210" rx="50" fill="url(#k-side)"/>
+        <rect x="34" y="16" width="188" height="184" rx="38" fill="url(#k-top)"/>
+        <rect x="34" y="16" width="188" height="184" rx="38" fill="url(#k-dish)"/>
+        <rect x="35" y="17" width="186" height="182" rx="37" fill="none" stroke="#fff" stroke-opacity="0.5" stroke-width="2"/>
+        <text x="128" y="138" text-anchor="middle" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="104" font-weight="800" fill="#1e1e2e">P</text>
+        <!-- pink homing bump, like F and J -->
+        <rect x="100" y="160" width="56" height="10" rx="5" fill="#f5c2e7" stroke="#1e1e2e" stroke-width="3"/>
+      </svg>
+      PlexusTyping
+    </div>
+    <div class="links"><span>Funciones</span><span>Documentación</span><span>Novedades</span></div>
+    <div class="nav-cta">Descargar</div>
+  </nav>
+
+  <header>
+    <h1>Mecanografía que se adapta<br><em>a tus fallos.</em></h1>
+    <p class="sub">Mide qué teclas y combinaciones te cuestan y escribe el siguiente texto para practicarlas. Gratis y sin conexión.</p>
+    <div class="ctas"><span class="btn primary">Descargar para Linux</span><span class="btn ghost">Windows</span></div>
+  </header>
+
+  <div class="window" aria-label="Demostración de la app">
+    <div class="bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="t">PlexusTyping · demostración</span></div>
+    <div class="inner">
+      <div class="stats">
+        <div class="stat"><b>48</b><span>PPM</span></div>
+        <div class="stat"><b>96 %</b><span>Precisión</span></div>
+        <div class="stat"><b>0:21</b><span>Tiempo</span></div>
+      </div>
+      <p class="text"><span class="done">¿Sabes qué pasó ayer? Un búho y un pin</span><span class="cursor"></span><span class="todo">güino vieron a Xavier…</span></p>
+      <div class="kb">
+        <div class="k wide">Bloq</div>
+        <div class="k">A</div><div class="k">S</div><div class="k">D</div><div class="k home">F</div>
+        <div class="k next">G</div><div class="k">H</div><div class="k home">J</div><div class="k">K</div>
+        <div class="k">L</div><div class="k">Ñ</div><div class="k">´</div><div class="k">Ç</div>
+        <div class="k wide">Intro</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="features"><span>Motor adaptativo</span><span>Sin conexión</span><span>Código abierto</span></div>
+</body>
+</html>
