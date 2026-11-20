@@ -12,7 +12,7 @@ Test runner: `pnpm test` (Vitest) and `pnpm build`; Playwright later (PRD §16).
 
 ## Tasks
 
-- [ ] T1 · S1, S4, S5 · delegated (user instruction: orchestrator delegates to Opus agents) · Astro 6 + Svelte 5 scaffold, base layout, nav/footer, theme tokens from the app (Catppuccin Mocha default), fonts self-hosted, es/en routing skeleton, security headers file · commit: —
+- [x] T1 · S1, S4, S5 · delegated (user instruction: orchestrator delegates to Opus agents) · Astro 6 + Svelte 5 scaffold, base layout, nav/footer, theme tokens from the app (Catppuccin Mocha default), fonts self-hosted, es/en routing skeleton, security headers file · commit: a886d1c
 - [ ] T2 · S2, S3 · delegated · `src/sim/`: styles and components extracted from the app (practice text + cursor, stats row, targets line, visual keyboard), engine copy, prerecorded demo data · commit: —
 - [ ] T3 · S1, S2, S3 · delegated · Home page with the S1 hero island (type or replay), matching canon.html; responsive; reduced motion · commit: —
 - [ ] T4 · S1 · delegated · impeccable finish: detector, finish review, DESIGN.md · commit: —
@@ -26,3 +26,4 @@ Test runner: `pnpm test` (Vitest) and `pnpm build`; Playwright later (PRD §16).
 - L5 (2026-11-20, user): "la simulaciones deben tener la apariecia exacta de plexustyping"
 - L6 (2026-11-20, user): fidelity question answered "Solo el aspecto"; then "lo que quiero es qeu copies eel aspecto de la app, que saques los estilos de su repo".
 - L7 (2026-11-20): app map (Opus explorer): pure TS reusable: practice/engine.ts, keyboard/Keyboard.svelte + geometry.ts + keys.ts + heat.ts, themes/colors.ts + themes.ts, code/CodeText.svelte, metronome/beat.ts + MetronomeQuick.svelte + BeatDot.svelte, practice/ghost.ts, announce.ts. Practice.svelte (1129 lines) is Tauri-bound: extract its markup and CSS. Layouts are TOML in `layouts/`; convert to the TS `Layout` JSON. Rust-only data (targets, heat scores, key sequences, syntect tokens, unlock states) is prerecorded.
+- L8 (2026-11-20): T1 done (a886d1c). Parent re-ran `pnpm test` (10 passed) and `pnpm build` (3 pages). Worker notes: Astro 6.4.8 kept per PRD although 7.x exists; native CSS `@view-transition` instead of ClientRouter (incompatible with Astro CSP); header CSP omits script/style-src because hashes are per page (meta CSP carries them); canonical uses https://example.com until SITE_URL is set; headlines use the system UI font (display face still open); tokens generated with the app's typingColors() at app commit 14f64cf. Risk: item 5 (new dependencies, host headers unverified until deployed).
