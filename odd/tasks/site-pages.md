@@ -11,12 +11,14 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
 - S5. Budgets and safety (PRD 0.1.2 §2, §11, §12, §13): 0 KB JS on documentation pages without a simulation (search loads only when opened); no third-party runtime requests; Astro CSP stays on; WCAG 2.2 AA.
 - S6. Download page (PRD §6.12, §12): artifacts, sizes and SHA-256 sums of the latest GitHub release of `jorgealonsodev/plexustyping`, read at build time with a committed snapshot as fallback (the Docker build in Portainer may have no token or network).
 - S8. "mira las tendencias en seo en 2026, y haz que la web sea lo mas optima posible" / "es importate que el seo on page sea lo mas optimo posible": SEO follows current (late 2026) guidance verified with sources, on top of PRD §10; every page type has an on-page template (title, description, h1–h3, first-paragraph answer, internal links, breadcrumbs, alt text, dates, JSON-LD, Open Graph) enforced by an automated check over the built HTML.
+- S9. English simulations: user reported "los textos no cambian a ingles cuando pasamos a ingles" and decided "todo en ingles": on `/en` pages every simulation shows English everywhere: the app's interface labels translated, English practice text from the app's English corpus, and the English (US) keyboard layout. The Spanish pages keep the app's real Spanish UI. The English pages keep the statement that the released app's interface is in Spanish (PRODUCT.md).
 - S7. Assumption: English mirror (`/en/…`, PRD F6) is a later task of this feature, after the Spanish content is approved; until then English routes exist only for the home.
 
 ## Tasks
 
 - [ ] P0 · S3, S4, S5 · delegated · shared foundation: content collections + schema, layouts (FeatureLayout, DocsLayout with sidebar/breadcrumbs/TOC, ProsePage), SEO/JSON-LD helpers, nav wired to real routes, sitemap + robots + RSS plumbing, release-data module with snapshot · commit: —
 - [ ] P1 · S3 · delegated, worktree · simulations S8 (code mode), S9 (AI privacy diagram), S10 (accessibility) with preview pages · commit: —
+- [ ] P1b · S9 · delegated, worktree · localize simulations S1–S7 for `/en` (labels, English corpus text, en-US layout and key sequences) · commit: —
 - [ ] P2 · S1–S4 · delegated, worktree · home below the hero (S2, S3 sections, feature overview, download close) and `/funciones` + nine feature pages mounting the simulations · commit: —
 - [ ] P3 · S1, S2, S6 · delegated, worktree · `/descargar` · commit: —
 - [ ] P4 · S1, S2, S4, S5 · delegated, worktrees · documentation content (Spanish), split by section across writers · commit: —
@@ -29,3 +31,4 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
 - L1 (2026-11-20, user): "hay que hacer las demas paginas"
 - L2 (2026-11-20): latest app release checked with `gh`: v0.1.0, published 2026-11-19T15:31:07Z, assets `plexustyping-0.1.0-linux-x86_64.tar.gz` (12358708 B), `plexustyping_0.1.0_amd64.deb` (12512330 B), `PlexusTyping_0.1.0_x64-setup.exe` (9701277 B), `SHA256SUMS` (299 B). Routes: P0 runs first (shared files); P1 runs in parallel with P0 (disjoint surfaces); P2–P5 fan out after P0. No per-surface direction round: the world is settled and the PRD specifies each page's structure.
 - L3 (2026-11-20, user): "mira las tendencias en seo en 2026, y haz que la web sea lo mas optima posible"; "es importate que el seo on page sea lo mas optimo posible". An Opus research worker gathers sourced 2026 SEO guidance; its checklist feeds P0 (helpers + an automated on-page check) before the page writers start.
+- L4 (2026-11-20, user): screenshot of `/en` hero: "los textos no cambian a ingles cuando pasamos a ingles". Parent explained the app UI is Spanish-only (PRD §6.4, §6.13) and offered text+keyboard in English with Spanish labels vs. everything in English; user chose "todo en ingles".
