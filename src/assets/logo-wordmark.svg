@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" role="img" aria-labelledby="plexustyping-wordmark-title">
+  <title id="plexustyping-wordmark-title">PlexusTyping — Adaptive typing</title>
+  <defs>
+    <linearGradient id="wm-top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b4cdff"/><stop offset="1" stop-color="#7aa2f7"/></linearGradient>
+    <linearGradient id="wm-side" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4f6fa8"/><stop offset="1" stop-color="#2a3b66"/></linearGradient>
+    <radialGradient id="wm-dish" cx="0.5" cy="0.35" r="0.75"><stop offset="0" stop-color="#ffffff" stop-opacity="0.35"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+  </defs>
+  <!-- the keycap mark from assets/logo.svg (256 units) scaled to 160 -->
+  <g transform="scale(0.625)">
+    <rect x="16" y="30" width="224" height="210" rx="50" fill="url(#wm-side)"/>
+    <rect x="34" y="16" width="188" height="184" rx="38" fill="url(#wm-top)"/>
+    <rect x="34" y="16" width="188" height="184" rx="38" fill="url(#wm-dish)"/>
+    <rect x="35" y="17" width="186" height="182" rx="37" fill="none" stroke="#fff" stroke-opacity="0.5" stroke-width="2"/>
+    <text x="128" y="138" text-anchor="middle" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="104" font-weight="800" fill="#1e1e2e">P</text>
+    <rect x="100" y="160" width="56" height="10" rx="5" fill="#f5c2e7" stroke="#1e1e2e" stroke-width="3"/>
+  </g>
+  <!-- name and tagline -->
+  <text x="182" y="88" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="64" font-weight="800" letter-spacing="-1.5"><tspan fill="#7aa2f7">Plexus</tspan><tspan fill="#8a8fa8">Typing</tspan></text>
+  <text x="185" y="124" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="21" font-style="italic" fill="#8a8fa8">Adaptive typing</text>
+</svg>

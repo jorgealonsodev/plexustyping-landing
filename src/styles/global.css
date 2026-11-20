@@ -1,0 +1,167 @@
+@layer tokens, base, layout, components;
+
+@import "./tokens.css" layer(tokens);
+@import "./fonts.css" layer(tokens);
+
+/* Site-level aliases over the app tokens; values all come from tokens.css. */
+@layer tokens {
+  :root {
+    /* Same stacks as the app (src/app.css): system UI for prose, JetBrains Mono for text, keys and numbers. */
+    --sans: system-ui, sans-serif;
+    --mono: "JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
+    --radius: 0.625rem;
+    --radius-lg: 1rem;
+    --gutter: clamp(1rem, 4vw, 3.5rem);
+    --measure: 68ch;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* Native cross-document View Transitions (no JavaScript). Off under reduced motion. */
+@view-transition {
+  navigation: auto;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    caret-color: var(--accent);
+    accent-color: var(--accent);
+    scrollbar-color: var(--border) var(--bg);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.55;
+    font-size: 1rem;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  main {
+    flex: 1;
+  }
+
+  h1,
+  h2,
+  h3 {
+    line-height: 1.1;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 35%, transparent);
+    color: var(--text);
+  }
+
+  /* Same focus ring as the app (src/app.css). */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Same rule as the app: under reduced motion nothing transitions or animates. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+      animation: none !important;
+      scroll-behavior: auto !important;
+    }
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
+    }
+  }
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color 160ms var(--ease-out),
+      border-color 160ms var(--ease-out),
+      color 160ms var(--ease-out);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .btn-primary:hover {
+    background: color-mix(in srgb, var(--accent) 86%, var(--text));
+  }
+
+  .btn-ghost {
+    border-color: var(--border);
+    color: var(--text);
+    background: transparent;
+  }
+  .btn-ghost:hover {
+    border-color: var(--muted);
+    background: var(--surface);
+  }
+
+  .btn-lg {
+    min-height: 3.5rem;
+    padding: 0.875rem 1.75rem;
+    font-size: 1.25rem;
+    border-radius: 0.75rem;
+  }
+}

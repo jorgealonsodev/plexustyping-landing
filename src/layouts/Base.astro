@@ -1,0 +1,75 @@
+---
+import "../styles/global.css";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import { LOCALES, type Locale, localizePath } from "../i18n/paths";
+import { ui } from "../i18n/ui";
+import { THEME_SCRIPT, THEME_SCRIPT_HASH } from "../scripts/theme";
+
+interface Props {
+  /** Unique page title, at most 60 characters (PRD §10.1). */
+  title: string;
+  /** Unique page description, at most 155 characters (PRD §10.1). */
+  description: string;
+  locale: Locale;
+  /** Language-neutral path of the page, e.g. "/" or "/descargar". */
+  path: string;
+  /** Pages that must not be indexed (404) get no canonical or hreflang. */
+  noindex?: boolean;
+}
+
+const { title, description, locale, path, noindex = false } = Astro.props;
+const t = ui(locale);
+const site = Astro.site ?? new URL("https://example.com");
+Astro.csp?.insertScriptHash(THEME_SCRIPT_HASH);
+const absolute = (l: Locale) => new URL(localizePath(path, l), site).href;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)" />
+    {noindex && <meta name="robots" content="noindex" />}
+    {!noindex && <link rel="canonical" href={absolute(locale)} />}
+    {!noindex && LOCALES.map((l) => <link rel="alternate" hreflang={l} href={absolute(l)} />)}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={absolute("es")} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline set:html={THEME_SCRIPT} />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">{t.skipLink}</a>
+    <SiteHeader locale={locale} />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter locale={locale} path={path} />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: var(--gutter);
+    top: 0.75rem;
+    z-index: 10;
+    padding: 0.625rem 1rem;
+    border-radius: var(--radius);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(calc(-100% - 1rem));
+  }
+  .skip-link:focus-visible {
+    transform: none;
+  }
+  main:focus {
+    outline: none;
+  }
+</style>

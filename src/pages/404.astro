@@ -1,0 +1,56 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  locale="es"
+  path="/404"
+  noindex
+  title="Página no encontrada · PlexusTyping"
+  description="Esta dirección no existe en el sitio de PlexusTyping."
+>
+  <section class="notfound" aria-labelledby="nf-title">
+    <p class="code" aria-hidden="true">404</p>
+    <h1 id="nf-title">Esta página no existe.</h1>
+    <p>Puede que el enlace esté mal escrito o que la página se haya movido.</p>
+    <p class="actions">
+      <a class="btn btn-primary" href="/">Ir al inicio</a>
+      <a class="btn btn-ghost" href="/descargar">Descargar PlexusTyping</a>
+    </p>
+    <p class="en" lang="en">Page not found. <a href="/en">Go to the English home page</a>.</p>
+  </section>
+</Base>
+
+<style>
+  .notfound {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: clamp(3rem, 10vw, 7rem) var(--gutter) 0;
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+  }
+  .code {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: clamp(3rem, 8vw, 5rem);
+    line-height: 1;
+    color: var(--accent);
+  }
+  h1 {
+    font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
+    letter-spacing: -0.02em;
+  }
+  p {
+    color: var(--muted);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  .en {
+    margin-top: 1.5rem;
+  }
+</style>

@@ -1,0 +1,177 @@
+---
+import { type Locale, localizePath } from "../i18n/paths";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const download = localizePath("/descargar", locale);
+
+const copy = {
+  es: {
+    lead: "Mecanografía que se adapta",
+    accent: "a tus fallos.",
+    sub: "Mide qué teclas y combinaciones te cuestan y escribe el siguiente texto para practicarlas. Gratis y sin conexión.",
+    note: null,
+    primary: "Descargar para Linux",
+    secondary: "Windows",
+    demoLabel: "Demostración de PlexusTyping",
+    demoTitle: "PlexusTyping · demostración",
+    proof: ["Motor adaptativo", "Sin conexión", "Código abierto"],
+    proofLabel: "En resumen",
+  },
+  en: {
+    lead: "Typing practice that adapts",
+    accent: "to your mistakes.",
+    sub: "It measures which keys and combinations cost you and writes the next text to practice them. Free and offline.",
+    note: "The app's interface is in Spanish.",
+    primary: "Download for Linux",
+    secondary: "Windows",
+    demoLabel: "PlexusTyping demo",
+    demoTitle: "PlexusTyping · demo",
+    proof: ["Adaptive engine", "Works offline", "Open source"],
+    proofLabel: "At a glance",
+  },
+}[locale];
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <h1 id="hero-title">{copy.lead} <em>{copy.accent}</em></h1>
+  <p class="sub">{copy.sub}</p>
+  {copy.note && <p class="note">{copy.note}</p>}
+  <div class="ctas">
+    <a class="btn btn-primary btn-lg" href={`${download}#linux`}>{copy.primary}</a>
+    <a class="btn btn-ghost btn-lg" href={`${download}#windows`}>{copy.secondary}</a>
+  </div>
+</section>
+
+<!-- App window that will host the S1 simulation island (T3). Sized now so the island causes no layout shift. -->
+<section class="window" aria-label={copy.demoLabel}>
+  <div class="bar" aria-hidden="true">
+    <i class="dot"></i><i class="dot"></i><i class="dot"></i>
+    <span class="bar-title">{copy.demoTitle}</span>
+  </div>
+  <div class="stage" data-sim-mount="s1"></div>
+</section>
+
+<ul class="proof" aria-label={copy.proofLabel}>
+  {copy.proof.map((item) => <li>{item}</li>)}
+</ul>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 5vw, 2.5rem) var(--gutter) 0;
+    text-align: center;
+  }
+  /* Soft accent glow behind the hero, as in the chosen sketch. */
+  .hero::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 14rem;
+    width: min(69rem, 140vw);
+    height: 39rem;
+    transform: translateX(-50%);
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 13%, transparent), transparent);
+    pointer-events: none;
+    z-index: -1;
+  }
+  h1 {
+    font-size: clamp(2.25rem, 1.2rem + 4.4vw, 4rem);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  h1 em {
+    display: block;
+    font-style: normal;
+    color: var(--accent);
+  }
+  .sub {
+    max-width: 46rem;
+    margin: 1.125rem auto 0;
+    font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.25rem);
+    color: var(--muted);
+  }
+  .note {
+    margin-top: 0.5rem;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.875rem;
+    margin-top: 1.625rem;
+  }
+
+  .window {
+    position: relative;
+    width: min(65rem, calc(100% - 2 * var(--gutter)));
+    margin: clamp(2rem, 5vw, 3rem) auto 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 1.875rem 5rem light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.45));
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.375rem;
+    padding: 0 1rem;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .bar-title {
+    margin: 0 auto;
+    padding-right: 3.25rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+  /* Reserved size of the S1 island: stats row, targets line, practice text and keyboard. */
+  .stage {
+    min-height: clamp(18rem, 40vw, 27.5rem);
+  }
+
+  @media (max-width: 30rem) {
+    .ctas .btn {
+      width: 100%;
+    }
+  }
+
+  .proof {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem clamp(1.5rem, 4vw, 3.5rem);
+    margin: 2rem auto 0;
+    padding: 0 var(--gutter);
+    list-style: none;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+  .proof li::before {
+    content: "";
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.625rem;
+    border-radius: 50%;
+    background: var(--accent);
+    vertical-align: 0.0625rem;
+  }
+</style>

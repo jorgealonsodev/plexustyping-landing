@@ -1,0 +1,92 @@
+---
+import logo from "../assets/logo.svg";
+import { type Locale, localizePath } from "../i18n/paths";
+import { ui } from "../i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = ui(locale);
+const href = (path: string) => localizePath(path, locale);
+---
+
+<header class="site-header">
+  <nav class="nav" aria-label={t.navLabel}>
+    <a class="brand" href={href("/")} aria-label={t.homeLabel}>
+      <img src={logo.src} width="34" height="34" alt="" />
+      <span>PlexusTyping</span>
+    </a>
+    <ul class="links">
+      <li><a href={href("/funciones")}>{t.nav.features}</a></li>
+      <li><a href={href("/docs")}>{t.nav.docs}</a></li>
+      <li><a href={href("/novedades")}>{t.nav.news}</a></li>
+    </ul>
+    <a class="btn btn-primary cta" href={href("/descargar")}>{t.nav.download}</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    view-transition-name: site-header;
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    min-height: 4.75rem;
+    padding: 0.75rem var(--gutter);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    font-size: 1.375rem;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    border-radius: var(--radius);
+  }
+  .brand img {
+    width: 2.125rem;
+    height: 2.125rem;
+  }
+  .links {
+    display: flex;
+    gap: 2rem;
+    margin: 0 0 0 1rem;
+    padding: 0;
+    list-style: none;
+  }
+  .links a {
+    color: var(--muted);
+    text-decoration: none;
+    border-radius: 0.25rem;
+    transition: color 160ms var(--ease-out);
+  }
+  .links a:hover {
+    color: var(--text);
+  }
+  .cta {
+    margin-left: auto;
+  }
+
+  /* Phones: the brand and the download button stay; the section links wrap to a second row. */
+  @media (max-width: 47.99rem) {
+    .nav {
+      flex-wrap: wrap;
+      row-gap: 0.5rem;
+    }
+    .brand {
+      font-size: 1.125rem;
+    }
+    .links {
+      order: 3;
+      width: 100%;
+      margin: 0;
+      gap: 1.25rem;
+      font-size: 0.9375rem;
+    }
+  }
+</style>
