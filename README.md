@@ -112,14 +112,14 @@ The container serves plain HTTP on one host port. HTTPS comes from a reverse pro
 | Variable | Default | Used for |
 |----------|---------|----------|
 | `SITE_URL` | `https://example.com` | Build argument: canonical and `hreflang` URLs. Changing it needs a rebuild |
-| `SITE_PORT` | `8080` | Host port published for the container's port 8080 |
+| `SITE_PORT` | `14834` | Host port published for the container's port 8080 |
 
 ### As a Portainer Stack from Git
 
 1. In Portainer, go to **Stacks > Add stack** and choose **Repository**.
 2. Set the repository URL and the reference (for example `refs/heads/main`). For a private repository, add credentials.
 3. Set **Compose path** to `docker-compose.yml`.
-4. Under **Environment variables**, set `SITE_URL` to the public origin (no trailing slash) and, if 8080 is taken, `SITE_PORT`.
+4. Under **Environment variables**, set `SITE_URL` to the public origin (no trailing slash) and, if 14834 is taken, `SITE_PORT`.
 5. Optional: turn on **GitOps updates** (polling or webhook) to redeploy on new commits.
 6. Deploy. Portainer builds the image on the server.
 
@@ -137,9 +137,9 @@ Redirects from the container (for example `/en/` to `/en`) use relative `Locatio
 
 ```bash
 # Optional: create an env file with SITE_URL and SITE_PORT (for example `env-prod`,
-# which is git-ignored) and pass it with --env-file. Defaults: https://example.com and 8080.
+# which is git-ignored) and pass it with --env-file. Defaults: https://example.com and 14834.
 docker compose --env-file env-prod up -d --build
-curl -I http://localhost:8080/
+curl -I http://localhost:14834/
 docker compose down
 ```
 
