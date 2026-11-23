@@ -16,3 +16,21 @@ export const APP_LICENSES = [
 ] as const;
 /** Size of the default Open Graph cards (src/pages/og). */
 export const OG_SIZE = { width: 1200, height: 630 } as const;
+/** Reserved placeholder origin used until the production domain is decided (PRODUCT.md, "Undecided"). */
+export const PLACEHOLDER_SITE = "https://example.com";
+
+/**
+ * True for a deploy build (DEPLOY_BUILD=1, set by the Dockerfile) whose SITE_URL is missing, invalid
+ * or the placeholder: every page then gets noindex, so a site whose canonicals point at example.com
+ * is never indexed (odd/tasks/seo-gaps.md S1). Local builds and tests are unaffected.
+ */
+export function isUnindexableDeploy(env: Record<string, string | undefined> = process.env): boolean {
+  if (env.DEPLOY_BUILD !== "1") return false;
+  const raw = env.SITE_URL?.trim();
+  if (!raw) return true;
+  try {
+    return new URL(raw).origin === PLACEHOLDER_SITE;
+  } catch {
+    return true;
+  }
+}

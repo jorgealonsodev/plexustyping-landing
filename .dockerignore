@@ -1,6 +1,6 @@
 # Keep the build context to what `pnpm build` needs: package files, astro/svelte/ts config,
-# public/, src/, and deploy/nginx (copied into the runtime image).
-.git
+# public/, src/, and deploy/nginx (copied into the runtime image). .git stays: the build stage
+# reads commit dates for the sitemap <lastmod> (src/lib/lastmod.ts); it never reaches the runtime image.
 .gitignore
 node_modules
 dist

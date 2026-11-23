@@ -4,7 +4,7 @@ import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import JsonLd from "../components/seo/JsonLd.astro";
 import type { PageType } from "../data/routes";
-import { OG_SIZE, SITE_NAME } from "../data/site";
+import { isUnindexableDeploy, OG_SIZE, SITE_NAME } from "../data/site";
 import { LOCALES, type Locale, localizePath } from "../i18n/paths";
 import { ui } from "../i18n/ui";
 import { getRelease } from "../lib/release";
@@ -16,6 +16,7 @@ import {
   softwareApplicationNode,
   websiteNode,
 } from "../lib/seo/jsonld";
+import { SPECULATION_RULES, SPECULATION_RULES_HASH } from "../scripts/speculation";
 import { THEME_SCRIPT, THEME_SCRIPT_HASH } from "../scripts/theme";
 
 interface Props {
@@ -51,16 +52,17 @@ const {
   description,
   locale,
   path,
-  noindex = false,
   translated = true,
   jsonLd = [],
   softwareExtras,
   ogType = "website",
 } = Astro.props;
+const noindex = (Astro.props.noindex ?? false) || isUnindexableDeploy();
 const pageType: PageType | "none" = noindex ? "none" : (Astro.props.pageType ?? (path === "/" ? "home" : "prose"));
 const t = ui(locale);
 const site = Astro.site ?? new URL("https://example.com");
 Astro.csp?.insertScriptHash(THEME_SCRIPT_HASH);
+Astro.csp?.insertScriptHash(SPECULATION_RULES_HASH);
 const absolute = (l: Locale) => new URL(localizePath(path, l), site).href;
 const other: Locale = locale === "es" ? "en" : "es";
 const ogLocale: Record<Locale, string> = { es: "es_ES", en: "en_US" };
@@ -112,6 +114,7 @@ const nodes: JsonLdNode[] = [
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title={`${t.nav.news} · ${SITE_NAME}`} href="/rss.xml" />
     <script is:inline set:html={THEME_SCRIPT} />
+    <script type="speculationrules" is:inline set:html={SPECULATION_RULES} />
     {nodes.length > 0 && <JsonLd data={graph(...nodes)} />}
     <slot name="head" />
   </head>

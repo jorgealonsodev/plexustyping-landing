@@ -10,15 +10,18 @@ ENV CI=true \
 WORKDIR /app
 
 # pnpm version comes from package.json "packageManager".
-RUN corepack enable
+# git: sitemap <lastmod> comes from commit dates (src/lib/lastmod.ts).
+RUN apk add --no-cache git && corepack enable
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN corepack install && pnpm install --frozen-lockfile
 
 COPY . .
 
-# Absolute base for canonical and hreflang URLs (read by astro.config.mjs).
-ARG SITE_URL=https://example.com
-ENV SITE_URL=${SITE_URL}
+# Absolute base for canonical and hreflang URLs (read by astro.config.mjs). Without a real domain
+# the build still succeeds, but DEPLOY_BUILD=1 makes every page noindex (src/data/site.ts).
+ARG SITE_URL=
+ENV SITE_URL=${SITE_URL} \
+    DEPLOY_BUILD=1
 
 # _headers is Cloudflare Pages syntax; nginx carries the same headers (deploy/nginx).
 # Text assets are precompressed for nginx gzip_static.

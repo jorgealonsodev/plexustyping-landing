@@ -1,3 +1,7 @@
+import { execFileSync } from "node:child_process";
+import { mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { lastModifiedFor, sourceCandidates } from "../src/lib/lastmod";
 import { CRAWLERS, robotsTxt } from "../src/lib/robots";
@@ -35,5 +39,15 @@ describe("sitemap lastmod from git (docs/seo-2026.md §B5)", () => {
   it("returns the commit date of a committed page and nothing for a page without a source", () => {
     expect(lastModifiedFor("/")).toMatch(/^\d{4}-\d{2}-\d{2}T/);
     expect(lastModifiedFor("/no-such-page")).toBeUndefined();
+  });
+
+  it("gives no date in a shallow clone, where every file would get the same last-commit date", () => {
+    const dir = mkdtempSync(join(tmpdir(), "lastmod-shallow-"));
+    try {
+      execFileSync("git", ["clone", "-q", "--depth", "1", `file://${process.cwd()}`, join(dir, "repo")], { stdio: "ignore" });
+      expect(lastModifiedFor("/", join(dir, "repo"))).toBeUndefined();
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });

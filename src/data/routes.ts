@@ -59,5 +59,22 @@ export const PAGE_TYPES = [
 ] as const;
 export type PageType = (typeof PAGE_TYPES)[number];
 
-/** Pages and path prefixes that are never indexed (robots noindex) and stay out of the sitemap. */
-export const NOINDEX_PATHS: readonly string[] = ["/404", "/sim-preview", "/en/sim-preview"];
+/**
+ * Pages and path prefixes that are never indexed (robots noindex) and stay out of the sitemap. The
+ * four docs pages summarize a hub page that answers the same question (odd/tasks/seo-gaps.md S5):
+ * they stay in the docs sidebar for readers, and the hub is the indexed page.
+ */
+export const NOINDEX_PATHS: readonly string[] = [
+  "/404",
+  "/sim-preview",
+  "/en/sim-preview",
+  "/docs/ayuda/preguntas-frecuentes",
+  "/docs/proyecto/notas-de-version",
+  "/docs/proyecto/privacidad",
+  "/docs/proyecto/licencias-y-creditos",
+];
+
+/** True for a path in NOINDEX_PATHS or under one of its prefixes. */
+export function isNoindexPath(path: string): boolean {
+  return NOINDEX_PATHS.some((p) => path === p || path.startsWith(`${p}/`));
+}

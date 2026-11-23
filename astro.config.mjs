@@ -3,12 +3,19 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import { defineConfig } from "astro/config";
-import { NOINDEX_PATHS } from "./src/data/routes.ts";
+import { isNoindexPath } from "./src/data/routes.ts";
+import { isUnindexableDeploy } from "./src/data/site.ts";
 import { lastModifiedFor } from "./src/lib/lastmod.ts";
 
 // The production domain is still undecided (PRODUCT.md, "Undecided"). Set SITE_URL in CI once it is;
 // until then canonical and hreflang URLs use the reserved example.com placeholder.
-const site = process.env.SITE_URL ?? "https://example.com";
+const site = process.env.SITE_URL || "https://example.com";
+if (isUnindexableDeploy()) {
+  console.warn(
+    "\n[seo] SITE_URL is not set to the real domain: this deploy build marks every page noindex. " +
+      "Set SITE_URL in the stack environment (env-prod) and rebuild.\n",
+  );
+}
 
 export default defineConfig({
   site,
@@ -23,8 +30,7 @@ export default defineConfig({
     // by Google and left out; lastmod is the git commit date of the page's source.
     sitemap({
       filter: (page) => {
-        const path = new URL(page).pathname;
-        return !NOINDEX_PATHS.some((p) => path === p || path.startsWith(`${p}/`));
+        return !isNoindexPath(new URL(page).pathname);
       },
       serialize: (item) => {
         const lastmod = lastModifiedFor(new URL(item.url).pathname);
