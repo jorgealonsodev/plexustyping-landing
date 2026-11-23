@@ -16,9 +16,9 @@ Test runner: `pnpm test` (Vitest) and `pnpm build`; Playwright later (PRD §16).
 - [x] T2 · S2, S3 · delegated · `src/sim/`: styles and components extracted from the app (practice text + cursor, stats row, targets line, visual keyboard), engine copy, prerecorded demo data · commit: 42abb69
 - [x] T3 · S1, S2, S3 · delegated · Home page with the S1 hero island (type or replay), matching canon.html; responsive; reduced motion · commit: 42abb69 (S5 budget NOT met)
 - [x] T5 · S2, S3, S5 · delegated, parallel worktrees · simulations S2+S6 (keyboard), S3+S4 (practice text; owns PracticeScreen.svelte), S5+S7 (metronome, personalisation), each with a preview page under src/pages/sim-preview/ · commit: f0b4021 (merges cf78dd6, 775dcdb, 28af441)
-- [ ] T6 · S2, S3, S5 · delegated · simulations S8, S9, S10 · commit: —
-- [ ] T7 · S1 · delegated · assemble the home below the hero (S2, S3 sections, features, download close) · commit: —
-- [ ] T4 · S1 · delegated · impeccable finish: detector, finish review, DESIGN.md · commit: —
+- [x] T6 · S2, S3, S5 · delegated · simulations S8, S9, S10 · commit: done as odd/tasks/site-pages.md P1 (eaf49f7, 88981df, a3182d4)
+- [x] T7 · S1 · delegated · assemble the home below the hero (S2, S3 sections, features, download close) · commit: done as odd/tasks/site-pages.md P2 (070b487, e217931, b4ca0dd, d937940)
+- [ ] T4 · S1 · delegated · impeccable finish: detector, finish review, DESIGN.md · commit: — (moved to odd/tasks/site-pages.md P7)
 
 ## Log
 
@@ -37,3 +37,4 @@ Test runner: `pnpm test` (Vitest) and `pnpm build`; Playwright later (PRD §16).
 - L13 (2026-11-20, user): "voy a desplegarla en portainer, crea un doker compose que haga el build en portainer"; "el servidor ya tiene nginx proxy manager, solo necesito un puerto publico"; "crea un archivo llamado env-prod y mete ahi las variables necesarias, con los comandos para generar las contraseñas si fuera necesario". Done: Dockerfile (node 22 alpine build → nginx-unprivileged 1.30.6), deploy/nginx/*, docker-compose.yml (one service, one published port SITE_PORT, read-only, non-root, healthcheck), .dockerignore, README deploy section, env-prod (git-ignored; SITE_URL, SITE_PORT; no secrets needed). Worker verified build and container on port 18080 (200s, real 404, all headers on 200 and 404, immutable cache on /_astro, relative redirects). `.env.example` was refused by permission settings and not created; README points to env-prod instead. Not verified: real Portainer deploy and Nginx Proxy Manager in front. Risk: items 2 and 5.
 - L14 (2026-11-20, user): "usa mejor el puerto 14834". Default host port is now 14834 (docker-compose.yml, README, env-prod); the container still listens on 8080 internally.
 - L15 (2026-11-20, user): "lleva todo a main, es la rama a desplegar". feat/site-base-home fast-forwarded into main and pushed to origin; main is the Portainer deploy branch. T6, T7 and T4 remain open.
+- L16 (2026-11-23): reconciled with odd/tasks/site-pages.md: T6 = site-pages P1, T7 = site-pages P2, T4 runs as site-pages P7.
