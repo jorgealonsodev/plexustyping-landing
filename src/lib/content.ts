@@ -123,7 +123,7 @@ export function docsLayoutProps(entry: DocEntry, headings: MarkdownHeading[]) {
     headings,
     sourcePath: entry.filePath ?? `src/content/docs/${entry.id}.md`,
     features: d.features,
-    translated: false,
+    translated: true,
     ogImage: `/og/${d.lang === "en" ? "en/" : ""}docs/${docSlug(entry)}.png`,
   };
 }

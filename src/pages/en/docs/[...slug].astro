@@ -1,0 +1,24 @@
+---
+/**
+ * English documentation pages: one route per entry of the docs collection with lang "en", at
+ * /en/docs/<english-section>/<english-page>. Content lives in src/content/docs/en/<section>/<page>.md under
+ * the Spanish file name; the URL comes from the one slug mapping (src/i18n/slugs.ts, site-pages S7).
+ */
+import { render } from "astro:content";
+import { englishPath } from "../../../i18n/slugs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import { type DocEntry, docSlug, docsLayoutProps, getDocs } from "../../../lib/content";
+
+export async function getStaticPaths() {
+  const docs = await getDocs("en");
+  return docs.map((entry) => ({
+    params: { slug: englishPath(`/docs/${docSlug(entry)}`).replace(/^\/docs\//, "") },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props as { entry: DocEntry };
+const { Content, headings } = await render(entry);
+---
+
+<DocsLayout {...docsLayoutProps(entry, headings)}><Content /></DocsLayout>
