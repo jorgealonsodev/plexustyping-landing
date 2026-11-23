@@ -36,9 +36,11 @@ const { class: className } = Astro.props;
     margin-top: 0.35em;
   }
   .prose :global(a) {
-    color: var(--accent);
+    color: var(--link);
   }
+  /* Inline code (paths, commands) may break anywhere rather than push a phone's page sideways. */
   .prose :global(:not(pre) > code) {
+    overflow-wrap: anywhere;
     padding: 0.1em 0.35em;
     border-radius: 0.3rem;
     background: var(--surface-2);
@@ -80,11 +82,24 @@ const { class: className } = Astro.props;
     color: var(--muted);
     font-weight: 600;
   }
+  /* Phones: a wide table scrolls inside its own box instead of widening the page. */
+  @media (max-width: 40rem) {
+    .prose :global(table) {
+      display: block;
+      overflow-x: auto;
+    }
+  }
+  /* Quoted app dialogs: a hairline panel like the site's notes, not a coloured side bar. */
   .prose :global(blockquote) {
     margin-inline: 0;
-    padding-left: 1rem;
-    border-left: 3px solid var(--accent);
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
     color: var(--muted);
+  }
+  .prose :global(blockquote > * + *) {
+    margin-top: 0.35em;
   }
   .prose :global(img) {
     height: auto;

@@ -95,9 +95,10 @@ const jsonLd = [
     <article class="article" data-pagefind-body>
       <div data-pagefind-ignore><Breadcrumbs {crumbs} {locale} /></div>
       <header class="head">
-        <p class="eyebrow" data-pagefind-ignore>{DOCS_SECTIONS[section][locale]}</p>
         <h1 data-pagefind-meta="title">{h1}</h1>
         <p class="meta" data-updated data-pagefind-ignore>
+          <span class="section">{DOCS_SECTIONS[section][locale]}</span>
+          <span aria-hidden="true">·</span>
           {t.layout.updated}: <time datetime={isoDate(updated)}>{formatDate(updated, locale)}</time>
           <span aria-hidden="true">·</span>
           {t.layout.appVersion}: <span data-app-version>{appVersion}</span>
@@ -160,17 +161,14 @@ const jsonLd = [
   }
   .article {
     display: grid;
+    /* One track as wide as the column: a wide table or code block scrolls instead of widening it. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
     min-width: 0;
   }
   .head {
     display: grid;
     gap: 0.75rem;
-  }
-  .eyebrow {
-    color: var(--accent);
-    font-size: 0.875rem;
-    font-weight: 700;
   }
   h1 {
     font-size: clamp(2rem, 1.4rem + 2.2vw, 2.875rem);
@@ -182,6 +180,11 @@ const jsonLd = [
     gap: 0.25rem 0.5rem;
     color: var(--muted);
     font-size: 0.875rem;
+  }
+  /* The page's section, first in the meta line (the breadcrumbs stop at Documentación). */
+  .meta .section {
+    color: var(--text);
+    font-weight: 600;
   }
   .foot {
     display: grid;
@@ -204,7 +207,7 @@ const jsonLd = [
     list-style: none;
   }
   .foot a {
-    color: var(--accent);
+    color: var(--link);
   }
   .links {
     display: flex;

@@ -97,6 +97,8 @@ const crumbs: Crumb[] = [
 <style>
   .page {
     display: grid;
+    /* One track as wide as the page: a wide table scrolls in its own box instead of widening the page. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.75rem;
     width: min(56rem, 100%);
     margin: 0 auto;

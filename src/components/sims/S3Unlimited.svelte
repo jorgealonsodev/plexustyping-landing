@@ -196,7 +196,8 @@
     font-size: 0.75rem;
     font-weight: 600;
     white-space: nowrap;
-    color: var(--accent);
+    /* Website label in the window bar, not app UI: the site's link blue, 4.5:1 in both themes (global.css). */
+    color: var(--link, var(--accent));
     border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
     border-radius: 999px;
   }

@@ -368,9 +368,15 @@
   .play svg {
     flex: none;
   }
+  /* Phones: the window title keeps the bar; the button keeps its icon and its accessible name. */
   @media (max-width: 30rem) {
-    .hint {
+    .hint,
+    .play-label {
       display: none;
+    }
+    .play {
+      justify-content: center;
+      min-width: 2rem;
     }
   }
 </style>

@@ -12,8 +12,15 @@
     --radius: 0.625rem;
     --radius-lg: 1rem;
     --gutter: clamp(1rem, 4vw, 3.5rem);
-    --measure: 68ch;
+    /* Reading measure: 62ch of the system sans is about 75 characters of running text. */
+    --measure: 62ch;
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    /*
+     * Link text. The accent itself in dark themes; in light themes Latte's blue reads 3.9–4.3:1 on the
+     * site's surfaces, so links darken it to reach WCAG 1.4.3's 4.5:1 (5.0:1 on the darkest surface).
+     * Buttons, focus rings and large headings keep the accent: they need 3:1 or carry white text.
+     */
+    --link: light-dark(color-mix(in srgb, var(--accent) 85%, black), var(--accent));
   }
 }
 
@@ -65,6 +72,11 @@
 
   p {
     margin: 0;
+    text-wrap: pretty;
+  }
+
+  /* No lone last word in list items, definitions and captions either; the simulations (.pt-app) keep the app's wrapping. */
+  :is(li, dd, figcaption):not(.pt-app *) {
     text-wrap: pretty;
   }
 
