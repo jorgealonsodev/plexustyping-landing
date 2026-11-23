@@ -9,12 +9,19 @@ interface Props {
 
 const { locale } = Astro.props;
 const download = localizePath("/descargar", locale);
+// The beginner path the target query asks for (site-pages S11); off by default in the app, so the lead says to turn it on.
+const unlock = localizePath("/docs/practicar/desbloqueo-progresivo", locale);
 
 const copy = {
   es: {
     lead: "Mecanografía que se adapta",
     accent: "a tus fallos.",
-    sub: "Mide qué teclas y combinaciones te cuestan y escribe el siguiente texto para practicarlas. Gratis y sin conexión.",
+    // The 40–60 word direct answer (site-pages S4, S11): text before the link, the link, text after it.
+    sub: [
+      "PlexusTyping es un programa gratuito y de código abierto para aprender mecanografía en Linux y Windows, sin conexión. Si empiezas desde cero, activa el ",
+      "desbloqueo progresivo",
+      ": empiezas con la fila central y la app añade teclas según las dominas. Si ya escribes, mide qué teclas te cuestan y practica justo esas.",
+    ],
     note: null,
     primary: "Descargar para Linux",
     secondary: "Windows",
@@ -26,7 +33,11 @@ const copy = {
   en: {
     lead: "Typing practice that adapts",
     accent: "to your mistakes.",
-    sub: "It measures which keys and combinations cost you and writes the next text to practice them. Free and offline.",
+    sub: [
+      "PlexusTyping is a free, open-source program to learn touch typing on Linux and Windows, offline. If you are starting from scratch, turn on ",
+      "progressive unlock",
+      ": you begin with the home row and the app adds keys as you master them. If you already type, it measures which keys cost you and writes texts to practice exactly those.",
+    ],
     note: "The demo shows the app translated; the released app's interface is in Spanish.",
     primary: "Download for Linux",
     secondary: "Windows",
@@ -40,7 +51,7 @@ const copy = {
 
 <section class="hero" aria-labelledby="hero-title">
   <h1 id="hero-title">{copy.lead} <em>{copy.accent}</em></h1>
-  <p class="sub">{copy.sub}</p>
+  <p class="sub">{copy.sub[0]}<a href={unlock}>{copy.sub[1]}</a>{copy.sub[2]}</p>
   {copy.note && <p class="note">{copy.note}</p>}
   <div class="ctas">
     <a class="btn btn-primary btn-lg" href={`${download}#linux`}>{copy.primary}</a>
@@ -100,8 +111,13 @@ const copy = {
   .sub {
     max-width: 46rem;
     margin: 1.125rem auto 0;
-    font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.25rem);
+    font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.125rem);
+    line-height: 1.6;
     color: var(--muted);
+    text-wrap: pretty;
+  }
+  .sub a {
+    color: var(--accent);
   }
   .note {
     margin-top: 0.5rem;
