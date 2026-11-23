@@ -44,3 +44,20 @@ export const PLANNED_ROUTES: readonly string[] = [
  * English mirror (spec S7). Links into them are pending until the page exists.
  */
 export const PLANNED_PREFIXES: readonly string[] = ["/docs/", "/en/"];
+
+/** Page templates of docs/seo-2026.md §C, written to <body data-page-type> and enforced by the on-page check. */
+export const PAGE_TYPES = [
+  "home",
+  "feature",
+  "feature-index",
+  "download",
+  "docs",
+  "docs-index",
+  "faq",
+  "release-notes",
+  "prose",
+] as const;
+export type PageType = (typeof PAGE_TYPES)[number];
+
+/** Pages and path prefixes that are never indexed (robots noindex) and stay out of the sitemap. */
+export const NOINDEX_PATHS: readonly string[] = ["/404", "/sim-preview"];

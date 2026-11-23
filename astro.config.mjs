@@ -1,6 +1,10 @@
 // @ts-check
+import mdx from "@astrojs/mdx";
+import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import { defineConfig } from "astro/config";
+import { NOINDEX_PATHS } from "./src/data/routes.ts";
+import { lastModifiedFor } from "./src/lib/lastmod.ts";
 
 // The production domain is still undecided (PRODUCT.md, "Undecided"). Set SITE_URL in CI once it is;
 // until then canonical and hreflang URLs use the reserved example.com placeholder.
@@ -11,7 +15,23 @@ export default defineConfig({
   output: "static",
   trailingSlash: "never",
   build: { format: "file" },
-  integrations: [svelte()],
+  integrations: [
+    svelte(),
+    mdx(),
+    // sitemap-index.xml + sitemap-0.xml with indexable pages only (docs/seo-2026.md §B5). hreflang lives
+    // in each page's <head>, so the sitemap carries no alternates; priority and changefreq are ignored
+    // by Google and left out; lastmod is the git commit date of the page's source.
+    sitemap({
+      filter: (page) => {
+        const path = new URL(page).pathname;
+        return !NOINDEX_PATHS.some((p) => path === p || path.startsWith(`${p}/`));
+      },
+      serialize: (item) => {
+        const lastmod = lastModifiedFor(new URL(item.url).pathname);
+        return lastmod ? { url: item.url, lastmod } : { url: item.url };
+      },
+    }),
+  ],
   i18n: {
     locales: ["es", "en"],
     defaultLocale: "es",

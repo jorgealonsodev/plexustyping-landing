@@ -8,7 +8,9 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { type HTMLElement, parse } from "node-html-parser";
-import { PLANNED_PREFIXES, PLANNED_ROUTES } from "../../data/routes.ts";
+import { PAGE_TYPES, PLANNED_PREFIXES, PLANNED_ROUTES } from "../../data/routes.ts";
+
+export { PAGE_TYPES };
 
 export type Level = "error" | "pending";
 export interface Issue {
@@ -30,17 +32,7 @@ export interface Report {
   pages: number;
 }
 
-export const PAGE_TYPES = [
-  "home",
-  "feature",
-  "feature-index",
-  "download",
-  "docs",
-  "docs-index",
-  "faq",
-  "release-notes",
-  "prose",
-] as const;
+
 
 const TITLE_MAX = 60;
 const DESCRIPTION_MAX = 155;

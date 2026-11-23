@@ -10,12 +10,31 @@ export interface UiStrings {
   footer: {
     privacy: string;
     licenses: string;
+    faq: string;
+    rss: string;
     github: string;
     language: string;
     /** Name of the other language, written in that language. */
     otherLanguage: string;
     /** Label of the theme toggle; aria-pressed tells whether the dark theme is on. */
     darkTheme: string;
+  };
+  /** Release facts under the footer links: date, platforms, licence. */
+  release: { published: string; platforms: string; license: string };
+  /** Shared chrome of the content layouts (breadcrumbs, docs meta, sidebar, TOC). */
+  layout: {
+    breadcrumbs: string;
+    home: string;
+    updated: string;
+    appVersion: string;
+    editOnGithub: string;
+    feedback: string;
+    toc: string;
+    docsNav: string;
+    relatedDocs: string;
+    relatedFeatures: string;
+    /** og:image:alt of the generated cards: "{title} · PlexusTyping". */
+    ogAlt: string;
   };
   /** The S1 hero demo around the app screen (whose own UI stays in Spanish, as the app's). */
   heroSim: HeroSimStrings;
@@ -47,10 +66,26 @@ export const UI: Record<Locale, UiStrings> = {
     footer: {
       privacy: "Privacidad",
       licenses: "Licencias",
+      faq: "Preguntas frecuentes",
+      rss: "Novedades por RSS",
       github: "Código en GitHub",
       language: "Idioma",
       otherLanguage: "English",
       darkTheme: "Tema oscuro",
+    },
+    release: { published: "publicada el", platforms: "Linux y Windows", license: "MIT o Apache-2.0" },
+    layout: {
+      breadcrumbs: "Migas de pan",
+      home: "Inicio",
+      updated: "Actualizado",
+      appVersion: "Versión de la app",
+      editOnGithub: "Editar en GitHub",
+      feedback: "¿Te ha ayudado? Cuéntanoslo en GitHub",
+      toc: "En esta página",
+      docsNav: "Documentación",
+      relatedDocs: "Documentación relacionada",
+      relatedFeatures: "Funciones relacionadas",
+      ogAlt: "{title} · PlexusTyping",
     },
     heroSim: {
       hint: "Haz clic y escribe",
@@ -73,10 +108,26 @@ export const UI: Record<Locale, UiStrings> = {
     footer: {
       privacy: "Privacy",
       licenses: "Licenses",
+      faq: "FAQ",
+      rss: "What's new (RSS)",
       github: "Source on GitHub",
       language: "Language",
       otherLanguage: "Español",
       darkTheme: "Dark theme",
+    },
+    release: { published: "released on", platforms: "Linux and Windows", license: "MIT or Apache-2.0" },
+    layout: {
+      breadcrumbs: "Breadcrumbs",
+      home: "Home",
+      updated: "Updated",
+      appVersion: "App version",
+      editOnGithub: "Edit on GitHub",
+      feedback: "Did this help? Tell us on GitHub",
+      toc: "On this page",
+      docsNav: "Documentation",
+      relatedDocs: "Related documentation",
+      relatedFeatures: "Related features",
+      ogAlt: "{title} · PlexusTyping",
     },
     heroSim: {
       hint: "Click and type",
