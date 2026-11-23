@@ -3,22 +3,16 @@
   app) scored by the app's TypingSession. A recorded replay types when the visitor does not; it stops the moment
   the visitor types, and never starts on its own under prefers-reduced-motion. The input handling mirrors the
   app's Practice.svelte (takeText/onInput/onKeydown/applyEvent); the loop and the replay are website-only.
+  On the English pages (`locale` "en", S9 of odd/tasks/site-pages.md) the app's labels are translated and the
+  texts are the app's English corpus on the English (US) keyboard (src/sim/data/s1.ts DEMO_PACKS); without a
+  locale the demo is the Spanish one.
 -->
 <script lang="ts">
   import { onMount } from "svelte";
+  import type { Locale } from "../i18n/paths";
   import type { HeroSimStrings } from "../i18n/ui";
-  import {
-    DIAGNOSTIC_SCRIPT,
-    DIAGNOSTIC_SOURCE,
-    DIAGNOSTIC_STEPS,
-    HEAT_SCORES,
-    STILL_STEPS,
-    TARGET_SCRIPT,
-    TARGET_SOURCE,
-    TARGETS,
-  } from "../sim/data/demo";
-  import { ES_QWERTY } from "../sim/data/es-qwerty";
-  import { sequencesFor } from "../sim/data/sequences";
+  import { DEMO_PACKS } from "../sim/data/s1";
+  import { KEYBOARD_UI, PRACTICE_UI } from "../sim/i18n/app";
   import { heatScores } from "../sim/keyboard/heat";
   import { type Flash, highlightsFor, keyForChar } from "../sim/keyboard/keys";
   import { type InputEvent, TypingSession, acceptsInput, keyAction, textToEvents } from "../sim/practice/engine";
@@ -27,7 +21,23 @@
   import { ReplayDriver, type Script, toInput } from "../sim/replay";
 
   // The strings come as a prop (only the page's language reaches the browser, not the whole ui.ts).
-  let { strings: t }: { strings: HeroSimStrings } = $props();
+  let { strings: t, locale = "es" }: { strings: HeroSimStrings; locale?: Locale } = $props();
+
+  // The page's language is fixed for the island's life: its texts, layout and labels.
+  // svelte-ignore state_referenced_locally
+  const lang: Locale = locale;
+  const {
+    layout: LAYOUT,
+    sequencesFor,
+    diagnosticScript: DIAGNOSTIC_SCRIPT,
+    diagnosticSource: DIAGNOSTIC_SOURCE,
+    diagnosticSteps: DIAGNOSTIC_STEPS,
+    heatScores: HEAT_SCORES,
+    stillSteps: STILL_STEPS,
+    targetScript: TARGET_SCRIPT,
+    targetSource: TARGET_SOURCE,
+    targets: TARGETS,
+  } = DEMO_PACKS[lang];
 
   type Phase = "diagnostic" | "targets";
   /** The replay types the start of the diagnostic text, then asks for a new text (F5), as a person might. */
@@ -35,7 +45,7 @@
     diagnostic: { ...DIAGNOSTIC_SCRIPT, steps: DIAGNOSTIC_SCRIPT.steps.slice(0, DIAGNOSTIC_STEPS) },
     targets: TARGET_SCRIPT,
   };
-  const HEAT = heatScores(ES_QWERTY, HEAT_SCORES);
+  const HEAT = heatScores(LAYOUT, HEAT_SCORES);
   // Backspace corrects (the app's "Borrar con Retroceso" mode), so the replay can show its corrections.
   const MODE = "backspace-correct";
 
@@ -82,7 +92,7 @@
     now = event.tMs;
     tick++;
     if (flashKey && event.kind === "char") {
-      const code = keyForChar(ES_QWERTY, event.ch);
+      const code = keyForChar(LAYOUT, event.ch);
       if (code) flash = { code, ok: event.ch === expected };
     }
     if (mode === "visitor" && session.completed) visitorFinished();
@@ -96,7 +106,7 @@
     tick++;
   }
 
-  // Server and first client render: the targets text typed up to "quedarnos", heat and targets shown.
+  // Server and first client render: the targets text typed up to "quedarnos" (Spanish), heat and targets shown.
   startText("targets", STILL_STEPS);
 
   function makeDriver(from = 0) {
@@ -280,13 +290,13 @@
   <p class="sr-only" aria-live="polite">{announcement}</p>
   <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
   <!-- Pointer convenience only: keyboard users reach the typing field with Tab. -->
-  <div class="screen" onclick={focusField} lang="es">
+  <div class="screen" onclick={focusField} {lang}>
     <PracticeScreen
       {view}
       {elapsed}
       {source}
       {targets}
-      layout={ES_QWERTY}
+      layout={LAYOUT}
       {highlights}
       {flash}
       {heat}
@@ -296,6 +306,8 @@
       oninput={onInput}
       onkeydown={onKeydown}
       oncompositionend={takeText}
+      strings={PRACTICE_UI[lang]}
+      keyboardStrings={KEYBOARD_UI[lang]}
     />
   </div>
 </div>

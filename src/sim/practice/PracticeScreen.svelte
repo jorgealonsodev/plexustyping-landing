@@ -10,16 +10,18 @@
   default (the hero uses none): the ghost cursor classes and their style (Practice.svelte, ghost S4), and
   slots where a demo puts what Practice.svelte shows beside the text (`top`: after the live stats, e.g. the
   ghost delta; `after`: under the text, e.g. "Generando más texto…"; `results`: Results.svelte in place
-  of the text). Edits to the extracted code are marked "Demo edit".
+  of the text). Edits to the extracted code are marked "Demo edit". Without `strings` and `keyboardStrings` the
+  screen shows the app's Spanish labels; the English pages pass the translated ones (src/sim/i18n/app.ts).
 -->
 <script lang="ts">
   import type { Snippet } from "svelte";
   import "../app.css";
+  import { type KeyboardUi, PRACTICE_UI, type PracticeUi } from "../i18n/app";
   import Keyboard from "../keyboard/Keyboard.svelte";
   import type { Flash, Highlight } from "../keyboard/keys";
   import type { Layout } from "../keyboard/types";
   import type { CharState, Stats } from "./engine";
-  import { charLabel, formatPercent, formatTime, formatWpm } from "./format";
+  import { charLabel, formatTime, formatWpm } from "./format";
 
   export interface PracticeView {
     chars: string[];
@@ -49,6 +51,8 @@
     top,
     after,
     results,
+    strings,
+    keyboardStrings,
   }: {
     view: PracticeView;
     elapsed: number;
@@ -73,6 +77,10 @@
     top?: Snippet;
     after?: Snippet;
     results?: Snippet;
+    /** Demo edit: the translated labels of the English pages; the app's Spanish ones without it. */
+    strings?: PracticeUi;
+    /** Demo edit: the keyboard's translated key names and legend (Keyboard.svelte `strings`). */
+    keyboardStrings?: KeyboardUi;
   } = $props();
 
   // Demo edit: Practice.svelte keeps the cursor line in view with scrollIntoView(), which would also scroll
@@ -97,12 +105,16 @@
 
   const noAutocorrect: Record<string, string> = { autocorrect: "off" };
 
-  // ModeSwitch.svelte's KINDS; the demo shows prose ("Prosa"), the app's default.
+  // ModeSwitch.svelte's KINDS; the demo shows prose ("Prosa"), the app's default. Demo edit: the labels read `t.kinds`.
   const KINDS = [
     { id: "prose", label: "Prosa" },
     { id: "words", label: "Palabras" },
     { id: "code", label: "Código" },
-  ];
+  ] as const;
+
+  // Demo edit: every label below reads `t`: the app's Spanish strings (src/sim/i18n/app.ts PRACTICE_UI.es, copied
+  // from this markup) unless `strings` is given.
+  const t = $derived(strings ?? PRACTICE_UI.es);
 </script>
 
 <div class="pt-frame">
@@ -137,19 +149,19 @@
         </button>
         <!-- Demo edit: the app's <h1> is a <b class="h1">, so the website keeps one h1. -->
         <b class="h1">PlexusTyping</b>
-        <span>Del cerebro a los dedos.</span>
+        <span>{t.tagline}</span>
       </div>
       <div class="who">
-        <button type="button" class="profile" tabindex="-1">Principal</button>
+        <button type="button" class="profile" tabindex="-1">{t.profile}</button>
       </div>
       <div class="mode">
         <div class="kinds">
           {#each KINDS as k (k.id)}
-            <button type="button" tabindex="-1" class:active={k.id === "prose"}>{k.label}</button>
+            <button type="button" tabindex="-1" class:active={k.id === "prose"}>{t.kinds[k.id]}</button>
           {/each}
         </div>
       </div>
-      <button type="button" class="gear ai-toggle" tabindex="-1"><span class="ai-label">IA</span></button>
+      <button type="button" class="gear ai-toggle" tabindex="-1"><span class="ai-label">{t.ai}</span></button>
       <!-- The ghost session is on by default in the app (settings `ghost`). -->
       <button type="button" class="gear ai-toggle active" tabindex="-1">
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor">
@@ -188,7 +200,7 @@
       <textarea
         bind:this={field}
         class="capture"
-        aria-label="Entrada de mecanografía"
+        aria-label={t.input}
         aria-describedby={textId}
         autocomplete="off"
         {...noAutocorrect}
@@ -207,24 +219,24 @@
           {@render results()}
         {:else}
         <div class="top">
-          <dl class="live" aria-label="Estadísticas en vivo">
-            <div><dt>PPM</dt><dd>{formatWpm(view.stats.netWpm)}</dd></div>
-            <div><dt>Pulsaciones/min</dt><dd>{formatWpm(view.stats.kpm)}</dd></div>
-            <div><dt>Precisión</dt><dd>{formatPercent(view.stats.accuracy)}</dd></div>
-            <div><dt>Tiempo</dt><dd>{formatTime(elapsed)}</dd></div>
+          <dl class="live" aria-label={t.liveStats}>
+            <div><dt>{t.wpm}</dt><dd>{formatWpm(view.stats.netWpm)}</dd></div>
+            <div><dt>{t.kpm}</dt><dd>{formatWpm(view.stats.kpm)}</dd></div>
+            <div><dt>{t.accuracy}</dt><dd>{t.percent(view.stats.accuracy)}</dd></div>
+            <div><dt>{t.time}</dt><dd>{formatTime(elapsed)}</dd></div>
           </dl>
           {@render top?.()}
         </div>
         <p class="kind">
           {source}
           {#if targets.length > 0}
-            · Practicando:
+            · {t.practising}
             {#each targets as t, i (i)}{#if i > 0}<span class="sep">·</span>{/if}<kbd>{charLabel(t)}</kbd>{/each}
           {/if}
         </p>
         <!-- Demo edit: no style attribute (the website's CSP); the app's typography and font variables are at
              their defaults, which are the fallbacks of the rules below. Cursor: the app's default bar, no blink. -->
-        <div id={textId} role="region" aria-label="Texto de práctica" data-cursor="bar">
+        <div id={textId} role="region" aria-label={t.practiceText} data-cursor="bar">
           <!-- No whitespace inside: the text uses white-space: pre-wrap. "Atenuar texto pendiente" is on by default. -->
           <p class="text dim" bind:this={proseText}>{#each view.chars as c, i (i)}<span
                 class="ch {view.states[i]}"
@@ -240,7 +252,7 @@
     </div>
 
     <footer>
-      <Keyboard {layout} {highlights} {flash} {heat} />
+      <Keyboard {layout} {highlights} {flash} {heat} strings={keyboardStrings} />
     </footer>
   </div>
 </div>

@@ -27,7 +27,7 @@ const copy = {
     lead: "Typing practice that adapts",
     accent: "to your mistakes.",
     sub: "It measures which keys and combinations cost you and writes the next text to practice them. Free and offline.",
-    note: "The app's interface is in Spanish.",
+    note: "The demo shows the app translated; the released app's interface is in Spanish.",
     primary: "Download for Linux",
     secondary: "Windows",
     demoLabel: "PlexusTyping demo",
@@ -55,7 +55,7 @@ const copy = {
     <span class="bar-title">{copy.demoTitle}</span>
   </div>
   <div class="stage">
-    <HeroSim client:visible strings={ui(locale).heroSim} />
+    <HeroSim client:visible strings={ui(locale).heroSim} locale={locale} />
   </div>
 </section>
 

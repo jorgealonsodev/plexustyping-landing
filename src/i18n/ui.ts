@@ -36,7 +36,7 @@ export interface UiStrings {
     /** og:image:alt of the generated cards: "{title} · PlexusTyping". */
     ogAlt: string;
   };
-  /** The S1 hero demo around the app screen (whose own UI stays in Spanish, as the app's). */
+  /** The S1 hero demo around the app screen (whose own UI is the app's Spanish one, translated on /en). */
   heroSim: HeroSimStrings;
 }
 
@@ -134,7 +134,7 @@ export const UI: Record<Locale, UiStrings> = {
       play: "Play",
       pause: "Pause",
       description:
-        "Demo with sample data: the PlexusTyping practice screen typing on its own (the app's interface is in Spanish). It shows the live stats (words per minute, keystrokes per minute, accuracy and time), the text with right and wrong characters, and the on-screen keyboard highlighting the next key. After the diagnostic text, the keyboard is tinted by each key's errors and the next text practises ñ, qu and z. You can type yourself: click the demo or Tab to its typing field; Esc restarts the text.",
+        "Demo with sample data: the PlexusTyping practice screen typing on its own (the released app's interface is in Spanish; the demo shows it translated). It shows the live stats (words per minute, keystrokes per minute, accuracy and time), the text with right and wrong characters, and the on-screen keyboard highlighting the next key. After the diagnostic text, the keyboard is tinted by each key's errors and the next text practises qu, z and x. You can type yourself: click the demo or Tab to its typing field; Esc restarts the text.",
       paused: "Demo paused.",
       playing: "Demo playing.",
       restarted: "Text restarted.",
