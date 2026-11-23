@@ -1,13 +1,15 @@
 <!--
   Copy of the PlexusTyping app's src/features/metronome/BeatDot.svelte (app commit 14f64cf2b9619deca9d99c2dbb3a2358586c5390).
-  Demo edit: a `running` prop; while the demo is paused the dot stays unlit and no frame loop runs.
+  Demo edits: a `running` prop; while the demo is paused the dot stays unlit and no frame loop runs. A `label`
+  prop (the English pages' translated name; the app's Spanish one without it).
 -->
 <script lang="ts">
   import { type BeatAnchor, beatAt, isAccent } from "./beat";
 
   // Flashes on each beat (S7), driven by requestAnimationFrame from beat 0; classes only (CSP).
   // Demo edit: `running` (see the header).
-  let { anchor, running = true }: { anchor: BeatAnchor; running?: boolean } = $props();
+  // Demo edit: `label`, the dot's accessible name for a tempo.
+  let { anchor, running = true, label }: { anchor: BeatAnchor; running?: boolean; label?: (bpm: number) => string } = $props();
 
   let on = $state(false);
   let accent = $state(false);
@@ -35,7 +37,7 @@
   });
 </script>
 
-<span class="dot" class:on class:accent role="img" aria-label="Metrónomo: {anchor.bpm} BPM" title="{anchor.bpm} BPM"></span>
+<span class="dot" class:on class:accent role="img" aria-label={label ? label(anchor.bpm) : `Metrónomo: ${anchor.bpm} BPM`} title="{anchor.bpm} BPM"></span>
 
 <style>
   .dot {

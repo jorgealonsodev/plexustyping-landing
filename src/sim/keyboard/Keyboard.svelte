@@ -1,4 +1,6 @@
-<!-- Copied verbatim from the PlexusTyping app: src/features/keyboard/Keyboard.svelte (app commit 14f64cf2b9619deca9d99c2dbb3a2358586c5390). Do not edit by hand. -->
+<!-- Copied from the PlexusTyping app: src/features/keyboard/Keyboard.svelte (app commit 14f64cf2b9619deca9d99c2dbb3a2358586c5390).
+     Demo edit, marked below: an optional `strings` prop (the English pages' translated key names and legend);
+     without it the app's Spanish ones show. Otherwise verbatim: do not edit by hand. -->
 <script lang="ts">
   import { onDestroy, untrack } from "svelte";
   import { NAMED_LABELS, fingerOf, rowsFor } from "./geometry";
@@ -6,6 +8,7 @@
   import { HEAT_LEGEND, HEAT_LEGEND_TITLE, heatLegendText, heatLevel, heatRank } from "./heat";
   import { type Flash, type Highlight, keyLabels } from "./keys";
   import type { Layout } from "./types";
+  import type { KeyboardUi } from "../i18n/app";
 
   let {
     layout,
@@ -14,6 +17,7 @@
     heat = null,
     locked = null,
     colorBlind = false,
+    strings,
   }: {
     layout: Layout | null;
     highlights: Highlight[];
@@ -24,7 +28,15 @@
     locked?: Set<string> | null;
     /** Colour-blind mode (a11y S5): Okabe–Ito blue/orange flashes and a bold underline on a wrong key. */
     colorBlind?: boolean;
+    /** Demo edit: translated key names and heatmap legend; the app's Spanish ones without it. */
+    strings?: KeyboardUi;
   } = $props();
+
+  // Demo edit: the legend and key names from `strings` when given.
+  const names = $derived(strings?.names ?? NAMED_LABELS);
+  const legendTitle = $derived(strings?.legendTitle ?? HEAT_LEGEND_TITLE);
+  const legend = $derived(strings ? HEAT_LEGEND.map((e, i) => ({ ...e, name: strings.legendNames[i] ?? e.name })) : HEAT_LEGEND);
+  const legendText = $derived(strings ? `${legendTitle}: ${legend.map(({ rank, name }) => `${rank} ${name}`).join(", ")}` : heatLegendText());
 
   let root = $state<HTMLDivElement>();
 
@@ -44,7 +56,7 @@
         widthClass: `w${spec.width * 100}`,
         finger: fingerOf(spec.code),
         labels: keyLabels(layout?.keys[spec.code], layout?.deadKeys ?? []),
-        name: spec.unlabelled ? null : (NAMED_LABELS[spec.code] ?? null),
+        name: spec.unlabelled ? null : (names[spec.code] ?? null),
       })),
     ),
   );
@@ -106,9 +118,9 @@
 </div>
 {#if heat}
   <!-- Each level with its number and its tint, as drawn on the keys (a11y S5). -->
-  <p class="legend" title={heatLegendText()}>
-    <span>{HEAT_LEGEND_TITLE}:</span>
-    {#each HEAT_LEGEND as entry (entry.rank)}
+  <p class="legend" title={legendText}>
+    <span>{legendTitle}:</span>
+    {#each legend as entry (entry.rank)}
       <span class="level"><span class="swatch heat heat-{entry.tint}">{entry.rank}</span> {entry.name}</span>
     {/each}
   </p>

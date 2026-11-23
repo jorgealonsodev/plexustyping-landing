@@ -3,13 +3,15 @@
   Demo edits, each marked below: no focus trap (Tab leaves the panel, as a web page must allow; the app keeps
   the keyboard inside it); a `startOpen` prop so the demo can show the panel open without moving the focus; an
   `inline` prop that gives the open panel its own room in the demo instead of floating over the text; a
-  `running` prop passed to BeatDot; ids made unique per instance. Everything else is the app's markup and CSS.
+  `running` prop passed to BeatDot; ids made unique per instance; a `strings` prop (the English pages' translated
+  labels; the app's Spanish ones without it). Everything else is the app's markup and CSS.
 -->
 <script lang="ts">
   import { tick } from "svelte";
   import type { Sound } from "./api";
   import BeatDot from "./BeatDot.svelte";
   import { type BeatAnchor, MAX_ACCENT_EVERY, MAX_BPM, MIN_BPM, type MetronomeSettings, SOUNDS, parseBpm, stepBpm } from "./beat";
+  import type { MetronomeUi } from "../i18n/s5";
 
   // The beat dot is also the metronome's quick settings: a click opens a small panel to tune it
   // without leaving the text. Classes only (CSP). Keyboard (accessibility S2): opening moves the
@@ -22,6 +24,7 @@
     startOpen = false,
     running = true,
     inline = false,
+    strings,
   }: {
     anchor: BeatAnchor;
     metronome: MetronomeSettings;
@@ -32,7 +35,27 @@
     running?: boolean;
     /** Demo edit: the panel takes its room in the page instead of floating over the practice text. */
     inline?: boolean;
+    /** Demo edit: translated labels; the app's Spanish ones without it. */
+    strings?: MetronomeUi;
   } = $props();
+
+  // Demo edit: each label from `strings` when given, else the app's own.
+  const L = $derived({
+    toggle: strings?.toggle(metronome.bpm) ?? `Ajustes rápidos del metrónomo: ${metronome.bpm} BPM`,
+    toggleTitle: strings?.toggleTitle ?? "Ajustar el metrónomo",
+    dialog: strings?.dialog ?? "Metrónomo",
+    tempo: strings?.tempo ?? "Tempo",
+    slower: strings?.slower ?? "Más lento",
+    faster: strings?.faster ?? "Más rápido",
+    bpmInput: strings?.bpmInput ?? "Tempo en BPM",
+    sound: strings?.sound ?? "Sonido",
+    volume: strings?.volume ?? "Volumen",
+    volumeValue: strings?.volumeValue(metronome.volume) ?? `${metronome.volume} %`,
+    accentEvery: strings?.accentEvery ?? "Acento cada",
+    adaptive: strings?.adaptive ?? "Tempo adaptativo",
+    off: strings?.off ?? "Apagar",
+    close: strings?.close ?? "Cerrar",
+  });
 
   // Demo edit: unique ids, in case a page shows the demo twice.
   const uid = $props.id();
@@ -80,20 +103,20 @@
     class="toggle"
     aria-expanded={open}
     aria-haspopup="dialog"
-    aria-label="Ajustes rápidos del metrónomo: {metronome.bpm} BPM"
-    title="Ajustar el metrónomo"
+    aria-label={L.toggle}
+    title={L.toggleTitle}
     onclick={() => (open ? close() : void show())}
     onkeydown={onToggleKeydown}
   >
-    <BeatDot {anchor} {running} />
+    <BeatDot {anchor} {running} label={strings?.dot} />
     <span class="bpm">{metronome.bpm} BPM</span>
   </button>
   {#if open}
     <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-    <div bind:this={panel} class="panel" class:inline role="dialog" aria-label="Metrónomo" tabindex="-1" onkeydown={onKeydown}>
+    <div bind:this={panel} class="panel" class:inline role="dialog" aria-label={L.dialog} tabindex="-1" onkeydown={onKeydown}>
       <div class="row">
-        <label class="name" for={`${uid}-bpm`}>Tempo</label>
-        <button type="button" aria-label="Más lento" onclick={() => onChange({ bpm: stepBpm(metronome.bpm, -1) })}>−</button>
+        <label class="name" for={`${uid}-bpm`}>{L.tempo}</label>
+        <button type="button" aria-label={L.slower} onclick={() => onChange({ bpm: stepBpm(metronome.bpm, -1) })}>−</button>
         <!-- Typed tempo applies on Enter or when leaving the field, not per key (typing 120 passes "1"). -->
         <input
           id={`${uid}-bpm`}
@@ -103,7 +126,7 @@
           min={MIN_BPM}
           max={MAX_BPM}
           value={metronome.bpm}
-          aria-label="Tempo en BPM"
+          aria-label={L.bpmInput}
           onchange={(e: Change<HTMLInputElement>) => {
             const bpm = parseBpm(e.currentTarget.value, metronome.bpm);
             e.currentTarget.value = String(bpm);
@@ -111,18 +134,18 @@
           }}
         />
         <span class="unit">BPM</span>
-        <button type="button" aria-label="Más rápido" onclick={() => onChange({ bpm: stepBpm(metronome.bpm, 1) })}>+</button>
+        <button type="button" aria-label={L.faster} onclick={() => onChange({ bpm: stepBpm(metronome.bpm, 1) })}>+</button>
       </div>
       <div class="row">
-        <label class="name" for={`${uid}-sound`}>Sonido</label>
+        <label class="name" for={`${uid}-sound`}>{L.sound}</label>
         <select id={`${uid}-sound`} onchange={(e: Change<HTMLSelectElement>) => onChange({ sound: e.currentTarget.value as Sound })}>
           {#each SOUNDS as s (s.id)}
-            <option value={s.id} selected={s.id === metronome.sound}>{s.label}</option>
+            <option value={s.id} selected={s.id === metronome.sound}>{strings?.sounds[s.id] ?? s.label}</option>
           {/each}
         </select>
       </div>
       <div class="row">
-        <label class="name" for={`${uid}-volume`}>Volumen</label>
+        <label class="name" for={`${uid}-volume`}>{L.volume}</label>
         <input
           id={`${uid}-volume`}
           type="range"
@@ -131,10 +154,10 @@
           value={metronome.volume}
           oninput={(e: Change<HTMLInputElement>) => onChange({ volume: number(e) })}
         />
-        <span class="value">{metronome.volume} %</span>
+        <span class="value">{L.volumeValue}</span>
       </div>
       <div class="row">
-        <label class="name" for={`${uid}-accent`}>Acento cada</label>
+        <label class="name" for={`${uid}-accent`}>{L.accentEvery}</label>
         <input
           id={`${uid}-accent`}
           type="number"
@@ -151,11 +174,11 @@
           checked={metronome.adaptive}
           onchange={(e: Change<HTMLInputElement>) => onChange({ adaptive: e.currentTarget.checked })}
         />
-        <label for={`${uid}-adaptive`}>Tempo adaptativo</label>
+        <label for={`${uid}-adaptive`}>{L.adaptive}</label>
       </div>
       <div class="row end">
-        <button type="button" onclick={() => onChange({ enabled: false })}>Apagar <kbd>F4</kbd></button>
-        <button type="button" onclick={close}>Cerrar</button>
+        <button type="button" onclick={() => onChange({ enabled: false })}>{L.off} <kbd>F4</kbd></button>
+        <button type="button" onclick={close}>{L.close}</button>
       </div>
     </div>
   {/if}

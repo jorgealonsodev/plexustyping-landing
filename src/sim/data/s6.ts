@@ -15,17 +15,6 @@ const HOME_ROW = 10;
 /** Letters of the full order for es / es-qwerty. */
 const TOTAL = 27;
 
-/** The status with the home row and `extra` more letters active. */
-const statusWith = (extra: number): UnlockStatus => ({
-  enabled: true,
-  targetWpm: 30,
-  active: UNLOCK_ORDER.slice(0, HOME_ROW + extra),
-  mastered: UNLOCK_ORDER.slice(0, HOME_ROW + extra - 1),
-  next: UNLOCK_ORDER[HOME_ROW + extra] ?? null,
-  total: TOTAL,
-  stalledSessions: 0,
-});
-
 export interface UnlockStage {
   status: UnlockStatus;
   /** A prose text with only the active letters, as the app writes them in this mode. */
@@ -42,21 +31,39 @@ function typo(text: string, word: string, offset: number, typed: string): Typo {
   return { index: [...text.slice(0, at)].length + offset, typed, corrected: true };
 }
 
-/** A beginner's pace (the default target speed is 30 PPM). */
-const stage = (extra: number, text: string, seed: number, typos: [string, number, string][]): UnlockStage => ({
-  status: statusWith(extra),
-  text,
-  script: buildScript(text, { seed, wpm: 46, typos: typos.map(([w, o, t]) => typo(text, w, o, t)) }),
-  unlocks: extra < 4 ? (UNLOCK_ORDER[HOME_ROW + extra] ?? null) : null,
-});
+/** One stage's text: the text, its replay's seed and its typos as [word, offset, typed]. */
+export type StageText = [text: string, seed: number, typos: [string, number, string][]];
 
-export const STAGES: UnlockStage[] = [
-  stage(0, "la sala da salsa a las hadas", 61, [["salsa", 2, "k"]]),
-  stage(1, "el hada desea la seda de jade", 62, [["desea", 1, "d"]]),
-  stage(2, "el oso halla dos hojas del lago", 63, [["hojas", 1, "l"]]),
-  stage(3, "los enanos llegan a la fonda del lago", 64, [["enanos", 1, "j"]]),
-  stage(4, "ella regala rosas rojas a la rana", 65, [["regala", 0, "e"]]),
-];
+/**
+ * The stages of an unlock order: stage `i` has the home row (`homeRow` letters of `order`) and `i` more
+ * letters active, out of `total`; every stage but the last unlocks the next letter of the order.
+ */
+export function buildStages(order: string[], homeRow: number, total: number, texts: StageText[]): UnlockStage[] {
+  const last = texts.length - 1;
+  return texts.map(([text, seed, typos], extra) => ({
+    status: {
+      enabled: true,
+      targetWpm: 30,
+      active: order.slice(0, homeRow + extra),
+      mastered: order.slice(0, homeRow + extra - 1),
+      next: order[homeRow + extra] ?? null,
+      total,
+      stalledSessions: 0,
+    },
+    text,
+    // A beginner's pace (the default target speed is 30 PPM).
+    script: buildScript(text, { seed, wpm: 46, typos: typos.map(([w, o, t]) => typo(text, w, o, t)) }),
+    unlocks: extra < last ? (order[homeRow + extra] ?? null) : null,
+  }));
+}
+
+export const STAGES: UnlockStage[] = buildStages(UNLOCK_ORDER, HOME_ROW, TOTAL, [
+  ["la sala da salsa a las hadas", 61, [["salsa", 2, "k"]]],
+  ["el hada desea la seda de jade", 62, [["desea", 1, "d"]]],
+  ["el oso halla dos hojas del lago", 63, [["hojas", 1, "l"]]],
+  ["los enanos llegan a la fonda del lago", 64, [["enanos", 1, "j"]]],
+  ["ella regala rosas rojas a la rana", 65, [["regala", 0, "e"]]],
+]);
 
 /** The still state (no JavaScript, reduced motion): the result screen of this stage, with its notice. */
 export const STILL_STAGE = 0;

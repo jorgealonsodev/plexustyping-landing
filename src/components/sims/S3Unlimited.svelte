@@ -5,22 +5,32 @@
   recorded replay. Replay only, accelerated, pausable; never starts on its own under prefers-reduced-motion.
   The markup under the text ("Generando más texto…", the hint and "Terminar") and its <style> are extracted
   from the app's src/features/practice/Practice.svelte at commit 14f64cf2b9619deca9d99c2dbb3a2358586c5390.
+  On the English pages (`locale` "en") the texts are the app's English corpus on the English (US) keyboard
+  (src/sim/data/s3.en.ts) and the app's UI is translated (src/sim/i18n/).
 -->
 <script lang="ts">
   import { onMount } from "svelte";
-  import { SEGMENTS, UnlimitedDemo, typingHint } from "../../sim/data/s3";
-  import { ES_QWERTY } from "../../sim/data/es-qwerty";
-  import { sequencesFor } from "../../sim/data/sequences";
-  import type { S3Strings } from "../../sim/i18n/s3";
+  import type { Locale } from "../../i18n/paths";
+  import { S3_PACKS, UnlimitedDemo } from "../../sim/data/s3";
+  import { PRACTICE_UI } from "../../sim/i18n/app";
+  import { type S3Strings, UNLIMITED_UI } from "../../sim/i18n/s3";
   import { type Flash, highlightsFor, keyForChar } from "../../sim/keyboard/keys";
+  import { KEYBOARDS } from "../../sim/keyboard/locale";
   import PracticeScreen from "../../sim/practice/PracticeScreen.svelte";
 
-  let { strings: t }: { strings: S3Strings } = $props();
+  let { strings: t, locale = "es" }: { strings: S3Strings; locale?: Locale } = $props();
+
+  // The page's language is fixed for the island's life: its texts, layout and the app's UI strings.
+  // svelte-ignore state_referenced_locally
+  const lang: Locale = locale;
+  const { layout: LAYOUT, sequencesFor } = KEYBOARDS[lang];
+  const PACK = S3_PACKS[lang];
+  const u = UNLIMITED_UI[lang];
 
   const uid = $props.id();
   const textId = `${uid}-text`;
   // Every char the text can grow to; the session's chars are always a prefix of it.
-  const SEQUENCES = sequencesFor(SEGMENTS.join(""));
+  const SEQUENCES = sequencesFor(PACK.segments.join(""));
 
   let tick = $state(0);
   let flash = $state.raw<Flash | null>(null);
@@ -34,9 +44,10 @@
   // Server and first client render: the still state (the start text typed, waiting for its continuation).
   const demo = new UnlimitedDemo({
     reducedMotion: true,
+    pack: PACK,
     onChange: (keystroke) => {
       if (keystroke?.event.kind === "char") {
-        const code = keyForChar(ES_QWERTY, keystroke.event.ch);
+        const code = keyForChar(LAYOUT, keystroke.event.ch);
         if (code) flash = { code, ok: keystroke.event.ch === keystroke.expected };
       }
       tick++;
@@ -118,13 +129,13 @@
     {/if}
   </div>
   <p class="sr-only" aria-live="polite">{announcement}</p>
-  <div class="screen" lang="es">
+  <div class="screen" lang={lang}>
     <PracticeScreen
       {view}
       {elapsed}
-      source="Corpus local"
+      source={PRACTICE_UI[lang].localCorpus}
       targets={[]}
-      layout={ES_QWERTY}
+      layout={LAYOUT}
       {highlights}
       {flash}
       heat={null}
@@ -136,11 +147,11 @@
         <!-- Practice.svelte, under the text of an unlimited session. Demo edit: no role="status" (a looping
              replay would announce it again and again; the text alternative describes it). -->
         {#if atEnd}
-          <p class="hint" bind:this={generating}>Generando más texto…</p>
+          <p class="hint" bind:this={generating}>{u.generating}</p>
         {/if}
-        <p class="hint">{typingHint(view.cursor !== 0, false, true)}</p>
+        <p class="hint">{u.hint(view.cursor !== 0, false, true)}</p>
         <!-- Demo edit: a picture of the app's button; it does nothing here, so it is inert. -->
-        <button type="button" class="end" tabindex="-1" inert aria-hidden="true">Terminar</button>
+        <button type="button" class="end" tabindex="-1" inert aria-hidden="true">{u.finish}</button>
       {/snippet}
     </PracticeScreen>
   </div>

@@ -5,24 +5,34 @@
   starts on its own under prefers-reduced-motion. Extracted from the app at commit
   14f64cf2b9619deca9d99c2dbb3a2358586c5390, with their <style>: the ghost delta (src/features/practice/
   Practice.svelte, `.ghost-delta`) and the results (src/features/practice/Results.svelte). Edits are marked
-  "Demo edit".
+  "Demo edit". On the English pages (`locale` "en") the text is the app's English corpus on the English (US)
+  keyboard (src/sim/data/s4.en.ts) and the app's UI is translated (src/sim/i18n/).
 -->
 <script lang="ts">
   import { onMount } from "svelte";
-  import { ES_QWERTY } from "../../sim/data/es-qwerty";
-  import { GHOST_TEXT, GhostDemo } from "../../sim/data/s4";
-  import { sequencesFor } from "../../sim/data/sequences";
-  import type { S4Strings } from "../../sim/i18n/s4";
+  import type { Locale } from "../../i18n/paths";
+  import { GhostDemo, S4_PACKS } from "../../sim/data/s4";
+  import { PRACTICE_UI, RESULTS_UI } from "../../sim/i18n/app";
+  import { GHOST_UI, type S4Strings } from "../../sim/i18n/s4";
   import { type Flash, highlightsFor, keyForChar } from "../../sim/keyboard/keys";
-  import { NEW_RECORD, formatDelta } from "../../sim/practice/ghost";
-  import { charLabel, formatPercent, formatTime, formatWpm } from "../../sim/practice/format";
+  import { KEYBOARDS } from "../../sim/keyboard/locale";
+  import { charLabel, formatTime, formatWpm } from "../../sim/practice/format";
   import PracticeScreen from "../../sim/practice/PracticeScreen.svelte";
 
-  let { strings: t }: { strings: S4Strings } = $props();
+  let { strings: t, locale = "es" }: { strings: S4Strings; locale?: Locale } = $props();
+
+  // The page's language is fixed for the island's life: its text, layout and the app's UI strings.
+  // svelte-ignore state_referenced_locally
+  const lang: Locale = locale;
+  const { layout: LAYOUT, sequencesFor } = KEYBOARDS[lang];
+  const PACK = S4_PACKS[lang];
+  const g = GHOST_UI[lang];
+  const p = PRACTICE_UI[lang];
+  const r = RESULTS_UI[lang];
 
   const uid = $props.id();
   const textId = `${uid}-text`;
-  const SEQUENCES = sequencesFor(GHOST_TEXT);
+  const SEQUENCES = sequencesFor(PACK.text);
 
   let tick = $state(0);
   /** Race time (ms) the ghost cursor is drawn at; moves on between keystrokes while playing. */
@@ -37,11 +47,13 @@
   // Server and first client render: the still state, mid-race.
   const demo = new GhostDemo({
     reducedMotion: true,
+    pack: PACK,
+    recordLines: g.recordLines,
     onChange: (keystroke) => {
       if (keystroke) {
         now = keystroke.event.tMs;
         if (keystroke.event.kind === "char") {
-          const code = keyForChar(ES_QWERTY, keystroke.event.ch);
+          const code = keyForChar(LAYOUT, keystroke.event.ch);
           if (code) flash = { code, ok: keystroke.event.ch === keystroke.expected };
         }
       } else now = demo.lastT;
@@ -148,13 +160,13 @@
     </div>
   {/if}
   <p class="sr-only" aria-live="polite">{announcement}</p>
-  <div class="screen" lang="es">
+  <div class="screen" lang={lang}>
     <PracticeScreen
       {view}
       {elapsed}
-      source="Corpus local"
+      source={p.localCorpus}
       targets={[]}
-      layout={ES_QWERTY}
+      layout={LAYOUT}
       {highlights}
       {flash}
       heat={null}
@@ -171,8 +183,8 @@
 {#snippet top()}
   <!-- Practice.svelte, in the stats row while a text races its ghost. -->
   {#if delta !== null}
-    {@const d = formatDelta(delta)}
-    <p class="ghost-delta" class:behind={d.startsWith("+")} class:ahead={d.startsWith("−")} aria-label="Diferencia con tu récord">{d}</p>
+    {@const d = g.delta(delta)}
+    <p class="ghost-delta" class:behind={d.startsWith("+")} class:ahead={d.startsWith("−")} aria-label={g.deltaLabel}>{d}</p>
   {/if}
 {/snippet}
 
@@ -182,27 +194,27 @@
          outline); no metronome rhythm, tempo, daily-goal, unlock, weak-spots or save-error lines (this demo
          shows the ghost's lines); the buttons are a picture (inert); no role="status" on the record lines
          (a looping replay would announce them again and again). -->
-    <section class="results" aria-label="Resultado">
-      <p class="h2">Resultado</p>
+    <section class="results" aria-label={r.title}>
+      <p class="h2">{r.title}</p>
       <dl class="figures">
-        <div class="main"><dt>PPM netas</dt><dd>{formatWpm(scored.stats.netWpm)}</dd></div>
-        <div><dt>PPM brutas</dt><dd>{formatWpm(scored.stats.grossWpm)}</dd></div>
-        <div><dt>Precisión</dt><dd>{formatPercent(scored.stats.accuracy)}</dd></div>
-        <div><dt>Tiempo</dt><dd>{formatTime(scored.stats.durationMs)}</dd></div>
-        <div><dt>Errores</dt><dd>{scored.stats.errors}</dd></div>
+        <div class="main"><dt>{r.netWpm}</dt><dd>{formatWpm(scored.stats.netWpm)}</dd></div>
+        <div><dt>{r.grossWpm}</dt><dd>{formatWpm(scored.stats.grossWpm)}</dd></div>
+        <div><dt>{p.accuracy}</dt><dd>{p.percent(scored.stats.accuracy)}</dd></div>
+        <div><dt>{p.time}</dt><dd>{formatTime(scored.stats.durationMs)}</dd></div>
+        <div><dt>{r.errors}</dt><dd>{scored.stats.errors}</dd></div>
       </dl>
-      {#each scored.records as line (line)}<p class="record" class:new-record={line === NEW_RECORD}>{line}</p>{/each}
+      {#each scored.records as line (line)}<p class="record" class:new-record={line === g.newRecord}>{line}</p>{/each}
       {#if scored.failed.length > 0}
         <p class="failed">
-          Caracteres fallados:
+          {r.failed}
           {#each scored.failed as c, i (i)}<kbd>{charLabel(c)}</kbd>{/each}
         </p>
       {:else}
-        <p class="note">Sin fallos.</p>
+        <p class="note">{r.noFailed}</p>
       {/if}
       <div class="actions" inert aria-hidden="true">
-        <button type="button" class="primary" tabindex="-1">Siguiente texto <kbd>Intro</kbd></button>
-        <button type="button" tabindex="-1">Repetir <kbd>Esc</kbd></button>
+        <button type="button" class="primary" tabindex="-1">{r.next} <kbd>{r.enter}</kbd></button>
+        <button type="button" tabindex="-1">{r.repeat} <kbd>Esc</kbd></button>
       </div>
     </section>
   {/if}
