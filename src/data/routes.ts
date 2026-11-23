@@ -60,4 +60,4 @@ export const PAGE_TYPES = [
 export type PageType = (typeof PAGE_TYPES)[number];
 
 /** Pages and path prefixes that are never indexed (robots noindex) and stay out of the sitemap. */
-export const NOINDEX_PATHS: readonly string[] = ["/404", "/sim-preview"];
+export const NOINDEX_PATHS: readonly string[] = ["/404", "/sim-preview", "/en/sim-preview"];
