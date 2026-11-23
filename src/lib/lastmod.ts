@@ -7,12 +7,14 @@
 import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import { isEnglishPath, neutralPath } from "../i18n/slugs.ts";
 
 /** Repository-relative source candidates of a language-neutral or localized URL path, most specific first. */
 export function sourceCandidates(pathname: string): string[] {
   const p = pathname.replace(/\/+$/, "") || "/";
-  const en = p === "/en" || p.startsWith("/en/");
-  const neutral = en ? p.slice(3) || "/" : p;
+  const en = isEnglishPath(p);
+  // Content files keep the Spanish slug under en/ (src/content/docs/en/empezar/…), so English URLs map back.
+  const neutral = neutralPath(p);
   const out: string[] = [];
   const content = (dir: string, slug: string) =>
     [".md", ".mdx"].map((ext) => `src/content/${dir}/${en ? "en/" : ""}${slug}${ext}`);

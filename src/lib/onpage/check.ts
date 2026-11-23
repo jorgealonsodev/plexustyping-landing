@@ -9,6 +9,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { type HTMLElement, parse } from "node-html-parser";
 import { PAGE_TYPES, PLANNED_PREFIXES, PLANNED_ROUTES } from "../../data/routes.ts";
+import { englishSitePath, isEnglishPath, neutralPath } from "../../i18n/slugs.ts";
 
 export { PAGE_TYPES };
 
@@ -25,6 +26,8 @@ export interface CheckOptions {
   site: string;
   /** Treat links to planned but unbuilt routes as errors (use once every page exists). */
   strictLinks?: boolean;
+  /** Every indexable page must have its other-language mirror built (site-pages S7, once the mirror is complete). */
+  requireMirrors?: boolean;
 }
 export interface Report {
   issues: Issue[];
@@ -56,12 +59,10 @@ export function urlPathOf(file: string): string {
   return p.replace(/\/index$/, "");
 }
 
-const localeOfPath = (p: string) => (p === "/en" || p.startsWith("/en/") ? "en" : "es");
-const esPathOf = (p: string) => (p === "/en" ? "/" : p.startsWith("/en/") ? p.slice(3) : p);
-const enPathOf = (p: string) => {
-  const es = esPathOf(p);
-  return es === "/" ? "/en" : `/en${es}`;
-};
+// English pages use English slugs (src/i18n/slugs.ts), so the mirror of a page comes from the mapping.
+const localeOfPath = (p: string) => (isEnglishPath(p) ? "en" : "es");
+const esPathOf = (p: string) => neutralPath(p);
+const enPathOf = (p: string) => englishSitePath(neutralPath(p));
 const words = (s: string) => s.split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w)).length;
 const text = (el: HTMLElement | null | undefined) => (el?.text ?? "").replace(/\s+/g, " ").trim();
 
@@ -96,6 +97,8 @@ export function checkSite(distDir: string, options: CheckOptions): Report {
   const isPlanned = (p: string) => PLANNED_ROUTES.includes(p) || PLANNED_PREFIXES.some((pre) => p.startsWith(pre));
 
   const titles = new Map<string, string[]>();
+  /** hreflang alternates of each indexable page, for the reciprocity check after the loop. */
+  const alternatesOf = new Map<string, { file: string; alternates: Map<string, string> }>();
   const descriptions = new Map<string, string[]>();
   const indexable = new Set<string>();
 
@@ -141,7 +144,9 @@ export function checkSite(distDir: string, options: CheckOptions): Report {
     for (const l of head?.querySelectorAll('link[rel="alternate"][hreflang]') ?? []) {
       alternates.set(l.getAttribute("hreflang") ?? "", l.getAttribute("href") ?? "");
     }
+    alternatesOf.set(urlPath, { file, alternates });
     const mirror = locale === "es" ? enPathOf(urlPath) : esPathOf(urlPath);
+    if (options.requireMirrors && !pageExists(mirror)) add("mirror", `no ${locale === "es" ? "English" : "Spanish"} mirror built at ${mirror}`);
     for (const [hl, href] of alternates) {
       const p = href.startsWith(site) ? href.slice(site.length) || "/" : null;
       if (p === null || !pageExists(p)) add("hreflang", `hreflang ${hl} points to a missing page ${href}`);
@@ -232,14 +237,14 @@ export function checkSite(distDir: string, options: CheckOptions): Report {
 
     const mainLinks = (main?.querySelectorAll("a[href]") ?? []).map((a) => a.getAttribute("href") ?? "");
     const docsPrefix = locale === "en" ? "/en/docs/" : "/docs/";
-    const featuresPrefix = locale === "en" ? "/en/funciones/" : "/funciones/";
+    const featuresPrefix = locale === "en" ? `${englishSitePath("/funciones")}/` : "/funciones/";
     const visibleCrumbs = !!main?.querySelector("nav[aria-label] ol");
     const updatedTime = main?.querySelector("[data-updated] time[datetime]")?.getAttribute("datetime") ?? "";
     const pageText = (main?.structuredText ?? "").replace(/\s+/g, " ");
     const t = (rule: string, ok: boolean, msg: string) => ok || add(rule, msg);
 
     if (type === "home") {
-      const loc = (p: string) => (locale === "en" ? (p === "/" ? "/en" : `/en${p}`) : p);
+      const loc = (p: string) => (locale === "en" ? englishSitePath(p) : p);
       const sw = ofType("SoftwareApplication")[0];
       t("home", !!sw, "home needs SoftwareApplication JSON-LD");
       if (locale === "es") {
@@ -310,6 +315,18 @@ export function checkSite(distDir: string, options: CheckOptions): Report {
       t("release-notes", rss, "needs a link to the RSS feed");
       const gh = mainLinks.filter((h) => h.startsWith("https://github.com/jorgealonsodev/plexustyping/releases")).length;
       t("release-notes", gh >= versions.length, "every version needs a link to its GitHub release");
+    }
+  }
+
+  // hreflang reciprocity: when page A names page B as its alternate in B's language, B names A back.
+  for (const [urlPath, { file, alternates }] of alternatesOf) {
+    const self = `${site}${urlPath === "/" ? "/" : urlPath}`;
+    for (const [hl, href] of alternates) {
+      if (hl === "x-default" || hl === localeOfPath(urlPath) || !href.startsWith(site)) continue;
+      const other = alternatesOf.get(href.slice(site.length) || "/");
+      if (other && other.alternates.get(localeOfPath(urlPath)) !== self) {
+        issues.push({ file, rule: "hreflang", message: `hreflang ${hl} ${href} does not point back to ${self}`, level: "error" });
+      }
     }
   }
 

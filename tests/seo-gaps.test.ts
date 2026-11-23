@@ -19,6 +19,15 @@ describe("docs pages that repeat a hub are not indexed (S5)", () => {
     expect(isNoindexPath("/sim-preview/s1")).toBe(true);
     expect(isNoindexPath("/en/sim-preview")).toBe(true);
   });
+
+  it("marks the English mirrors of those pages noindex too, at their English slugs (site-pages S7)", () => {
+    for (const p of ["/en/docs/help/faq", "/en/docs/project/release-notes", "/en/docs/project/privacy", "/en/docs/project/licenses-and-credits", "/en/sim-preview/s2"]) {
+      expect(isNoindexPath(p)).toBe(true);
+    }
+    for (const p of ["/en", "/en/faq", "/en/release-notes", "/en/privacy", "/en/licenses", "/en/docs/help/troubleshooting"]) {
+      expect(isNoindexPath(p)).toBe(false);
+    }
+  });
 });
 
 describe("docs layout order (S3)", () => {

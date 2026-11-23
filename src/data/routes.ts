@@ -1,8 +1,11 @@
 /**
  * Language-neutral routes of the site (PRD §5). Nav, footer and the on-page check read them.
  * Imported with an explicit `.ts` extension by scripts/check-onpage.ts (run by Node directly), so this
- * file must stay free of imports and of non-erasable TypeScript syntax.
+ * file imports only modules with the same constraint (with `.ts` extensions) and uses only erasable
+ * TypeScript syntax.
  */
+import { neutralPath } from "../i18n/slugs.ts";
+
 export const ROUTES = {
   home: "/",
   download: "/descargar",
@@ -74,7 +77,11 @@ export const NOINDEX_PATHS: readonly string[] = [
   "/docs/proyecto/licencias-y-creditos",
 ];
 
-/** True for a path in NOINDEX_PATHS or under one of its prefixes. */
+/**
+ * True for a path in NOINDEX_PATHS or under one of its prefixes. English paths are checked by their
+ * Spanish counterpart (src/i18n/slugs.ts), so a page and its mirror are always indexed alike.
+ */
 export function isNoindexPath(path: string): boolean {
-  return NOINDEX_PATHS.some((p) => path === p || path.startsWith(`${p}/`));
+  const match = (q: string) => NOINDEX_PATHS.some((p) => q === p || q.startsWith(`${p}/`));
+  return match(path) || match(neutralPath(path));
 }

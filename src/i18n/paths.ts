@@ -1,12 +1,13 @@
 /**
- * URL helpers for the two site languages (PRD §5, §14): Spanish at the root with no prefix,
- * English mirrored under `/en`, the same slugs in both, and never a trailing slash.
+ * URL helpers for the two site languages (PRD §5, §14): Spanish at the root with no prefix, English
+ * under `/en` with English slugs (src/i18n/slugs.ts holds the one mapping), and never a trailing slash.
+ * A "language-neutral" path is the Spanish one: pages and layouts pass it, and these helpers localize it.
  */
+import { englishSitePath, isEnglishPath, neutralPath } from "./slugs.ts";
+
 export const LOCALES = ["es", "en"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "es";
-
-const EN_PREFIX = "/en";
 
 /** `path` without query, hash, `.html` suffix (build.format "file") or trailing slash; always starts with "/". */
 export function normalizePath(path: string): string {
@@ -17,25 +18,20 @@ export function normalizePath(path: string): string {
   return clean || "/";
 }
 
-const isEnglish = (clean: string) => clean === EN_PREFIX || clean.startsWith(`${EN_PREFIX}/`);
-
 /** The language a site path belongs to. */
 export function localeFromPath(path: string): Locale {
-  return isEnglish(normalizePath(path)) ? "en" : "es";
+  return isEnglishPath(normalizePath(path)) ? "en" : "es";
 }
 
-/** The language-neutral part of a path: `/en/descargar` and `/descargar` both give `/descargar`. */
+/** The language-neutral (Spanish) path: `/en/download` and `/descargar` both give `/descargar`. */
 export function basePath(path: string): string {
-  const clean = normalizePath(path);
-  if (!isEnglish(clean)) return clean;
-  return clean.slice(EN_PREFIX.length) || "/";
+  return neutralPath(normalizePath(path));
 }
 
 /** `path` (language-neutral or already localized) in `locale`. */
 export function localizePath(path: string, locale: Locale): string {
   const base = basePath(path);
-  if (locale === "es") return base;
-  return base === "/" ? EN_PREFIX : `${EN_PREFIX}${base}`;
+  return locale === "es" ? base : englishSitePath(base);
 }
 
 /** The same page in the other language, for the language switch. */

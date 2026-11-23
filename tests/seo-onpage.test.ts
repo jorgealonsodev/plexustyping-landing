@@ -8,6 +8,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 import { checkSite } from "../src/lib/onpage/check";
+import { englishSitePath, neutralPath } from "../src/i18n/slugs";
 
 const SITE = "https://plexus.example";
 const SHA = "fea1b0988907d6e01755defa940c46b4e1263156d45e0fe22adf482afc1d000f";
@@ -41,8 +42,8 @@ interface PageOpts {
 function html(o: PageOpts): string {
   const lang = o.lang ?? (o.path === "/en" || o.path.startsWith("/en/") ? "en" : "es");
   const url = `${SITE}${o.path}`;
-  const esPath = o.path === "/en" ? "/" : o.path.replace(/^\/en(?=\/)/, "");
-  const enPath = esPath === "/" ? "/en" : `/en${esPath}`;
+  const esPath = neutralPath(o.path);
+  const enPath = englishSitePath(esPath);
   const head = o.noindex
     ? `<meta name="robots" content="noindex">`
     : `<link rel="canonical" href="${url}">
@@ -85,7 +86,7 @@ function validSite(): Fixture {
       type: "home",
       title: "PlexusTyping: typing that adapts",
       jsonLd: [software],
-      main: `<h1>Typing</h1><p>Version 0.1.0.</p><a href="/en/descargar">Download</a><a href="/en/funciones">Features</a><a href="/en/docs">Docs</a>`,
+      main: `<h1>Typing</h1><p>Version 0.1.0.</p><a href="/en/download">Download</a><a href="/en/features">Features</a><a href="/en/docs">Docs</a>`,
     },
     "funciones/motor-adaptativo.html": {
       path: "/funciones/motor-adaptativo",
@@ -257,6 +258,13 @@ describe("checkSite: all pages", () => {
     );
   });
 
+  it("hreflang alternates must be reciprocal: the other page's alternate points back", () => {
+    const dir = writeSite(validSite());
+    // /en claims a Spanish alternate that is not /, so / and /en no longer agree.
+    writeFileSync(join(dir, "en.html"), html(validSite()["en.html"] as PageOpts).replace(`hreflang="es" href="${SITE}/"`, `hreflang="es" href="${SITE}/privacidad"`));
+    expect(rulesFor(dir, "en.html")).toContain("hreflang");
+  });
+
   it("titles and descriptions are unique across the site", () => {
     const fx = mutate(f, (p) => ({ ...p, title: "Novedades · PlexusTyping", description: "Descripción única de Novedades · PlexusTyping" }));
     const rules = rulesFor(writeSite(fx), f);
@@ -284,6 +292,47 @@ describe("checkSite: all pages", () => {
   it("a noindex page needs no SEO elements, but 404 must be noindex", () => {
     const fx = mutate("404.html", (p) => ({ ...p, noindex: false, type: "prose" }));
     expect(rulesFor(writeSite(fx), "404.html")).toContain("noindex");
+  });
+});
+
+describe("checkSite: English mirror with English slugs (site-pages S7)", () => {
+  /** The valid site plus the English mirror of the feature page, at its English slug. */
+  function withMirror(): Fixture {
+    const fx = validSite();
+    fx["funciones/motor-adaptativo.html"] = { ...(fx["funciones/motor-adaptativo.html"] as PageOpts), hreflang: true };
+    fx["en/features/adaptive-engine.html"] = {
+      path: "/en/features/adaptive-engine",
+      type: "feature",
+      title: "Adaptive engine · PlexusTyping",
+      jsonLd: [breadcrumbLd],
+      main: `${crumbs([["Home", "/en"], ["Features", "/en"]])}<div data-content><h1>Adaptive engine</h1><p data-lead>${LEAD}</p>
+        <figure><img src="/a.png" alt="Heatmap" width="10" height="10"><figcaption>Demo</figcaption></figure>
+        <a href="/en/docs/adaptive-engine/how">How it measures weak spots</a>
+        <p data-updated>Updated: <time datetime="2026-11-20">20 Nov 2026</time></p></div>`,
+    };
+    return fx;
+  }
+  const sitemap = [...INDEXABLE, "/en/features/adaptive-engine"];
+
+  it("accepts reciprocal es/en/x-default alternates between Spanish and English slugs", () => {
+    const dir = writeSite(withMirror(), { sitemap });
+    expect(errorsOf(dir).filter((i) => i.file.includes("adaptive") || i.file.includes("motor"))).toEqual([]);
+  });
+
+  it("wants the English feature page to link to its English documentation (/en/docs/…)", () => {
+    const fx = withMirror();
+    const f = "en/features/adaptive-engine.html";
+    fx[f] = replaceMain('href="/en/docs/adaptive-engine/how"', 'href="/docs/motor-adaptativo/como-mide"')(fx[f] as PageOpts);
+    expect(rulesFor(writeSite(fx, { sitemap }), f)).toContain("feature");
+  });
+
+  it("with requireMirrors, an indexable page without its built mirror fails", () => {
+    const dir = writeSite(withMirror(), { sitemap });
+    const missing = checkSite(dir, { site: SITE, requireMirrors: true }).issues.filter((i) => i.rule === "mirror");
+    expect(missing.map((i) => i.file)).toContain("privacidad.html");
+    expect(missing.map((i) => i.file)).not.toContain("funciones/motor-adaptativo.html");
+    expect(missing.map((i) => i.file)).not.toContain("en/features/adaptive-engine.html");
+    expect(checkSite(dir, { site: SITE }).issues.filter((i) => i.rule === "mirror")).toEqual([]);
   });
 });
 

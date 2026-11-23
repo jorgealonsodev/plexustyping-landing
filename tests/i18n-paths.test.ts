@@ -5,21 +5,21 @@ describe("mirrorPath (language switch keeps the page)", () => {
   it.each([
     ["/", "/en"],
     ["/en", "/"],
-    ["/descargar", "/en/descargar"],
-    ["/en/descargar", "/descargar"],
-    ["/docs/empezar/instalacion", "/en/docs/empezar/instalacion"],
-    ["/en/docs/empezar/instalacion", "/docs/empezar/instalacion"],
+    ["/descargar", "/en/download"],
+    ["/en/download", "/descargar"],
+    ["/docs/empezar/instalar-linux-deb", "/en/docs/getting-started/install-linux-deb"],
+    ["/en/docs/getting-started/install-linux-deb", "/docs/empezar/instalar-linux-deb"],
   ])("%s -> %s", (from, to) => {
     expect(mirrorPath(from)).toBe(to);
   });
 
   it("never emits a trailing slash and tolerates one on input", () => {
-    expect(mirrorPath("/descargar/")).toBe("/en/descargar");
+    expect(mirrorPath("/descargar/")).toBe("/en/download");
     expect(mirrorPath("/en/")).toBe("/");
   });
 
   it("drops the .html suffix of file-format builds", () => {
-    expect(mirrorPath("/descargar.html")).toBe("/en/descargar");
+    expect(mirrorPath("/descargar.html")).toBe("/en/download");
     expect(mirrorPath("/en.html")).toBe("/");
   });
 
@@ -30,10 +30,10 @@ describe("mirrorPath (language switch keeps the page)", () => {
 });
 
 describe("localizePath", () => {
-  it("prefixes English only", () => {
+  it("prefixes English and uses its English slug", () => {
     expect(localizePath("/", "es")).toBe("/");
     expect(localizePath("/", "en")).toBe("/en");
-    expect(localizePath("/privacidad", "en")).toBe("/en/privacidad");
+    expect(localizePath("/privacidad", "en")).toBe("/en/privacy");
     expect(localizePath("/privacidad", "es")).toBe("/privacidad");
   });
 });

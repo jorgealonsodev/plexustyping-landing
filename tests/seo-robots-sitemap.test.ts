@@ -32,7 +32,9 @@ describe("sitemap lastmod from git (docs/seo-2026.md §B5)", () => {
       "src/content/docs/empezar/instalar.md",
       "src/content/docs/empezar/instalar.mdx",
     ]);
-    expect(sourceCandidates("/en/funciones/ia")[0]).toBe("src/content/features/en/ia.md");
+    expect(sourceCandidates("/en/features/ai")[0]).toBe("src/content/features/en/ia.md");
+    expect(sourceCandidates("/en/docs/getting-started/first-launch")[0]).toBe("src/content/docs/en/empezar/primer-arranque.md");
+    expect(sourceCandidates("/en/download")).toContain("src/pages/en/download.astro");
     expect(sourceCandidates("/descargar")).toContain("src/pages/descargar.astro");
   });
 
