@@ -7,6 +7,7 @@ import ProsePage from "../layouts/ProsePage.astro";
 import { ROUTES } from "../data/routes";
 import { getFaq } from "../lib/content";
 import { faqPageNode } from "../lib/seo/jsonld";
+import { ogImagePath } from "../lib/og/cards";
 
 const entries = await Promise.all((await getFaq("es")).map(async (e) => ({ e, Content: (await render(e)).Content })));
 const jsonLd = [faqPageNode(faqJsonLdItems(entries.map(({ e }) => ({ question: e.data.question, body: e.body ?? "" }))))];
@@ -14,6 +15,7 @@ const jsonLd = [faqPageNode(faqJsonLdItems(entries.map(({ e }) => ({ question: e
 
 <ProsePage
   locale="es"
+  ogImage={ogImagePath("preguntas-frecuentes")}
   path={ROUTES.faq}
   title="Preguntas frecuentes · PlexusTyping"
   description="Respuestas cortas sobre PlexusTyping: precio, sistemas, uso sin conexión, qué se envía a la IA, SmartScreen, verificación y actualizaciones."

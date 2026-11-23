@@ -4,10 +4,12 @@
 // "Where data lives"; crates/plexustyping-ai/src/prompt.rs).
 import ProsePage from "../layouts/ProsePage.astro";
 import { ROUTES } from "../data/routes";
+import { ogImagePath } from "../lib/og/cards";
 ---
 
 <ProsePage
   locale="es"
+  ogImage={ogImagePath("privacidad")}
   path={ROUTES.privacy}
   title="Privacidad · PlexusTyping"
   description="Esta web no usa cookies, analítica ni terceros. La app guarda todo en tu equipo y la IA opcional nunca recibe lo que escribes."

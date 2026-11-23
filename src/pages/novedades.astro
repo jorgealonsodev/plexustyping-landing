@@ -9,6 +9,7 @@ import { ROUTES } from "../data/routes";
 import { getReleases, releaseAnchor } from "../lib/content";
 import { formatDate } from "../lib/format";
 import { isoDate } from "../lib/seo/jsonld";
+import { ogImagePath } from "../lib/og/cards";
 
 const releases = await Promise.all((await getReleases("es")).map(async (r) => ({ r, Content: (await render(r)).Content })));
 const latest = releases[0]?.r.data;
@@ -42,6 +43,7 @@ const planned = [
 
 <ProsePage
   locale="es"
+  ogImage={ogImagePath("novedades")}
   path={ROUTES.news}
   title="Novedades y notas de versión · PlexusTyping"
   description="Notas de cada versión de PlexusTyping, con fecha y enlace a GitHub, y la hoja de ruta: lo que llega en la 0.1.1 y lo planeado."

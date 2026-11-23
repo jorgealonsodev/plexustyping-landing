@@ -5,6 +5,7 @@
 import ProsePage from "../layouts/ProsePage.astro";
 import { ROUTES } from "../data/routes";
 import { APP_REPO_URL, SITE_REPO_URL } from "../data/site";
+import { ogImagePath } from "../lib/og/cards";
 
 const fonts = [
   ["Roboto Mono", "@fontsource/roboto-mono 5.3.0", "The Roboto Mono Project Authors"],
@@ -33,6 +34,7 @@ const appBlob = (file: string) => `${APP_REPO_URL}/blob/main/${file}`;
 
 <ProsePage
   locale="es"
+  ogImage={ogImagePath("licencias")}
   path={ROUTES.licenses}
   title="Licencias y créditos · PlexusTyping"
   description="PlexusTyping usa licencia MIT o Apache-2.0. Créditos de temas, listas de palabras, frases, fuentes y resaltado, y licencias de esta web."

@@ -13,4 +13,11 @@ export interface OgPageCard {
   locale: Locale;
 }
 
-export const OG_PAGES: OgPageCard[] = [];
+export const OG_PAGES: OgPageCard[] = [
+  { slug: "descargar", title: "Descargar PlexusTyping", locale: "es" },
+  { slug: "funciones", title: "Funciones de PlexusTyping", locale: "es" },
+  { slug: "novedades", title: "Novedades de PlexusTyping", locale: "es" },
+  { slug: "preguntas-frecuentes", title: "Preguntas frecuentes", locale: "es" },
+  { slug: "privacidad", title: "Privacidad", locale: "es" },
+  { slug: "licencias", title: "Licencias y créditos", locale: "es" },
+];
