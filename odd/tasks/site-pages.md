@@ -28,6 +28,8 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
   - proyecto: privacidad, licencias-y-creditos, codigo-fuente-y-contribuir, notas-de-version
 - S7. English mirror (`/en/…`, PRD F6) of every Spanish page. The approval gate was a parent assumption; the user delegated the order ("haz lo que creas mas optimo", L13), so P6 runs now on the current Spanish content and later Spanish edits must be mirrored.
 
+- S11. "programa para aprender mecanografía" (user, 2026-11-23, target query of the home `/`): the home is optimized for that query per `seo-audit-home.md` (Important 2–5, Nice-to-have 6), with the English home optimized for the equivalent English query; claims stay within S2 (progressive unlock is off by default).
+
 ## Tasks
 
 - [x] T0 · S3, S4, S5, S8 · delegated (parallel with P1, P1b) · shared foundation: content collections + schema, layouts (FeatureLayout, DocsLayout with sidebar/breadcrumbs/TOC, ProsePage), SEO/JSON-LD helpers, nav wired to real routes, sitemap + robots + RSS plumbing, release-data module with snapshot · commit: 793baa8, 9b62f0d, 9b6070a, a62851e; parent: 95ebb3a, 5a9cf1c, 59d2fc3
@@ -39,7 +41,8 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
 - [x] T4a · S1, S2, S4, S5, S10 · delegated, worktree · docs sections empezar…teclado-e-idiomas, /docs index, Pagefind search · commit: 4ec6e90, fa54814, baf2ec4, beb5c1b
 - [x] T4b · S1, S2, S4, S10 · delegated, worktree · docs sections progreso…proyecto · commit: 39a81b1, bfaf1f8, d0b5445
 - [x] T5 · S1, S2, S4 · delegated, worktree · `/novedades` (+ roadmap, RSS), `/preguntas-frecuentes`, `/privacidad`, `/licencias`, `llms.txt`, `llms-full.txt`, Pagefind search (moved to P4a) · commit: 59ca185, f79e70e, cc43818, 36567e8
-- [ ] T6 · S7 · delegated · English mirror · commit: —
+- [x] T6 · S7 · delegated · English mirror · commit: 921275b..8b54382 (13 commits)
+- [ ] T8 · S4, S8, S11 · delegated · apply `seo-audit-home.md` to `/` and its English equivalent to `/en` · commit: —
 - [ ] T7 · all · delegated · impeccable finish (detector, finish review, DESIGN.md) and one independent verifier (covers site-base-home T4 too) · commit: —
 
 ## Log
@@ -58,3 +61,5 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
 - L12 (2026-11-23): Independent verifier on item 2 (CSP) and item 5 (build/Docker): no blockers. S1 S2(5/5 vs v0.1.0) S4 S5 S6(offline build ok) S8 S9 S10 PASS; S3 visual is P7; S7 partial as expected. Docker build from git archive ok, Pagefind indexes 54 pages on alpine, 0 CSP violations, 0 third-party requests. Parent fixed findings 2 (OG nginx location limited to .png, live-tested headers) and 3 (s8–s10 previews and 404 no longer link unbuilt /en pages). Open, non-blocking: 'wasm-unsafe-eval' applies site-wide (Astro CSP is global); docs pages carry 444 B gzip inline JS (theme + search loader), not literally 0 KB; Markdown highlighting off departs from PRD §15 (Shiki) — PRD update or CSP-compatible highlighter; sims draw the 0.1.1 bar cursor; S8/S10 default to the es layout unless pages pass `layout` (P6). Regression probes to add in P7: offline build, CSP meta scan, dist/og only PNGs, search CSP Playwright test, link resolver over noindex pages.
 - L13 (2026-11-23, user): "haz lo que creas mas optimo" (after the status summary listing the pending decisions). Decision: run P6 (English mirror) now, then P7 (impeccable finish + verifier) once over both languages, so the finish and verification are not done twice. Domain, nginx container, site LICENSE, HSTS preload and the merge into main stay the user's decisions.
 - L14 (2026-11-23, user): chose «Delegarla a un agente» after the harness refused the writer launch. Task IDs renamed P→T in `## Tasks` so the harness recognizes them (P6 = T6, P7 = T7, etc.); earlier Log entries keep the P names.
+- L15 (2026-11-23): T6 worker (mwtf6y5u-1-8ygr) was cancelled ("parent session shut down") after commit 921275b plus uncommitted feature-page edits; resumed as mwtfpjmh-1-eiea from that state. User asked for an on-page audit of `/` for «programa para aprender mecanografía»: `seo-audit-home.md` (title, description, 40–60 word first paragraph, link to /docs/practicar/desbloqueo-progresivo). To apply on `/` and `/en` after T6, since T6 edits the home components.
+- L16 (2026-11-23): T6 done (921275b..8b54382). Worker: build 158 pages, Pagefind en 54 / es 54, 655 tests, check 0 errors, check:seo 134 indexable pages 0 errors; English slugs in src/i18n/slugs.ts (PRD §5 names no slugs). Open for T7: Spanish UI labels on English pages lack lang="es" (WCAG 3.1.2); British (sims) vs US (site copy) spelling; en sim-preview s8–s10 missing; OG image paths keep Spanish slugs; S8/S10 en-US layout checked only in static HTML (Risk item 6).
