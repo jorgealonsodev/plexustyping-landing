@@ -1,6 +1,6 @@
 # PRD · Web de PlexusTyping (landing, descargas y documentación)
 
-**Versión:** 0.1 (borrador) · **Fecha:** 19-11-2026 · **Repositorio:** `plexustyping-landing` · **Producto:** [PlexusTyping](https://github.com/jorgealonsodev/plexustyping), versión publicada 0.1.0
+**Versión:** 0.1 (borrador) · **Fecha:** 19-11-2026 · **Repositorio:** `plexustyping-landing` · **Producto:** [PlexusTyping](https://github.com/jorgealonsodev/plexustyping), versión publicada 0.2.0
 
 > Este PRD define la web pública de PlexusTyping: qué páginas tiene, qué cuenta de la app, cómo se descarga, cómo se documenta, cómo se posiciona en buscadores y asistentes de IA en 2026, y los límites de rendimiento, seguridad y accesibilidad que no se negocian. El aspecto visual **no** se decide aquí: se decide con el proceso de la skill *impeccable* (§9), que este PRD hace obligatorio.
 
@@ -116,7 +116,7 @@ La web debe contar **todo lo que la app hace hoy y nada que no haga**. El invent
 
 ### 6.4 Teclado, distribuciones e idiomas
 - **Distribuciones (8):** Español (España), Español (Latinoamérica), English (US), Português (Brasil, ABNT2), Français (AZERTY), Deutsch (QWERTZ), English (Dvorak), English (Colemak).
-- **Idiomas del texto:** español, inglés, portugués de Brasil, francés y alemán; cada uno con corpus local (5.000 palabras frecuentes, frases, párrafo de diagnóstico y hasta 2.000 frases de Common Voice, CC0). **La interfaz de la app está solo en español.**
+- **Idiomas del texto:** español, inglés, portugués de Brasil, francés y alemán; cada uno con corpus local (5.000 palabras frecuentes, frases, párrafo de diagnóstico y hasta 2.000 frases de Common Voice, CC0). **Idiomas de la interfaz (desde la 0.2.0):** español, inglés, portugués de Brasil, francés y alemán; sigue el idioma del sistema (inglés si no está entre ellos) y se elige en Ajustes → Apariencia, aparte del idioma del texto.
 - **Teclado visual** (F2) con forma ISO, ANSI o ABNT2, etiquetas de Shift y AltGr, teclas muertas, color por dedo, resaltado de la tecla siguiente y su modificador, destellos verde/rojo y mapa de calor.
 
 ### 6.5 Modo código
@@ -153,7 +153,7 @@ La web debe contar **todo lo que la app hace hoy y nada que no haga**. El invent
 - **Gratis y de código abierto.**
 
 ### 6.13 Planeado (no se presenta como disponible)
-Texto de control para medir el progreso, modo infantil, endpoint compatible con OpenAI propio (Ollama, LM Studio), coste y límite de gasto mensual, interfaz en inglés, actualización automática y firma Authenticode en Windows, corpus italiano, tema que sigue el modo del sistema, pares de confusión como objetivos, gráficas de consistencia, copiar informe de diagnóstico, aviso de distribución distinta a la del sistema, exportar perfiles. macOS y AppImage quedan fuera de la v1. Solo aparecen en «Novedades → Hoja de ruta», marcados como planeados.
+Texto de control para medir el progreso, modo infantil, endpoint compatible con OpenAI propio (Ollama, LM Studio), coste y límite de gasto mensual, actualización automática y firma Authenticode en Windows, corpus italiano, tema que sigue el modo del sistema, pares de confusión como objetivos, gráficas de consistencia, copiar informe de diagnóstico, aviso de distribución distinta a la del sistema, exportar perfiles. macOS y AppImage quedan fuera de la v1. Solo aparecen en «Novedades → Hoja de ruta», marcados como planeados.
 
 ## 7. Documentación (toda, en web)
 
@@ -335,13 +335,14 @@ El aspecto se decide con la skill *impeccable* (`~/.pi/agent/skills/impeccable`)
 1. **Dominio** (el autor tiene uno propio) y host definitivo.
 2. ¿Analítica? Recomendación: ninguna, o una autoalojada sin cookies (no exige banner).
 3. ¿Nombre visible del autor/organización para `Organization`/`Person` y la página de privacidad?
-4. ¿Se publica ya la 0.1.1 (texto ilimitado, cursor barra, ajustes reorganizados) antes de la web, para no marcar tantas funciones como «próxima versión»?
-5. ¿Traducción al inglés de la app? Hoy la interfaz está en español; la web en inglés debe decirlo.
+4. ~~¿Se publica ya la 0.1.1 (texto ilimitado, cursor barra, ajustes reorganizados) antes de la web?~~ Resuelto: salieron en la 0.2.0 (23-11-2026).
+5. ~~¿Traducción al inglés de la app?~~ Resuelto: la 0.2.0 trae la interfaz en cinco idiomas, incluido el inglés.
 
 ## 21. Historial
 
 | Versión | Fecha | Cambios |
 |---|---|---|
+| 0.1.3 | 23-11-2026 | §6 y §20 contrastados con la app v0.2.0: interfaz en cinco idiomas; texto ilimitado, longitudes hasta 2000 y cursor barra ya publicados |
 | 0.1.2 | 20-11-2026 | Presupuesto de JS revisado tras medir la isla del hero: el runtime de Svelte 5 (≈16 KB) se cuenta aparte y una sola vez; home ≤ 60 KB. Las simulaciones copian el aspecto de la app desde su repositorio con datos pregrabados (sin Rust en el build) |
 | 0.1.1 | 19-11-2026 | §6 contrastado con el código de `feat/unlimited-text`: privacidad exacta de la IA, 15 lenguajes de código, nombres de los modos de error, detalles de historial, metrónomo, teclado, licencias y artefactos; §6.13 «Planeado» |
 | 0.1 | 19-11-2026 | Primer borrador: alcance, contenido completo de la app, documentación, simulaciones, diseño con *impeccable*, SEO 2026 (incluida búsqueda generativa), rendimiento, seguridad, accesibilidad, stack y fases |

@@ -41,14 +41,14 @@ It diagnoses your personal weak characters and bigrams (EMA of error and slownes
 
 ## Capabilities and Constraints
 
-- Feature inventory and its truth rules: PRD.md §6 is the single source of content. The site states everything the app does today and nothing it does not. Items marked *(próxima versión 0.1.1)* (lengths 800–2000 and «Ilimitado») and §6.13 planned items appear only labeled as such.
-- The app UI is Spanish only; the English site must say so.
+- Feature inventory and its truth rules: PRD.md §6 is the single source of content, checked against app tag `v0.2.0` (released 2026-11-23). The site states everything the app does today and nothing it does not. The former *(próxima versión 0.1.1)* items (lengths 800–2000 and «Ilimitado») shipped in 0.2.0; §6.13 planned items appear only labeled as such.
+- The app UI comes in five languages since v0.2.0 (Español, English, Português (Brasil), Français, Deutsch; it follows the computer's language, English when unsupported; Settings → Appearance, separate from the practice-text language). Spanish pages quote the app's Spanish labels, English pages its English labels.
 - Platforms: Linux x86_64 (`.deb` for Ubuntu 22.04+, package `plexus-typing`; `.tar.gz` needing WebKitGTK 4.1 + GTK 3) and Windows 10/11 x64 (unsigned per-user installer; SmartScreen warning explained honestly). No macOS, no AppImage, no auto-update in v1.
 - Licenses: code MIT or Apache-2.0; fonts OFL-1.1; word lists CC BY-SA 4.0; Common Voice CC0; themes MIT; syntect MIT.
 - Hard technical constraints: static HTML, 0 KB JS by default, islands hydrated on visibility (≤12 KB gzip each, hero ≤20 KB), no third-party runtime resources, strict CSP with hashes, full security headers, self-hosted WOFF2 fonts (≤2 files on first paint).
 - Languages: Spanish primary at `/`, full English mirror at `/en/`. URLs without trailing slash.
 - Out of scope v1: accounts, rankings, blog, full app in the browser.
-- Undecided: domain and final host; analytics (recommendation: none or self-hosted cookieless); visible author/organization name for `Organization`/`Person` and privacy page; whether 0.1.1 ships before the site; English app UI.
+- Undecided: domain and final host; analytics (recommendation: none or self-hosted cookieless); visible author/organization name for `Organization`/`Person` and privacy page; whether further app versions ship before the site.
 
 ## Brand Commitments
 
@@ -68,7 +68,7 @@ It diagnoses your personal weak characters and bigrams (EMA of error and slownes
 
 ## Product Principles
 
-1. Truth over pitch: every claim traces to the shipped app or carries a "próxima versión"/"planeado" label.
+1. Truth over pitch: every claim traces to the shipped app (tag `v0.2.0`) or carries a "planeado" label.
 2. Show, don't tell: the app working (simulations) is the argument; copy supports it.
 3. Private and local by construction: the site mirrors the product, with no third parties, no tracking, no accounts.
 4. Fast and complete without JavaScript: static HTML is the whole page; islands only enhance.
