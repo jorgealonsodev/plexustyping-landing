@@ -65,6 +65,7 @@ pnpm check            # astro check: type and template checks
 │   └── styles/             # tokens.css (app theme tokens), fonts.css, global.css
 ├── tests/                  # Vitest: i18n paths, replay, key sequences
 ├── PRD.md                  # product requirements (Spanish)
+├── DESIGN.md               # design system in use
 └── PRODUCT.md              # design context for the impeccable process
 ```
 
@@ -162,7 +163,7 @@ English pages use English slugs. `src/i18n/slugs.ts` is the one mapping between 
 | `/privacidad`, `/licencias` | `/en/privacy`, `/en/licenses` |
 | `/rss.xml` | `/en/rss.xml` |
 
-English content files keep the Spanish file name under an `en/` folder (`src/content/docs/en/empezar/primer-arranque.md` builds `/en/docs/getting-started/first-launch`), so both languages pair by id; tests fail when an entry lacks its translation. A Spanish edit must be mirrored in its English file; pages whose two languages share one component (download, home sections, feature and docs indexes) keep both copies side by side. URLs never end in a slash (`trailingSlash: "never"`, `build.format: "file"`). `src/i18n/ui.ts` holds the UI strings. The app's UI is Spanish only: the English footer says so on every page, and the English docs give each app label in Spanish with its English meaning. Pagefind builds one index per language from each page's `lang`. `pnpm check:seo` requires every indexable page to have its mirror (`--allow-missing-mirrors` turns that off).
+English content files keep the Spanish file name under an `en/` folder (`src/content/docs/en/empezar/primer-arranque.md` builds `/en/docs/getting-started/first-launch`), so both languages pair by id; tests fail when an entry lacks its translation. A Spanish edit must be mirrored in its English file; pages whose two languages share one component (download, home sections, feature and docs indexes) keep both copies side by side. URLs never end in a slash (`trailingSlash: "never"`, `build.format: "file"`). `src/i18n/ui.ts` holds the UI strings. The app's UI is Spanish only: the English footer says so on every page, and the English docs give each app label in Spanish, in curly quotes, with its English meaning; at build time `src/middleware.ts` marks those quoted labels `lang="es"` (WCAG 3.1.2). English copy uses US spelling. Pagefind builds one index per language from each page's `lang`. `pnpm check:seo` requires every indexable page to have its mirror (`--allow-missing-mirrors` turns that off).
 
 ## Performance budgets
 
@@ -195,7 +196,7 @@ Design uses the impeccable skill:
 
 - [`PRODUCT.md`](PRODUCT.md): users, positioning, brand commitments, constraints.
 - [`.impeccable/surfaces/src-pages-index-astro.md`](.impeccable/surfaces/src-pages-index-astro.md): direction brief for the home page.
-- `DESIGN.md`: pending; it is written from the finished build.
+- [`DESIGN.md`](DESIGN.md): the design system in use (tokens, type, layout, components, motion), written from the finished build.
 
 The site wears the app's own skin: Catppuccin Mocha by default, JetBrains Mono, the app's components. The logos in `src/assets/` are the app's, used as is.
 
