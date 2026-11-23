@@ -1,32 +1,32 @@
 {
-  "tag_name": "v0.1.0",
-  "name": "PlexusTyping 0.1.0",
-  "published_at": "2026-11-19T15:31:07Z",
-  "html_url": "https://github.com/jorgealonsodev/plexustyping/releases/tag/v0.1.0",
+  "tag_name": "v0.2.0",
+  "name": "PlexusTyping 0.2.0",
+  "published_at": "2026-11-23T19:28:34Z",
+  "html_url": "https://github.com/jorgealonsodev/plexustyping/releases/tag/v0.2.0",
   "assets": [
     {
-      "name": "plexustyping-0.1.0-linux-x86_64.tar.gz",
-      "size": 12358708,
-      "digest": "sha256:dc4e79a5af27a44771daceff4afda6e8ff3092811bbaa863cfbc6dfceb31a2be",
-      "browser_download_url": "https://github.com/jorgealonsodev/plexustyping/releases/download/v0.1.0/plexustyping-0.1.0-linux-x86_64.tar.gz"
+      "name": "plexustyping-0.2.0-linux-x86_64.tar.gz",
+      "size": 12419776,
+      "digest": "sha256:66cbb302d74c905bc8c0ed2f6167ca42dde73c90581737e6f9fa07e4515d082a",
+      "browser_download_url": "https://github.com/jorgealonsodev/plexustyping/releases/download/v0.2.0/plexustyping-0.2.0-linux-x86_64.tar.gz"
     },
     {
-      "name": "plexustyping_0.1.0_amd64.deb",
-      "size": 12512330,
-      "digest": "sha256:fea1b0988907d6e01755defa940c46b4e1263156d45e0fe22adf482afc1d000f",
-      "browser_download_url": "https://github.com/jorgealonsodev/plexustyping/releases/download/v0.1.0/plexustyping_0.1.0_amd64.deb"
+      "name": "plexustyping_0.2.0_amd64.deb",
+      "size": 12574984,
+      "digest": "sha256:96611bfc2e0c06ad9434547b579ae4d69ef85f3614609e01e662721c05235495",
+      "browser_download_url": "https://github.com/jorgealonsodev/plexustyping/releases/download/v0.2.0/plexustyping_0.2.0_amd64.deb"
     },
     {
-      "name": "PlexusTyping_0.1.0_x64-setup.exe",
-      "size": 9701277,
-      "digest": "sha256:b36c0512b4ef43d47a105bf2d95b57236ad9d70715e78a5e8395c3738d25baab",
-      "browser_download_url": "https://github.com/jorgealonsodev/plexustyping/releases/download/v0.1.0/PlexusTyping_0.1.0_x64-setup.exe"
+      "name": "PlexusTyping_0.2.0_x64-setup.exe",
+      "size": 9667019,
+      "digest": "sha256:56f81c272c38bda89ce17096484339e01ed1c39aa28c13b569f954bc76b2a270",
+      "browser_download_url": "https://github.com/jorgealonsodev/plexustyping/releases/download/v0.2.0/PlexusTyping_0.2.0_x64-setup.exe"
     },
     {
       "name": "SHA256SUMS",
       "size": 299,
-      "digest": "sha256:465a4c2bb32613814e9f2540c9fcc5bc0a6dbd3404c84377590ef684e14749d8",
-      "browser_download_url": "https://github.com/jorgealonsodev/plexustyping/releases/download/v0.1.0/SHA256SUMS"
+      "digest": "sha256:8d7deef4a0e71c3dbb5b216443ae218a7a94225cc3ab8aeb1b56ad92716e8615",
+      "browser_download_url": "https://github.com/jorgealonsodev/plexustyping/releases/download/v0.2.0/SHA256SUMS"
     }
   ]
 }
