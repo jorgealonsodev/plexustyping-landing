@@ -1,0 +1,109 @@
+---
+/**
+ * The feature index (/funciones, /en/features; PRD §5; Persuade surface): the nine feature pages, in nav
+ * order, from the `features` collection of the page's language. Spanish and English copy side by side.
+ */
+import FeatureIndex from "./FeatureIndex.astro";
+import Breadcrumbs from "../seo/Breadcrumbs.astro";
+import { OG_PAGES } from "../../data/og-pages";
+import { ROUTES } from "../../data/routes";
+import { type Locale, localizePath } from "../../i18n/paths";
+import { ui } from "../../i18n/ui";
+import Base from "../../layouts/Base.astro";
+import { getFeatures } from "../../lib/content";
+import { ogImagePath } from "../../lib/og/cards";
+import { breadcrumbListNode } from "../../lib/seo/jsonld";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const es = locale === "es";
+const t = ui(locale);
+const site = Astro.site ?? new URL("https://example.com");
+const features = await getFeatures(locale);
+const crumbs = [
+  { name: t.layout.home, path: localizePath("/", locale) },
+  { name: t.nav.features, path: localizePath(ROUTES.features, locale) },
+];
+const ogSlug = es ? "funciones" : "en/funciones";
+const ogImage = OG_PAGES.some((p) => p.slug === ogSlug) ? ogImagePath(ogSlug) : undefined;
+---
+
+<Base
+  {locale}
+  path={ROUTES.features}
+  pageType="feature-index"
+  title={es ? "Funciones de PlexusTyping, tutor de mecanografía" : "PlexusTyping features: an adaptive typing tutor"}
+  description={es
+    ? "Motor adaptativo, IA opcional, modo código, metrónomo, ocho distribuciones, accesibilidad, temas y progreso: todo lo que hace PlexusTyping, gratis."
+    : "Adaptive engine, optional AI, code mode, metronome, eight layouts, accessibility, themes and progress: everything PlexusTyping does, for free."}
+  {...ogImage ? { ogImage } : {}}
+  jsonLd={[breadcrumbListNode(site, crumbs)]}
+>
+  <div class="page" data-content>
+    <Breadcrumbs {crumbs} {locale} />
+    {
+      es ? (
+        <header class="intro">
+          <h1>Funciones de PlexusTyping</h1>
+          <p class="lead" data-lead>
+            PlexusTyping es un tutor de mecanografía gratuito y de código abierto para Linux y Windows. Mide qué teclas y combinaciones
+            de letras te cuestan y escribe el texto siguiente para practicarlas, sin conexión y sin cuenta. Estas son todas sus
+            funciones, cada una con una demostración y su documentación.
+          </p>
+        </header>
+      ) : (
+        <header class="intro">
+          <h1>PlexusTyping features</h1>
+          <p class="lead" data-lead>
+            PlexusTyping is a free, open-source typing tutor for Linux and Windows. It measures which keys and letter combinations
+            cost you and writes the next text to practice them, offline and with no account. These are all its features, each with
+            a demo and its documentation. The app's interface is in Spanish.
+          </p>
+        </header>
+      )
+    }
+    <FeatureIndex {features} />
+    <p class="cta">
+      <a class="btn btn-primary btn-lg" href={localizePath(ROUTES.download, locale)}>{es ? "Descargar PlexusTyping" : "Download PlexusTyping"}</a>
+      <span>{es ? "Gratis para Linux y Windows · MIT o Apache-2.0" : "Free for Linux and Windows · MIT or Apache-2.0"}</span>
+    </p>
+  </div>
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    width: min(72rem, 100%);
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3rem) var(--gutter) clamp(3rem, 8vw, 5rem);
+  }
+  .intro {
+    display: grid;
+    gap: 1rem;
+    max-width: 48rem;
+  }
+  h1 {
+    font-size: clamp(2.25rem, 1.4rem + 3.5vw, 3.75rem);
+    letter-spacing: -0.025em;
+  }
+  .lead {
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem);
+    color: var(--muted);
+    max-width: var(--measure);
+  }
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    color: var(--muted);
+  }
+  @media (max-width: 30rem) {
+    .cta .btn {
+      width: 100%;
+    }
+  }
+</style>

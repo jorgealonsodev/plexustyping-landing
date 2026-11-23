@@ -1,0 +1,47 @@
+---
+title: "History, streak and typing progress · PlexusTyping"
+description: "History with charts and CSV export, a daily goal with a streak, a ghost session against your record, progressive key unlock and local profiles."
+h1: "Progress"
+lead: "PlexusTyping saves every session on your computer and shows how you improve: history with charts by session, by day and by character, CSV export, a daily goal with a streak, a ghost session that replays your best run and progressive key unlock to start from zero. Each local profile keeps its own progress."
+order: 9
+updated: 2026-11-23
+docs:
+  - progreso/historial-y-graficas
+  - progreso/exportar-csv
+  - progreso/perfiles
+  - practicar/sesion-fantasma
+  - practicar/desbloqueo-progresivo
+  - practicar/meta-diaria-y-racha
+lang: en
+---
+import FeatureSim from "../../../components/features/FeatureSim.astro";
+
+## Ghost session
+
+When you type a text again, with “Repetir” (repeat) or because it comes up again, a translucent ghost cursor races you at the pace of your best session with that same text. Next to the live statistics you see how far behind (“+1,2 s”) or ahead (“−0,8 s”) you are. At the end, the results show “Récord anterior: 52 PPM” (previous record: 52 WPM) and, if you beat it, “¡Nuevo récord para este texto!” (new record for this text).
+
+<FeatureSim sim="s4" locale="en" />
+
+## History and charts
+
+<kbd>Ctrl</kbd>+<kbd>H</kbd> opens the “Historial” (history), with an All, Prose, Words or Code filter and three views:
+
+- **Sessions:** a summary, a chart of net WPM and accuracy over the last 50 sessions and a table with all of them.
+- **By day:** the last 30 days with sessions, with net WPM and minutes practiced.
+- **By character:** errors and slowness of each character, with a chart of the 20 worst.
+
+“Exportar CSV” (export CSV) saves the filtered sessions to your downloads folder as `plexustyping-sesiones-AAAAMMDD.csv`, a standard UTF-8 CSV any spreadsheet opens.
+
+## Daily goal and streak
+
+Each profile can have its daily goal, in minutes (5 to 120) or in texts (1 to 30). The header shows the progress, for example “Hoy 12/20 min · racha 3” (today 12/20 min · streak 3), and the streak counts the days in a row on which you met it.
+
+## Progressive unlock
+
+A mode for getting started, off by default. You practice only with the home row (in Spanish, a s d f g h j k l ñ) and one key is added each time you master the active ones at your “Velocidad objetivo” (target speed), from 20 to 50 WPM. With few letters, the texts are words and pronounceable pseudo-words; from 15 letters, normal sentences with only the active keys. Progress is saved per profile, language and layout.
+
+<FeatureSim sim="s6" locale="en" />
+
+## Local profiles
+
+Several people, or different goals, can share the app with local profiles: “Nuevo perfil” (new profile), “Usar” (use), “Renombrar” (rename) and “Borrar” (delete). Each profile has its history, its statistics and heatmap, its layout, its language, its theme, its daily goal and its unlock progress. Everything stays on your computer, with no account and no telemetry. What each session measures is explained by the [adaptive engine](/en/features/adaptive-engine).

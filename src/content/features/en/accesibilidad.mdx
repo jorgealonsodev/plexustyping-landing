@@ -1,0 +1,38 @@
+---
+title: "Accessible typing practice · PlexusTyping"
+description: "WCAG AA themes and two high-contrast ones at 7:1, a screen reader mode with aria-live, Okabe–Ito color-blind mode, adjustable type and reduced motion."
+h1: "Accessibility"
+lead: "PlexusTyping can be used entirely with the keyboard and with a screen reader, which announces the next letter and every error. All its themes meet WCAG AA, the two high-contrast ones reach 7:1, and it has a color-blind mode, adjustable type and reduced motion. It is for anyone who needs to adapt practice to their eyesight."
+order: 7
+updated: 2026-11-23
+docs:
+  - accesibilidad/teclado
+  - accesibilidad/lector-de-pantalla
+  - accesibilidad/modo-daltonico
+  - accesibilidad/alto-contraste
+  - accesibilidad/movimiento-reducido
+lang: en
+---
+import FeatureSim from "../../../components/features/FeatureSim.astro";
+
+<FeatureSim sim="s10" locale="en" />
+
+## Everything from the keyboard
+
+The app is fully operable with the keyboard: <kbd>Tab</kbd> moves through the controls and <kbd>F6</kbd> goes to the header. Shortcuts cover the rest: <kbd>Ctrl</kbd>+<kbd>,</kbd> opens the settings, <kbd>Ctrl</kbd>+<kbd>F</kbd> searches for a setting, <kbd>Ctrl</kbd>+<kbd>H</kbd> opens the history, <kbd>F2</kbd> the on-screen keyboard, <kbd>F4</kbd> the metronome and <kbd>F5</kbd> loads a new text.
+
+## Screen reader
+
+With “Anunciar con lector de pantalla” (announce with screen reader) on, in Settings → Accessibility, a polite `aria-live` region announces the next character after every keystroke, every wrong key, the start of every text and the results line. The announcements are in Spanish, like the app's interface: “siguiente: a” (next: a), with names such as “espacio” (space), “salto de línea” (line break) or “coma” (comma), and “error: esperaba e, pulsaste r” (error: expected e, you pressed r). Off, it announces nothing.
+
+## Color-blind mode
+
+“Modo daltónico” (color-blind mode) changes the keyboard flashes to the blue `#0072B2` and the orange `#E69F00` of the Okabe–Ito palette, the same in every theme, and underlines the wrong key's label in bold. The heatmap already marks each key with its level, from 1 to 5, so it does not depend on color either.
+
+## Contrast and type
+
+All themes meet WCAG AA. “Alto contraste oscuro” and “Alto contraste claro” (high contrast dark and light) reach 7:1 for text and 4.5:1 for the interface, and never dim the pending text. You can change the font, among them Atkinson Hyperlegible Mono, Lexend Deca and OpenDyslexic, the size (80–200 %), the letter spacing and the line height. [Personalization](/en/features/personalization) explains it.
+
+## Reduced motion
+
+If your system asks for reduced motion, no transition or animation runs in the app. A pressed key is underlined in the flash color instead of flashing, the cursor stops blinking and the metronome dot still marks every beat, without a transition.

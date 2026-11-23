@@ -1,0 +1,40 @@
+---
+title: "Themes, fonts and cursor: personalization · PlexusTyping"
+description: "59 themes, VS Code theme import, 10 bundled fonts, five cursors and dimmed pending text, so you practice with the look you prefer."
+h1: "Personalization"
+lead: "PlexusTyping adapts to how you like to see the text: 59 color themes, themes imported from VS Code, ten bundled fonts, five cursor styles, size, letter spacing and line height, and dimmed pending text. It is for anyone coming from Monkeytype or from their editor who wants to practice with a familiar look."
+order: 8
+updated: 2026-11-23
+docs:
+  - personalizacion/temas-y-vscode
+  - personalizacion/fuentes
+  - personalizacion/cursor
+  - personalizacion/tipografia
+  - personalizacion/texto-pendiente-atenuado
+lang: en
+---
+import FeatureSim from "../../../components/features/FeatureSim.astro";
+
+<FeatureSim sim="s7" locale="en" />
+
+## 59 themes, dark and light
+
+The 57 PlexusTerm themes plus “Alto contraste oscuro” and “Alto contraste claro” (high contrast dark and light), switched live in Settings → Appearance. The default theme is Catppuccin Mocha, the same one this website wears.
+
+## VS Code themes
+
+“Importar tema de VS Code…” (import VS Code theme) reads a color theme file (`.json` or `.jsonc`, with comments, up to 1 MB) and adds it to the selector, under “Importados” (imported). It takes the editor, cursor and selection colors and the terminal's 16 ANSI colors, which paint the keyboard and the code highlighting. Up to 30 imported themes are kept.
+
+## Ten fonts, all bundled
+
+Roboto Mono, JetBrains Mono, Fira Code without ligatures, Source Code Pro, IBM Plex Mono and Inconsolata to type as usual; Atkinson Hyperlegible Mono, Intel One Mono, Lexend Deca and OpenDyslexic to read better. They ship inside the app: none is downloaded from the network. You also adjust the font size (80–200 %), the letter spacing (0–0.30 em) and the line height (1.2–2.4).
+
+## Five cursors
+
+“Resaltado” (highlight), the default, tints the next character and underlines it. There are also “Barra” (bar), a thin line between characters like Monkeytype's, “Bloque” (block), “Subrayado” (underline) and “Contorno” (outline); on an error they take the error color. “Cursor parpadeante” (blinking cursor), off by default, makes it blink, never with reduced motion.
+
+<p class="note"><span class="badge">Next version 0.1.1</span> “Barra” (bar) becomes the default cursor and blinking comes on: the cursor blinks while you wait and stays still while you type.</p>
+
+## Dimmed pending text
+
+“Atenuar texto pendiente” (dim pending text), on by default, lowers the text you still have to type to a 2.5:1 contrast so what you typed stands out. Turning it off brings back the AA colors. High-contrast themes never dim. More options to read better under [Accessibility](/en/features/accessibility).

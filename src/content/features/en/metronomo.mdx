@@ -1,0 +1,40 @@
+---
+title: "Metronome for typing practice · PlexusTyping"
+description: "A 30 to 300 BPM metronome with click, wood or beep, accents, rhythm offset per key and an adaptive tempo that adjusts after each text. F4 turns it on."
+h1: "Metronome"
+lead: "PlexusTyping's metronome beats a pulse from 30 to 300 BPM so you type at a steady rhythm, measures how far each keystroke strays from it and, if you want, adjusts the tempo after each text. It is for anyone who wants to build consistency before speed. F4 turns it on and off."
+order: 4
+updated: 2026-11-23
+docs:
+  - metronomo/uso-basico
+  - metronomo/panel-rapido
+  - metronomo/tempo-adaptativo
+lang: en
+---
+import FeatureSim from "../../../components/features/FeatureSim.astro";
+
+<FeatureSim sim="s5" locale="en" />
+
+## One beat per keystroke
+
+Each click is one expected keystroke: at 60 BPM, one key per second. You choose the tempo between 30 and 300 BPM, the sound (“Clic”, “Madera” or “Bip”: click, wood or beep), the volume and an accent every N beats, up to 16. Changes apply at once. Next to the live statistics, a dot lights up on every beat, in another color on accented ones.
+
+The sound comes from the app's core and only plays while a text is ready or in progress: it stops on the results screen and when you hide the window. <kbd>F4</kbd> turns it on and off from anywhere.
+
+## Quick panel
+
+Clicking the pulse dot opens a panel with what you adjust most while practicing: lower or raise the tempo, type it, the sound, the volume, the accent, the adaptive tempo and “Apagar F4” (turn off, F4).
+
+## Rhythm offset
+
+Every character you type records how many milliseconds it landed before or after the nearest click. The results show “Ritmo: desvío medio ±X ms” (rhythm: mean offset ±X ms) and what share of the keys were early or late.
+
+## Adaptive tempo
+
+With “Tempo adaptativo” (adaptive tempo) on (it comes off), every text typed in full at a single tempo adjusts the next one's:
+
+- It goes up one step if accuracy reaches 97 % and the mean offset is no more than 15 % of the interval between beats.
+- It goes down one step if accuracy is below 90 % or the offset exceeds 20 %.
+- Otherwise it stays.
+
+A step is 5 % of the tempo, with a minimum of 2 BPM. The results say it plainly: “Tempo: 60 → 63 BPM” or “Tempo: se mantiene en 60 BPM” (stays at 60 BPM). Each session's BPM stays in the [history](/en/features/progress).

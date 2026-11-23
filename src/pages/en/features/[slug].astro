@@ -1,0 +1,24 @@
+---
+/**
+ * /en/features/<english-slug>: the nine English feature pages from src/content/features/en/<spanish-slug>.mdx.
+ * The URL slug comes from the one mapping, src/i18n/slugs.ts (site-pages S7).
+ */
+import { render } from "astro:content";
+import FeatureBody from "../../../components/features/FeatureBody.astro";
+import { FEATURE_PAGE_SLUGS } from "../../../i18n/slugs";
+import FeatureLayout from "../../../layouts/FeatureLayout.astro";
+import { featureLayoutProps, featureSlug, getFeatures } from "../../../lib/content";
+
+export async function getStaticPaths() {
+  const features = await getFeatures("en");
+  return features.map((entry) => ({ params: { slug: FEATURE_PAGE_SLUGS[featureSlug(entry)] }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const props = await featureLayoutProps(entry);
+---
+
+<FeatureLayout {...props}>
+  <FeatureBody><Content /></FeatureBody>
+</FeatureLayout>

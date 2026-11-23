@@ -1,0 +1,40 @@
+---
+title: "Unlimited text for typing practice · PlexusTyping"
+description: "Next version 0.1.1: a text that grows while you type, with the continuation generated without interrupting you. Esc or “Terminar” scores it."
+h1: "Unlimited text"
+lead: "Coming in the next version, 0.1.1: with the “Ilimitado” (unlimited) length, the practice text grows while you type. As you near the end, PlexusTyping generates the continuation with AI or the local corpus and appends it without interrupting you. It suits long prose or word sessions; Esc or “Terminar” (finish) scores what you typed."
+order: 3
+updated: 2026-11-23
+docs:
+  - practicar/longitud-y-texto-ilimitado
+  - practicar/modos
+lang: en
+---
+import FeatureSim from "../../../components/features/FeatureSim.astro";
+
+<p class="note"><span class="badge">Next version 0.1.1</span> The released version, 0.1.0, offers texts of 100 to 600 characters. Unlimited text and the 800 to 2000 character lengths arrive with 0.1.1.</p>
+
+<FeatureSim sim="s3" locale="en" />
+
+## How the text grows
+
+You start with a text of about 600 characters. When you reach the middle, or when 400 characters or fewer are left ahead, the app asks in the background for a continuation of about 600 characters and appends it after a space, without you stopping. There is always text ahead.
+
+In prose, the AI writes the continuation from the last 400 characters, in the same language. Without AI, or if it fails, a text from the local corpus follows, with a note explaining it. In words mode, more words from the corpus always follow. Code mode does not use this option and keeps its line limit.
+
+If you reach the end before the continuation, the text waits with “Generando más texto…” (generating more text) and goes on as soon as it arrives.
+
+## How the session ends
+
+<kbd>Esc</kbd> or the “Terminar” (finish) button closes the session and scores what you typed as a complete session: results, history, statistics, daily goal and progressive unlock. If you finish without typing anything, it is discarded and another text loads. “Repetir” (repeat) brings back only the text you typed, as a normal text.
+
+Unlimited texts do not race the ghost session, and the [metronome](/en/features/metronome)'s adaptive tempo does not change after them.
+
+## Available lengths
+
+| Version | Lengths |
+| --- | --- |
+| 0.1.0 (released) | 100, 200, 300 (default), 450 and 600 characters |
+| 0.1.1 (next) | Also 800, 1000, 1500 and 2000 characters, and “Ilimitado” (unlimited) |
+
+To continue the text, only the text already generated is sent to the AI, never what you type. More details in [optional AI](/en/features/ai).

@@ -1,0 +1,45 @@
+---
+title: "Optional AI for practice texts · PlexusTyping"
+description: "Practice texts from Claude, OpenAI, Gemini, OpenCode Go or your ChatGPT plan. What you type is never sent. It also works without AI."
+h1: "Optional AI"
+lead: "PlexusTyping can ask an AI model (Claude, OpenAI, Google Gemini, OpenCode Go or your ChatGPT subscription) for the practice texts instead of taking them from the local corpus. It is optional: without AI and without a connection the app works just the same. What you type is never sent to any provider."
+order: 2
+updated: 2026-11-23
+docs:
+  - ia/activar-la-ia
+  - ia/proveedores-y-claves
+  - ia/iniciar-sesion-con-chatgpt
+  - ia/respaldo-cache-y-uso
+  - ia/que-se-envia
+lang: en
+---
+import FeatureSim from "../../../components/features/FeatureSim.astro";
+
+## What is sent and what is not
+
+To ask for a prose text, the app sends only the language, the length and the topic, if you set one. With progressive unlock it adds the allowed characters and, in an unlimited text (next version 0.1.1), the end of the text generated so far to continue it. In code mode it also sends the targets and the allowed characters.
+
+**What you type is never sent.** Requests leave only from the app's core, written in Rust; the interface has no network access. API keys are stored in the system keychain.
+
+<FeatureSim sim="s9" locale="en" />
+
+## Providers
+
+- Claude (Anthropic), OpenAI, Google Gemini and OpenCode Go, each with your API key.
+- “ChatGPT (tu suscripción)” (your subscription): you sign in in the browser with OpenAI's official sign-in and the texts use your plan's quota, with no API key. A plan error never falls back to spending your keys, and “Cerrar sesión” (sign out) revokes the session.
+
+Choosing a provider selects a model automatically. Each one has “Probar conexión” (test connection) and “Guardar clave” (save key) or “Borrar clave” (delete key).
+
+## Fallback chain
+
+You can chain up to 5 providers, each with its model. If one fails or is too slow, the app moves to the next: a 30-second limit per provider, 60 per chain and one retry. If none answers, it uses a text from the cache or the local corpus and tells you. Every text shows where it comes from: “Generado con IA · …” (generated with AI), “Texto del caché” (cached text) or “Corpus local” (local corpus).
+
+## More options
+
+- An optional topic for the texts.
+- In code mode, the density of targets, from 2 to 5 times.
+- The “IA” button in the header turns it on or off without opening the settings.
+- The next text is prepared while you type the current one.
+- A usage table with each provider's calls and tokens, today and in total.
+
+Without AI, the texts come from each language's local corpus and the [adaptive engine](/en/features/adaptive-engine) keeps picking your weak spots.

@@ -49,7 +49,7 @@ interface Props {
   ogImage?: string;
 }
 
-const { locale, slug, title, description, h1, lead, updated, docs, translated = false, ogImage } = Astro.props;
+const { locale, slug, title, description, h1, lead, updated, docs, translated = true, ogImage } = Astro.props;
 const t = ui(locale);
 const site = Astro.site ?? new URL("https://example.com");
 const path = `/funciones/${slug}`;

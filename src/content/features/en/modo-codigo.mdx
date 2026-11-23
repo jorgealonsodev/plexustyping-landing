@@ -1,0 +1,34 @@
+---
+title: "Typing practice for programmers: code mode · PlexusTyping"
+description: "Practice code in 15 languages with syntax highlighting: 5 to 20 line snippets where Enter and Tab count, with statistics kept apart from prose."
+h1: "Code mode"
+lead: "PlexusTyping's code mode has you type snippets of 5 to 20 lines in 15 languages, with syntax highlighting, symbols and indentation. Enter and Tab count as measured keys and the statistics are kept apart from prose. It is for programmers who want to type code faster and with fewer errors."
+order: 5
+updated: 2026-11-23
+docs:
+  - practicar/modos
+  - practicar/objetivos-y-puntos-debiles
+  - referencia/atajos-de-teclado
+lang: en
+---
+import FeatureSim from "../../../components/features/FeatureSim.astro";
+
+<FeatureSim sim="s8" locale="en" />
+
+## Fifteen languages
+
+The “Prosa / Palabras / Código” (prose / words / code) switch in the header changes what you practice. In code, a second selector picks the language: Python, JavaScript, TypeScript, Java, C#, C++, C, Go, Rust, PHP, SQL, Bash, HTML/CSS, Kotlin or Swift. Changing it loads a new text.
+
+## Snippets that target your symbols
+
+Snippets have 5 to 20 lines (12 by default, in Settings → Code → “Líneas máximas”, maximum lines) and are chosen by how much they use the symbols that cost you most: `{} [] () <> ; : = -> => && || " ' _ # $` and the rest. With the [AI](/en/features/ai) on, it is asked first for a snippet in that language; if it does not answer, the cache or the snippets bundled with the app are used.
+
+## Real keys
+
+<kbd>Enter</kbd> types the line break and <kbd>Tab</kbd> types a tab or skips the spaces to the next tab stop; both count as measured keystrokes. “Sangría” (indentation) can be automatic on Enter (the default: the next line's indentation fills in by itself and is not measured) or manual, typing every space.
+
+The text keeps its lines and indentation and is colored with the active theme's syntax colors. Pending text is dimmed, typed text takes its color and a `↵` marks a line break at the cursor or typed wrong.
+
+## Separate statistics
+
+Code sessions are saved with their language and feed their own weak-spot model, shared by all languages. That way symbols do not muddy your prose metrics. The results, the weak spots and the keyboard heatmap in code mode come from that model. You can filter the [history](/en/features/progress) to see only code.

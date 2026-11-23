@@ -1,0 +1,43 @@
+---
+title: "Keyboard layouts and languages · PlexusTyping"
+description: "Eight keyboard layouts, from Spanish to Dvorak and Colemak, and practice texts in Spanish, English, Brazilian Portuguese, French and German."
+h1: "Layouts and languages"
+lead: "PlexusTyping ships eight keyboard layouts, among them Dvorak and Colemak, and practice texts in five languages: Spanish, English, Brazilian Portuguese, French and German. It is for anyone who practices on their own keyboard, learns a new layout or types in another language. The app's interface is in Spanish."
+order: 6
+updated: 2026-11-23
+docs:
+  - teclado-e-idiomas/distribuciones
+  - teclado-e-idiomas/idiomas-del-texto
+  - teclado-e-idiomas/teclado-visual-y-destellos
+lang: en
+---
+import FeatureSim from "../../../components/features/FeatureSim.astro";
+
+<FeatureSim sim="layouts" locale="en" />
+
+## Eight layouts
+
+The layout is chosen in Settings → Keyboard → “Distribución” (layout). It decides how the on-screen keyboard is drawn and which characters can appear in the texts: with English (US), for example, Spanish texts carry no ñ or accents.
+
+| Layout | Shape | Dead keys |
+| --- | --- | --- |
+| Español (España), the default | ISO | ´ ¨ ^ and the grave accent |
+| Español (Latinoamérica) | ISO | ´ ¨ ^ and the grave accent |
+| English (US) | ANSI | none |
+| Português (Brasil) | ABNT2 | ´ ^ ~ ¨ and the grave accent |
+| Français (France), AZERTY | ISO | ^ ¨ |
+| Deutsch (Deutschland), QWERTZ | ISO | ^ ´ and the grave accent |
+| English (Dvorak) | ANSI | none |
+| English (Colemak) | ANSI | none |
+
+The app's layout has to match the operating system's, because keystrokes arrive from the system keyboard.
+
+## Five text languages
+
+In Settings → Practice → “Idioma” (language) you choose the language of the texts: Spanish (the default), English, Brazilian Portuguese, French or German. Each has its own offline local corpus, with the 5,000 most frequent words, everyday sentences, a diagnostic paragraph and up to 2,000 sentences from Mozilla Common Voice (CC0). With the [optional AI](/en/features/ai), texts are requested in that language.
+
+The app's interface, on the other hand, is in Spanish only.
+
+## On-screen keyboard
+
+<kbd>F2</kbd> shows or hides the on-screen keyboard, in ISO, ANSI or ABNT2 shape depending on the layout. It carries the Shift and AltGr labels, marks the dead keys, colors each key by finger, highlights the next key and its modifier and flashes green or red when you press. With the [adaptive engine](/en/features/adaptive-engine), it also shows the heatmap of your errors.
