@@ -1,0 +1,46 @@
+---
+title: "Historial, racha y progreso en mecanografía · PlexusTyping"
+description: "Historial con gráficas y exportación CSV, meta diaria con racha, sesión fantasma contra tu récord, desbloqueo progresivo de teclas y perfiles locales."
+h1: "Progreso"
+lead: "PlexusTyping guarda cada sesión en tu ordenador y te enseña cómo avanzas: historial con gráficas por sesión, por día y por carácter, exportación a CSV, meta diaria con racha, una sesión fantasma que repite tu mejor marca y el desbloqueo progresivo de teclas para empezar desde cero. Cada perfil local lleva su propio progreso."
+order: 9
+updated: 2026-11-23
+docs:
+  - progreso/historial-y-graficas
+  - progreso/exportar-csv
+  - progreso/perfiles
+  - practicar/sesion-fantasma
+  - practicar/desbloqueo-progresivo
+  - practicar/meta-diaria-y-racha
+---
+import FeatureSim from "../../components/features/FeatureSim.astro";
+
+## Sesión fantasma
+
+Cuando vuelves a escribir un texto, con «Repetir» o porque vuelve a salir, un cursor fantasma translúcido corre contigo al ritmo de tu mejor sesión con ese mismo texto. Junto a las estadísticas en vivo ves cuánto vas por detrás («+1,2 s») o por delante («−0,8 s»). Al terminar, los resultados muestran «Récord anterior: 52 PPM» y, si lo superas, «¡Nuevo récord para este texto!».
+
+<FeatureSim sim="s4" />
+
+## Historial y gráficas
+
+<kbd>Ctrl</kbd>+<kbd>H</kbd> abre el «Historial», con un filtro Todo, Prosa, Palabras o Código y tres vistas:
+
+- **Sesiones:** resumen, gráfica de PPM netas y precisión de las últimas 50 sesiones y tabla con todas.
+- **Por día:** los últimos 30 días con sesiones, con PPM netas y minutos practicados.
+- **Por carácter:** errores y lentitud de cada carácter, con una gráfica de los 20 peores.
+
+«Exportar CSV» guarda las sesiones del filtro en tu carpeta de descargas como `plexustyping-sesiones-AAAAMMDD.csv`, un CSV estándar en UTF-8 que abre cualquier hoja de cálculo.
+
+## Meta diaria y racha
+
+Cada perfil puede tener su meta diaria, en minutos (de 5 a 120) o en textos (de 1 a 30). La cabecera muestra el avance, por ejemplo «Hoy 12/20 min · racha 3», y la racha cuenta los días seguidos en que la cumpliste.
+
+## Desbloqueo progresivo
+
+Un modo para empezar, apagado por defecto. Practicas solo con la fila central (en español, a s d f g h j k l ñ) y se añade una tecla cada vez que dominas las activas a tu «Velocidad objetivo», de 20 a 50 PPM. Con pocas letras, los textos son palabras y pseudopalabras pronunciables; desde 15 letras, frases normales con solo las teclas activas. El progreso se guarda por perfil, idioma y distribución.
+
+<FeatureSim sim="s6" />
+
+## Perfiles locales
+
+Varias personas, u objetivos distintos, pueden compartir la app con perfiles locales: «Nuevo perfil», «Usar», «Renombrar» y «Borrar». Cada perfil tiene su historial, sus estadísticas y su mapa de calor, su distribución, su idioma, su tema, su meta diaria y su progreso de desbloqueo. Todo se queda en tu ordenador, sin cuenta ni telemetría. Lo que mide cada sesión lo explica el [motor adaptativo](/funciones/motor-adaptativo).

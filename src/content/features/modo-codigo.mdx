@@ -1,0 +1,33 @@
+---
+title: "Mecanografía para programadores: modo código · PlexusTyping"
+description: "Practica código en 15 lenguajes con resaltado de sintaxis: fragmentos de 5 a 20 líneas donde Enter y Tab cuentan, con estadísticas aparte de la prosa."
+h1: "Modo código"
+lead: "El modo código de PlexusTyping te hace escribir fragmentos de 5 a 20 líneas en 15 lenguajes, con resaltado de sintaxis, símbolos y sangría. Enter y Tab cuentan como teclas medidas y las estadísticas se guardan aparte de la prosa. Es para programadores que quieren escribir código más rápido y con menos errores."
+order: 5
+updated: 2026-11-23
+docs:
+  - practicar/modos
+  - practicar/objetivos-y-puntos-debiles
+  - referencia/atajos-de-teclado
+---
+import FeatureSim from "../../components/features/FeatureSim.astro";
+
+<FeatureSim sim="s8" />
+
+## Quince lenguajes
+
+El selector «Prosa / Palabras / Código» de la cabecera cambia lo que practicas. En código, un segundo selector elige el lenguaje: Python, JavaScript, TypeScript, Java, C#, C++, C, Go, Rust, PHP, SQL, Bash, HTML/CSS, Kotlin o Swift. Al cambiarlo se carga un texto nuevo.
+
+## Fragmentos que atacan tus símbolos
+
+Los fragmentos tienen de 5 a 20 líneas (12 por defecto, en Ajustes → Código → «Líneas máximas») y se eligen por cuánto usan los símbolos que más te cuestan: `{} [] () <> ; : = -> => && || " ' _ # $` y demás. Con la [IA](/funciones/ia) activada, se le pide primero un fragmento en ese lenguaje; si no responde, se usa el caché o los fragmentos incluidos en la app.
+
+## Teclas de verdad
+
+<kbd>Enter</kbd> escribe el salto de línea y <kbd>Tab</kbd> escribe un tabulador o salta los espacios hasta la siguiente tabulación; las dos cuentan como pulsaciones medidas. La «Sangría» puede ser automática al pulsar Enter (por defecto: la sangría de la línea siguiente se rellena sola y no se mide) o manual, escribiendo cada espacio.
+
+El texto conserva sus líneas y su sangría y se colorea con los colores de sintaxis del tema activo. Lo pendiente se atenúa, lo escrito toma su color y un `↵` marca un salto de línea en el cursor o escrito mal.
+
+## Estadísticas separadas
+
+Las sesiones de código se guardan con su lenguaje y alimentan su propio modelo de puntos débiles, común a todos los lenguajes. Así los símbolos no ensucian tus métricas de prosa. Los resultados, los puntos débiles y el mapa de calor del teclado en modo código salen de ese modelo. Puedes filtrar el [historial](/funciones/progreso) para ver solo el código.
