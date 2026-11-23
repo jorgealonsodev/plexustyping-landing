@@ -1,8 +1,9 @@
 /**
  * Spanish passages inside English pages (WCAG 3.1.2 Language of Parts, odd/tasks/site-pages.md T7).
  *
- * The released app's interface is in Spanish (PRODUCT.md), so the English documentation quotes its labels as
- * they appear, in curly quotes with an English gloss: “Ajustes” (settings). This marks every such quotation
+ * Since app v0.2.0 the English pages quote the app's English labels (site-pages S17), but a few strings stay
+ * Spanish in every interface language, such as the provider name “ChatGPT (tu suscripción)” (app v0.2.0
+ * crates/plexustyping-ai/src/lib.rs:81), quoted with an English gloss. This marks every such quotation
  * with `<span lang="es">` at build time (src/middleware.ts), so screen readers switch voice, while the Markdown
  * sources stay plain text for /llms-full.txt. The English quotation marks stay outside the span.
  *
@@ -11,18 +12,11 @@
  * on English pages are translated (site-pages S9) and set their own `lang`.
  */
 
-/** Quoted strings on the English pages that are English (Windows dialogs, site links, CSV header, theme name). */
-export const ENGLISH_QUOTES: ReadonlySet<string> = new Set([
-  "Characters typed",
-  "Did this help?",
-  "Edit on GitHub",
-  "More info",
-  "Run anyway",
-  "name",
-  "OK",
-  "PlexusTerm",
-  "Tab",
-]);
+/**
+ * Quoted strings on the English pages that are Spanish because the English app shows them in Spanish
+ * (app v0.2.0 crates/plexustyping-ai/src/lib.rs:81, the provider label). Every other quotation is English.
+ */
+export const SPANISH_QUOTES: ReadonlySet<string> = new Set(["ChatGPT (tu suscripción)"]);
 
 /** Elements whose text is left as it is (raw text, code, or hydrated by an island). */
 const SKIP = new Set(["script", "style", "code", "pre", "kbd", "textarea", "astro-island", "svg"]);
@@ -36,7 +30,7 @@ const QUOTED = /“([^“”]+)”/g;
 
 function markText(text: string): string {
   return text.replace(QUOTED, (whole, inner: string) =>
-    ENGLISH_QUOTES.has(inner) || !/\p{L}/u.test(inner) ? whole : `“<span lang="es">${inner}</span>”`,
+    SPANISH_QUOTES.has(inner) ? `“<span lang="es">${inner}</span>”` : whole,
   );
 }
 

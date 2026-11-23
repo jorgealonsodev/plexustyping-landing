@@ -1,8 +1,11 @@
 /**
  * Finish items of odd/tasks/site-pages.md T7 over the built site, after `pnpm build` (skipped without dist/):
- * - (a) Spanish app labels inside English pages carry lang="es" (WCAG 3.1.2): no English page has a Spanish
- *   word outside a lang="es" element, apart from proper names (layout, language and theme names);
- * - (b) English pages use US spelling;
+ * - (a) Spanish app strings inside English pages carry lang="es" (WCAG 3.1.2): no English page has a Spanish
+ *   word outside a lang="es" element, apart from proper names (layout, language and theme names); since app
+ *   v0.2.0 (site-pages S17) English pages quote the app's English labels, so only strings the English app keeps
+ *   in Spanish remain, such as the provider “ChatGPT (tu suscripción)”;
+ * - (b) English pages use US spelling, except inside quotations of the app's English labels, which keep the
+ *   app's British spelling (“Colour-blind mode”, “Practising:”);
  * - (c) the English previews of S8, S9 and S10 exist and draw the translated app on the English (US) keyboard;
  * - the English S8/S10 keyboards name their keys in English (site-pages S9).
  */
@@ -69,10 +72,11 @@ describe.skipIf(!built)("finish over the built site (after pnpm build)", () => {
     ? [join(DIST, "en.html"), ...htmlFiles(join(DIST, "en"))].map((f) => relative(DIST, f))
     : [];
 
-  it("tags the Spanish app labels quoted in English pages with lang=es", () => {
+  it("quotes the app's English labels on English pages and tags the Spanish strings the English app keeps", () => {
     const modes = read("en/docs/practice/modes.html");
-    expect(modes).toContain('“<span lang="es">Prosa / Palabras / Código</span>”');
-    expect(read("en/docs/reference/glossary.html")).toContain('“<span lang="es">precisión</span>”');
+    expect(modes).toContain("“Prose / Words / Code”");
+    expect(modes).not.toContain('<span lang="es">');
+    expect(read("en/docs/ai/sign-in-with-chatgpt.html")).toContain('“<span lang="es">ChatGPT (tu suscripción)</span>”');
     expect(read("en/docs/getting-started/install-windows.html")).toContain("“Run anyway”");
     // Spanish pages are left as they are: the whole page is already lang="es".
     expect(read("docs/practicar/modos.html")).not.toContain('<span lang="es">');
@@ -88,7 +92,8 @@ describe.skipIf(!built)("finish over the built site (after pnpm build)", () => {
     const UK = /\b(colour\w*|practis\w*|personalis\w*|favourite\w*|behaviour\w*|licence\w*|grey)\b/gi;
     const offenders: string[] = [];
     for (const f of enFiles) {
-      const text = body(read(f)).text;
+      // Quotations of the app's own English labels keep its spelling (app v0.2.0 src/**/messages.ts).
+      const text = body(read(f)).text.replace(/“[^“”]*”/g, "");
       for (const m of text.matchAll(UK)) offenders.push(`${f}: ${m[0]}`);
     }
     expect(offenders).toEqual([]);

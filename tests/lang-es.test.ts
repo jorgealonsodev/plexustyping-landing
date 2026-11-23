@@ -1,48 +1,53 @@
 /**
- * Spanish app labels quoted in English pages carry lang="es" (WCAG 3.1.2, odd/tasks/site-pages.md T7,
- * L16): the build-time transform src/lib/lang-es.ts that src/middleware.ts applies to every /en page.
+ * Spanish app strings quoted in English pages carry lang="es" (WCAG 3.1.2, odd/tasks/site-pages.md T7,
+ * L16): the build-time transform src/lib/lang-es.ts that src/middleware.ts applies to every /en page. Since app
+ * v0.2.0 (S17, T14) English pages quote the app's English labels, so only the strings the English app itself
+ * keeps in Spanish (SPANISH_QUOTES) are wrapped; every other quotation is English and stays as it is.
  */
 import { describe, expect, it } from "vitest";
-import { ENGLISH_QUOTES, isEnglishPath, markSpanishQuotes } from "../src/lib/lang-es";
+import { isEnglishPath, markSpanishQuotes, SPANISH_QUOTES } from "../src/lib/lang-es";
 
-const page = (body: string, head = "<title>“Ajustes” · PlexusTyping</title>") =>
+const page = (body: string, head = "<title>“ChatGPT (tu suscripción)” · PlexusTyping</title>") =>
   `<!doctype html><html lang="en"><head>${head}</head><body>${body}</body></html>`;
 
 describe("markSpanishQuotes", () => {
-  it("wraps a quoted Spanish label in a lang=es span, keeping the English quotation marks outside", () => {
-    expect(markSpanishQuotes(page("<p>Open “Ajustes” (settings).</p>"))).toContain(
-      '<p>Open “<span lang="es">Ajustes</span>” (settings).</p>',
+  it("wraps the provider name the English app keeps in Spanish, keeping the English quotation marks outside", () => {
+    expect(markSpanishQuotes(page("<p>Add “ChatGPT (tu suscripción)” (your subscription).</p>"))).toContain(
+      '<p>Add “<span lang="es">ChatGPT (tu suscripción)</span>” (your subscription).</p>',
     );
   });
 
-  it("wraps every label of a run and labels with inner punctuation", () => {
-    const out = markSpanishQuotes(page("<li>“Prosa / Palabras / Código” and “¡Meta diaria cumplida!”</li>"));
-    expect(out).toContain('“<span lang="es">Prosa / Palabras / Código</span>”');
-    expect(out).toContain('“<span lang="es">¡Meta diaria cumplida!</span>”');
+  it("wraps every Spanish string of a run", () => {
+    const out = markSpanishQuotes(page("<li>“ChatGPT (tu suscripción)” or “ChatGPT (tu suscripción)”</li>"));
+    expect(out.match(/<span lang="es">ChatGPT \(tu suscripción\)<\/span>/g)).toHaveLength(2);
   });
 
-  it("leaves the quoted English strings alone", () => {
-    for (const q of ENGLISH_QUOTES) {
+  it("leaves the app's English labels alone, British spelling included (app v0.2.0)", () => {
+    for (const q of ["Settings", "Prose / Words / Code", "Colour-blind mode", "Practising: ñ · qu · z", "Run anyway", "Daily goal met!"]) {
       const html = page(`<p>Click “${q}”.</p>`);
       expect(markSpanishQuotes(html)).toBe(html);
     }
   });
 
+  it("lists only strings the English app shows in Spanish", () => {
+    expect([...SPANISH_QUOTES]).toEqual(["ChatGPT (tu suscripción)"]);
+  });
+
   it("does not touch the head, attributes, scripts, styles, code or simulation islands", () => {
     const body = [
-      '<a title="“Ajustes”" href="/en">x</a>',
-      "<script>const s = \"“Ajustes”\";</script>",
-      "<style>.a::before{content:\"“Ajustes”\"}</style>",
-      "<code>“Ajustes”</code>",
-      "<pre>“Ajustes”</pre>",
-      '<astro-island uid="1"><p>“Ajustes”</p></astro-island>',
+      '<a title="“ChatGPT (tu suscripción)”" href="/en">x</a>',
+      "<script>const s = \"“ChatGPT (tu suscripción)”\";</script>",
+      "<style>.a::before{content:\"“ChatGPT (tu suscripción)”\"}</style>",
+      "<code>“ChatGPT (tu suscripción)”</code>",
+      "<pre>“ChatGPT (tu suscripción)”</pre>",
+      '<astro-island uid="1"><p>“ChatGPT (tu suscripción)”</p></astro-island>',
     ].join("");
     const html = page(body);
     expect(markSpanishQuotes(html)).toBe(html);
   });
 
   it("is idempotent", () => {
-    const once = markSpanishQuotes(page("<p>“Ajustes”</p>"));
+    const once = markSpanishQuotes(page("<p>“ChatGPT (tu suscripción)”</p>"));
     expect(markSpanishQuotes(once)).toBe(once);
   });
 });
