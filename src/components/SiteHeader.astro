@@ -1,15 +1,27 @@
 ---
 import logo from "../assets/logo.svg";
-import { type Locale, localizePath } from "../i18n/paths";
+import { ROUTES } from "../data/routes";
+import { basePath, type Locale, localizePath } from "../i18n/paths";
 import { ui } from "../i18n/ui";
 
 interface Props {
   locale: Locale;
+  /** Language-neutral path of the current page; its section link gets aria-current. */
+  path?: string;
 }
 
-const { locale } = Astro.props;
+const { locale, path = "/" } = Astro.props;
 const t = ui(locale);
-const href = (path: string) => localizePath(path, locale);
+const href = (p: string) => localizePath(p, locale);
+const current = basePath(path);
+/** "page" on the section's own index, "true" inside the section (e.g. a docs page under /docs). */
+const ariaCurrent = (section: string) =>
+  current === section ? "page" : current.startsWith(`${section}/`) ? "true" : undefined;
+const links = [
+  { path: ROUTES.features, label: t.nav.features },
+  { path: ROUTES.docs, label: t.nav.docs },
+  { path: ROUTES.news, label: t.nav.news },
+];
 ---
 
 <header class="site-header">
@@ -19,11 +31,17 @@ const href = (path: string) => localizePath(path, locale);
       <span>PlexusTyping</span>
     </a>
     <ul class="links">
-      <li><a href={href("/funciones")}>{t.nav.features}</a></li>
-      <li><a href={href("/docs")}>{t.nav.docs}</a></li>
-      <li><a href={href("/novedades")}>{t.nav.news}</a></li>
+      {
+        links.map((l) => (
+          <li>
+            <a href={href(l.path)} aria-current={ariaCurrent(l.path)}>
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
     </ul>
-    <a class="btn btn-primary cta" href={href("/descargar")}>{t.nav.download}</a>
+    <a class="btn btn-primary cta" href={href(ROUTES.download)} aria-current={ariaCurrent(ROUTES.download)}>{t.nav.download}</a>
   </nav>
 </header>
 
@@ -65,7 +83,8 @@ const href = (path: string) => localizePath(path, locale);
     border-radius: 0.25rem;
     transition: color 160ms var(--ease-out);
   }
-  .links a:hover {
+  .links a:hover,
+  .links a[aria-current] {
     color: var(--text);
   }
   .cta {

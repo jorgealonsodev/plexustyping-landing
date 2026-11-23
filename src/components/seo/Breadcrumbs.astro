@@ -1,0 +1,57 @@
+---
+// Visible breadcrumbs (docs/seo-2026.md §C): a labelled <nav> with an ordered list; the last crumb is
+// the current page. The matching BreadcrumbList JSON-LD comes from breadcrumbListNode() with the same crumbs.
+import type { Locale } from "../../i18n/paths";
+import { ui } from "../../i18n/ui";
+import type { Crumb } from "../../lib/seo/jsonld";
+
+interface Props {
+  crumbs: Crumb[];
+  locale: Locale;
+}
+const { crumbs, locale } = Astro.props;
+const t = ui(locale);
+---
+
+<nav class="crumbs" aria-label={t.layout.breadcrumbs}>
+  <ol>
+    {
+      crumbs.map((c, i) =>
+        i === crumbs.length - 1 ? (
+          <li aria-current="page">{c.name}</li>
+        ) : (
+          <li>
+            <a href={c.path}>{c.name}</a>
+          </li>
+        ),
+      )
+    }
+  </ol>
+</nav>
+
+<style>
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .crumbs li + li::before {
+    content: "/";
+    margin-right: 0.5rem;
+    color: var(--border);
+  }
+  .crumbs a {
+    color: var(--muted);
+  }
+  .crumbs a:hover {
+    color: var(--text);
+  }
+  [aria-current="page"] {
+    color: var(--text);
+  }
+</style>

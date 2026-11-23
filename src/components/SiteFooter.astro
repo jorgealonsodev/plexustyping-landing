@@ -1,18 +1,27 @@
 ---
 import wordmark from "../assets/logo-wordmark.svg";
+import { ROUTES } from "../data/routes";
 import { type Locale, localizePath, mirrorPath } from "../i18n/paths";
 import { GITHUB_URL, ui } from "../i18n/ui";
+import { formatDate } from "../lib/format";
+import type { Release } from "../lib/release";
+import { isoDate } from "../lib/seo/jsonld";
 
 interface Props {
   locale: Locale;
   /** Language-neutral path of the current page, so the language switch keeps it. */
   path: string;
+  /** False when the page has no mirror yet: the language switch goes to the other language's home. */
+  translated?: boolean;
+  /** Latest release (src/lib/release.ts): version, date, platforms and licence as text (docs/seo-2026.md §C). */
+  release: Release;
 }
 
-const { locale, path } = Astro.props;
+const { locale, path, translated = true, release } = Astro.props;
 const t = ui(locale);
 const other: Locale = locale === "es" ? "en" : "es";
 const href = (p: string) => localizePath(p, locale);
+const switchHref = translated ? mirrorPath(localizePath(path, locale)) : localizePath("/", other);
 ---
 
 <footer class="site-footer">
@@ -20,15 +29,17 @@ const href = (p: string) => localizePath(p, locale);
     <img class="wordmark" src={wordmark.src} width="200" height="50" alt="PlexusTyping, Adaptive typing" />
     <nav aria-label={t.footerLabel}>
       <ul class="links">
-        <li><a href={href("/privacidad")}>{t.footer.privacy}</a></li>
-        <li><a href={href("/licencias")}>{t.footer.licenses}</a></li>
+        <li><a href={href(ROUTES.faq)}>{t.footer.faq}</a></li>
+        <li><a href={href(ROUTES.privacy)}>{t.footer.privacy}</a></li>
+        <li><a href={href(ROUTES.licenses)}>{t.footer.licenses}</a></li>
+        <li><a href={ROUTES.rss}>{t.footer.rss}</a></li>
         <li><a href={GITHUB_URL} rel="noopener">{t.footer.github}</a></li>
       </ul>
     </nav>
     <div class="prefs">
       <p class="lang">
         <span class="label">{t.footer.language}:</span>
-        <a href={mirrorPath(localizePath(path, locale))} hreflang={other} lang={other}>{t.footer.otherLanguage}</a>
+        <a href={switchHref} hreflang={other} lang={other}>{t.footer.otherLanguage}</a>
       </p>
       <button class="theme" type="button" data-theme-toggle aria-pressed="true">
         <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
@@ -38,6 +49,12 @@ const href = (p: string) => localizePath(p, locale);
         {t.footer.darkTheme}
       </button>
     </div>
+    <p class="release">
+      <a href={release.url} rel="noopener">PlexusTyping {release.version}</a>, {t.release.published}
+      <time datetime={isoDate(release.publishedAt)}>{formatDate(release.publishedAt, locale)}</time> · {t.release.platforms} · {
+        t.release.license
+      }
+    </p>
   </div>
 </footer>
 
@@ -81,6 +98,10 @@ const href = (p: string) => localizePath(p, locale);
     .prefs {
       margin-left: auto;
     }
+  }
+  .release {
+    flex-basis: 100%;
+    font-size: 0.875rem;
   }
   .label {
     margin-right: 0.375rem;

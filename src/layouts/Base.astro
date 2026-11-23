@@ -2,27 +2,77 @@
 import "../styles/global.css";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import JsonLd from "../components/seo/JsonLd.astro";
+import type { PageType } from "../data/routes";
+import { OG_SIZE, SITE_NAME } from "../data/site";
 import { LOCALES, type Locale, localizePath } from "../i18n/paths";
 import { ui } from "../i18n/ui";
+import { getRelease } from "../lib/release";
+import {
+  graph,
+  type JsonLdNode,
+  organizationNode,
+  type SoftwareExtras,
+  softwareApplicationNode,
+  websiteNode,
+} from "../lib/seo/jsonld";
 import { THEME_SCRIPT, THEME_SCRIPT_HASH } from "../scripts/theme";
 
 interface Props {
-  /** Unique page title, at most 60 characters (PRD §10.1). */
+  /** Unique page title, at most 60 characters (PRD §10.1). Main term first, then " · PlexusTyping". */
   title: string;
   /** Unique page description, at most 155 characters (PRD §10.1). */
   description: string;
   locale: Locale;
   /** Language-neutral path of the page, e.g. "/" or "/descargar". */
   path: string;
-  /** Pages that must not be indexed (404) get no canonical or hreflang. */
+  /** Pages that must not be indexed (404, previews) get no canonical, hreflang or Open Graph. */
   noindex?: boolean;
+  /**
+   * Template the on-page check applies (docs/seo-2026.md §C), written to <body data-page-type>.
+   * Defaults to "home" for "/" and "prose" otherwise; the content layouts set their own.
+   */
+  pageType?: PageType;
+  /** False while the page exists in this language only: no hreflang, and the language switch goes to the other home. */
+  translated?: boolean;
+  /** Extra JSON-LD nodes; they join the page's single @graph. */
+  jsonLd?: JsonLdNode[];
+  /** Home only: featureList / screenshot for its SoftwareApplication node. */
+  softwareExtras?: SoftwareExtras;
+  /** Site path of a 1200×630 PNG under /og (see src/pages/og). Defaults to the language's generic card. */
+  ogImage?: string;
+  /** Alt text of the og:image; defaults to "{title} · PlexusTyping". */
+  ogImageAlt?: string;
+  ogType?: "website" | "article";
 }
 
-const { title, description, locale, path, noindex = false } = Astro.props;
+const {
+  title,
+  description,
+  locale,
+  path,
+  noindex = false,
+  translated = true,
+  jsonLd = [],
+  softwareExtras,
+  ogType = "website",
+} = Astro.props;
+const pageType: PageType | "none" = noindex ? "none" : (Astro.props.pageType ?? (path === "/" ? "home" : "prose"));
 const t = ui(locale);
 const site = Astro.site ?? new URL("https://example.com");
 Astro.csp?.insertScriptHash(THEME_SCRIPT_HASH);
 const absolute = (l: Locale) => new URL(localizePath(path, l), site).href;
+const other: Locale = locale === "es" ? "en" : "es";
+const ogLocale: Record<Locale, string> = { es: "es_ES", en: "en_US" };
+const ogImage = new URL(Astro.props.ogImage ?? `/og/default-${locale}.png`, site).href;
+const ogImageAlt = Astro.props.ogImageAlt ?? t.layout.ogAlt.replace("{title}", title.replace(/ · PlexusTyping$/, ""));
+
+const release = await getRelease();
+const nodes: JsonLdNode[] = [
+  ...(pageType === "home" && locale === "es" ? [websiteNode(site, locale), organizationNode(site)] : []),
+  ...(pageType === "home" ? [softwareApplicationNode(site, release, locale, softwareExtras)] : []),
+  ...jsonLd,
+];
 ---
 
 <!doctype html>
@@ -36,19 +86,42 @@ const absolute = (l: Locale) => new URL(localizePath(path, l), site).href;
     <meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#eff1f5" media="(prefers-color-scheme: light)" />
     {noindex && <meta name="robots" content="noindex" />}
-    {!noindex && <link rel="canonical" href={absolute(locale)} />}
-    {!noindex && LOCALES.map((l) => <link rel="alternate" hreflang={l} href={absolute(l)} />)}
-    {!noindex && <link rel="alternate" hreflang="x-default" href={absolute("es")} />}
+    {
+      !noindex && (
+        <>
+          <meta name="robots" content="max-image-preview:large" />
+          <link rel="canonical" href={absolute(locale)} />
+          {translated && LOCALES.map((l) => <link rel="alternate" hreflang={l} href={absolute(l)} />)}
+          {translated && <link rel="alternate" hreflang="x-default" href={absolute("es")} />}
+          <meta property="og:type" content={ogType} />
+          <meta property="og:site_name" content={SITE_NAME} />
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={description} />
+          <meta property="og:url" content={absolute(locale)} />
+          <meta property="og:locale" content={ogLocale[locale]} />
+          {translated && <meta property="og:locale:alternate" content={ogLocale[other]} />}
+          <meta property="og:image" content={ogImage} />
+          <meta property="og:image:type" content="image/png" />
+          <meta property="og:image:width" content={String(OG_SIZE.width)} />
+          <meta property="og:image:height" content={String(OG_SIZE.height)} />
+          <meta property="og:image:alt" content={ogImageAlt} />
+          <meta name="twitter:card" content="summary_large_image" />
+        </>
+      )
+    }
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${t.nav.news} · ${SITE_NAME}`} href="/rss.xml" />
     <script is:inline set:html={THEME_SCRIPT} />
+    {nodes.length > 0 && <JsonLd data={graph(...nodes)} />}
+    <slot name="head" />
   </head>
-  <body>
+  <body data-page-type={pageType}>
     <a class="skip-link" href="#contenido">{t.skipLink}</a>
-    <SiteHeader locale={locale} />
+    <SiteHeader locale={locale} path={path} />
     <main id="contenido" tabindex="-1">
       <slot />
     </main>
-    <SiteFooter locale={locale} path={path} />
+    <SiteFooter locale={locale} path={path} translated={translated} release={release} />
   </body>
 </html>
 

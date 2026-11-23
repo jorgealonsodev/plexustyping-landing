@@ -1,0 +1,11 @@
+---
+// One JSON-LD data block (not executed, so outside the CSP's script hashes).
+import { serializeJsonLd } from "../../lib/seo/jsonld";
+
+interface Props {
+  data: unknown;
+}
+const { data } = Astro.props;
+---
+
+<script type="application/ld+json" is:inline set:html={serializeJsonLd(data)} />
