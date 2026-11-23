@@ -42,7 +42,7 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
 - [x] T4b · S1, S2, S4, S10 · delegated, worktree · docs sections progreso…proyecto · commit: 39a81b1, bfaf1f8, d0b5445
 - [x] T5 · S1, S2, S4 · delegated, worktree · `/novedades` (+ roadmap, RSS), `/preguntas-frecuentes`, `/privacidad`, `/licencias`, `llms.txt`, `llms-full.txt`, Pagefind search (moved to P4a) · commit: 59ca185, f79e70e, cc43818, 36567e8
 - [x] T6 · S7 · delegated · English mirror · commit: 921275b..8b54382 (13 commits)
-- [ ] T8 · S4, S8, S11 · delegated · apply `seo-audit-home.md` to `/` and its English equivalent to `/en` · commit: —
+- [x] T8 · S4, S8, S11 · delegated · apply `seo-audit-home.md` to `/` and its English equivalent to `/en` · commit: 1133a98
 - [ ] T7 · all · delegated · impeccable finish (detector, finish review, DESIGN.md) and one independent verifier (covers site-base-home T4 too) · commit: —
 
 ## Log
@@ -63,3 +63,4 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
 - L14 (2026-11-23, user): chose «Delegarla a un agente» after the harness refused the writer launch. Task IDs renamed P→T in `## Tasks` so the harness recognizes them (P6 = T6, P7 = T7, etc.); earlier Log entries keep the P names.
 - L15 (2026-11-23): T6 worker (mwtf6y5u-1-8ygr) was cancelled ("parent session shut down") after commit 921275b plus uncommitted feature-page edits; resumed as mwtfpjmh-1-eiea from that state. User asked for an on-page audit of `/` for «programa para aprender mecanografía»: `seo-audit-home.md` (title, description, 40–60 word first paragraph, link to /docs/practicar/desbloqueo-progresivo). To apply on `/` and `/en` after T6, since T6 edits the home components.
 - L16 (2026-11-23): T6 done (921275b..8b54382). Worker: build 158 pages, Pagefind en 54 / es 54, 655 tests, check 0 errors, check:seo 134 indexable pages 0 errors; English slugs in src/i18n/slugs.ts (PRD §5 names no slugs). Open for T7: Spanish UI labels on English pages lack lang="es" (WCAG 3.1.2); British (sims) vs US (site copy) spelling; en sim-preview s8–s10 missing; OG image paths keep Spanish slugs; S8/S10 en-US layout checked only in static HTML (Risk item 6).
+- L17 (2026-11-23): T8 done (1133a98; worker cannot commit, parent committed). Parent re-ran build ok, 664 tests, check 0 errors, check:seo 134 pages 0 errors. es title 57 chars, description 154, lead 51 words; en «Free program to learn touch typing · PlexusTyping» (49), description 146, lead 57 words (English wording not checked against search data). `.sub` max font size 1.25rem → 1.125rem: review in T7.
