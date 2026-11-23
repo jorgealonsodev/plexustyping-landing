@@ -212,4 +212,4 @@ SITE_URL=https://your-domain.example pnpm build
 
 ## License
 
-This repository does not declare a license yet (there is no `LICENSE` file).
+Like the app, this repository is licensed under either of [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option (SPDX: `MIT OR Apache-2.0`).

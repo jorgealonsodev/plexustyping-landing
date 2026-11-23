@@ -1,6 +1,6 @@
 ---
 // Licences (PRD §5, §6.12). App: LICENSE-MIT, LICENSE-APACHE and THIRD_PARTY_NOTICES.md of the app
-// repository. Site: this repository (no LICENSE file yet, README "License") and the fontsource
+// repository. Site: this repository (LICENSE-MIT and LICENSE-APACHE, README "License") and the fontsource
 // packages it bundles (package.json; each package's `license` field).
 import ProsePage from "../layouts/ProsePage.astro";
 import { ROUTES } from "../data/routes";
@@ -68,7 +68,7 @@ const appBlob = (file: string) => `${APP_REPO_URL}/blob/main/${file}`;
 
   <h2 id="esta-web">Esta web</h2>
   <p>
-    El <a href={SITE_REPO_URL}>código de esta web</a> todavía no declara una licencia. Está hecha con Astro y Svelte
+    El <a href={SITE_REPO_URL}>código de esta web</a> se publica, como la app, con licencia MIT o Apache-2.0, a tu elección. Está hecha con Astro y Svelte
     (MIT); el código de Svelte solo se carga en las simulaciones.
   </p>
   <h3 id="fuentes">Fuentes</h3>
