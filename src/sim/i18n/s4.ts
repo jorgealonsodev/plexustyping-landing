@@ -1,6 +1,8 @@
-// Strings of the S4 "Sesión fantasma" simulation (src/components/sims/S4Ghost.svelte). The app's own UI
-// inside the demo stays Spanish (the app is Spanish only); these are the website's words around it.
+// Strings of the S4 "Sesión fantasma" simulation (src/components/sims/S4Ghost.svelte): the website's words
+// around it and (GHOST_UI) the app's lines inside it. Spanish pages show the app's real Spanish UI;
+// English pages show it translated, with English texts on the English (US) keyboard.
 import type { Locale } from "../../i18n/paths";
+import { NEW_RECORD, formatDelta, recordLines } from "../practice/ghost";
 
 export interface S4Strings {
   play: string;
@@ -31,11 +33,39 @@ export const S4_STRINGS: Record<Locale, S4Strings> = {
     play: "Play",
     pause: "Pause",
     description:
-      "Demo with sample data: PlexusTyping's ghost session. A recorded session types a text practised before while a translucent ghost cursor replays the previous record on that same text. Top right, the difference with the record in seconds: red with «+» when behind, blue with «−» when ahead. After a correction it falls behind, then overtakes the ghost; at the end the result shows «Récord anterior: 63 PPM» (previous record) and «¡Nuevo récord para este texto!» (new record for this text). The app's interface is in Spanish.",
+      "Demo with sample data: PlexusTyping's ghost session. A recorded session types a text practised before while a translucent ghost cursor replays the previous record on that same text. Top right, the difference with the record in seconds: red with “+” when behind, blue with “−” when ahead. After a correction it falls behind, then overtakes the ghost; at the end the result shows “Previous record: 63 WPM” and “New record for this text!”. The released app's interface is in Spanish; the demo shows it translated.",
     paused: "Demo paused.",
     playing: "Playing the demo.",
     windowTitle: "PlexusTyping · demo",
     caption:
-      "Ghost session: race your best session on the same text, with the live difference in seconds. Sample data; the app's interface is in Spanish.",
+      "Ghost session: race your best session on the same text, with the live difference in seconds. Sample data. The released app's interface is in Spanish; the demo shows it translated.",
+  },
+};
+
+/** The ghost session (ghost.ts): the live difference and the result's record lines. */
+export interface GhostUi {
+  deltaLabel: string;
+  delta: (ms: number) => string;
+  recordLines: (recordWpm: number, netWpm: number, saved: boolean) => string[];
+  newRecord: string;
+}
+
+const EN_NEW_RECORD = "New record for this text!";
+
+export const GHOST_UI: Record<Locale, GhostUi> = {
+  es: { deltaLabel: "Diferencia con tu récord", delta: formatDelta, recordLines, newRecord: NEW_RECORD },
+  en: {
+    deltaLabel: "Difference from your record",
+    delta: (ms) => {
+      const tenths = Math.round(Math.abs(ms) / 100);
+      if (tenths === 0) return "0.0 s";
+      return `${ms > 0 ? "+" : "−"}${(tenths / 10).toFixed(1)} s`;
+    },
+    recordLines: (recordWpm, netWpm, saved) => {
+      const lines = [`Previous record: ${Math.round(recordWpm)} WPM`];
+      if (saved && netWpm > recordWpm) lines.push(EN_NEW_RECORD);
+      return lines;
+    },
+    newRecord: EN_NEW_RECORD,
   },
 };

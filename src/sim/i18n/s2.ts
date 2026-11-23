@@ -1,5 +1,6 @@
-// Website strings of the S2 demo ("Tus puntos débiles", src/components/sims/S2WeakSpots.svelte). The app's own
-// interface inside the demo stays Spanish; these are the controls, caption and text alternative around it.
+// Website strings of the S2 demo ("Tus puntos débiles", src/components/sims/S2WeakSpots.svelte): the controls,
+// caption and text alternative around the app's interface. Spanish pages show the app's real Spanish UI;
+// English pages show it translated, with English texts on the English (US) keyboard.
 import type { Locale } from "../../i18n/paths";
 
 export interface SimStrings {
@@ -31,11 +32,11 @@ export const S2_STRINGS: Record<Locale, SimStrings> = {
   en: {
     title: "PlexusTyping · demo",
     caption:
-      "Your weak spots. As you type, the keyboard is tinted by each key's errors and slowness; the next text practises those keys and combinations (ñ, qu, z). Demo data; the app's interface is in Spanish.",
+      "Your weak spots. As you type, the keyboard is tinted by each key's errors and slowness; the next text practises those keys and combinations (qu, z, x). Demo data. The released app's interface is in Spanish; the demo shows it translated.",
     play: "Play",
     pause: "Pause",
     description:
-      "Demo with sample data: PlexusTyping's practice screen types the diagnostic text and the on-screen keyboard is tinted on the keys with the most errors, with the legend «Errores por tecla» (errors per key) from 1 (very few) to 5 (many). Then a new text arrives with the line «Practicando: ñ · qu · z» (practising) and words that contain them, such as queremos, montaña and zona.",
+      "Demo with sample data, in English on the English (US) keyboard: PlexusTyping's practice screen types the diagnostic text and the on-screen keyboard is tinted on the keys with the most errors, with the legend “Errors per key” from 1 (very few) to 5 (many). Then a new text arrives with the line “Practising: qu · z · x” and words that contain them, such as quiet, pizza and next.",
     paused: "Demo paused.",
     playing: "Playing the demo.",
   },

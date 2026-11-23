@@ -2,9 +2,12 @@
 // keystroke scripts (./demo.ts) and adds the heat scores as they grow while the diagnostic text is typed.
 // Synthetic, never real users. In the app the `heatmap` command is read again after each text; the demo
 // compresses that into keyframes during one text, so the tint can be seen growing in a few seconds.
+// English pages: S2_PACKS.en, from the S1 English data (./demo.en.ts) and its own keyframes (./s2.en.ts).
+import type { Locale } from "../../i18n/paths";
 import type { CharScore } from "../keyboard/heat";
 import type { Script } from "../replay";
 import { DIAGNOSTIC_SCRIPT, DIAGNOSTIC_STEPS, HEAT_SCORES, TARGET_SCRIPT } from "./demo";
+import { S2_EN } from "./s2.en";
 
 /** Steps of `script` after which the cursor first stands right after `prefix`, i.e. `prefix` is typed. */
 function stepsToType(script: Script, prefix: string): number {
@@ -79,3 +82,17 @@ export function scoresAt(step: number): CharScore[] {
   for (const frame of HEAT_KEYFRAMES) if (frame.step <= step) scores = frame.scores;
   return scores;
 }
+
+/** One language's S2 data: the scripts it plays, its still state and its heat keyframes. */
+export interface S2Pack {
+  diagnostic: Script;
+  targets: Script;
+  stillSteps: number;
+  keyframes: { step: number; scores: CharScore[] }[];
+  scoresAt: (step: number) => CharScore[];
+}
+
+export const S2_PACKS: Record<Locale, S2Pack> = {
+  es: { diagnostic: S2_DIAGNOSTIC, targets: S2_TARGETS, stillSteps: S2_STILL_STEPS, keyframes: HEAT_KEYFRAMES, scoresAt },
+  en: S2_EN,
+};

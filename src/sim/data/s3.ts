@@ -4,9 +4,12 @@
 // 14f64cf2b9619deca9d99c2dbb3a2358586c5390 (crates/plexustyping-corpus/data/es/sentences.txt), unchanged and
 // joined by spaces as a prose text is. In the app the continuations come from the local corpus or an AI
 // provider through the Rust core; here they are fixed and arrive on a schedule (see UnlimitedDemo).
+// English pages: the same replay over sentences of the app's English corpus (./s3.en.ts, S3_PACKS.en).
 import { type InputEvent, TypingSession } from "../practice/engine";
 import { continuationPiece, shouldContinue } from "../practice/unlimited";
 import { type Clock, ReplayDriver, type Script, type Typo, buildScript, toInput } from "../replay";
+import type { Locale } from "../../i18n/paths";
+import * as EN from "./s3.en";
 
 /** The text the session starts with (the app's first text is about 600 chars; the demo's is shorter). */
 export const START_TEXT =
@@ -19,16 +22,16 @@ export const PIECES = [
 ];
 
 /** The start text, then each piece as the app's continuationPiece() appends it (after a single space). */
-export const SEGMENTS: string[] = (() => {
-  const out = [START_TEXT];
-  let text = START_TEXT;
-  for (const piece of PIECES) {
+function segmentsOf(start: string, pieces: string[]): string[] {
+  const out = [start];
+  let text = start;
+  for (const piece of pieces) {
     const chained = continuationPiece([...text], piece);
     out.push(chained);
     text += chained;
   }
   return out;
-})();
+}
 
 /** The replay plays this many times faster than it was recorded ("reproducción acelerada"); the stats keep the recorded times. */
 export const SPEED = 2.5;
@@ -46,34 +49,66 @@ const REFRESH_MS = 700;
 const GAP_MS = 160;
 const MODE = "backspace-correct";
 
+/** A corrected typo on the `offset`-th char of the first `word` of segment `segment`, typed as `typed`. */
+export type SegmentTypo = [segment: number, word: string, offset: number, typed: string];
+
 function typo(text: string, word: string, offset: number, typed: string): Typo {
   const at = text.indexOf(word);
   if (at < 0) throw new Error(`s3: "${word}" not in the text`);
   return { index: [...text.slice(0, at)].length + offset, typed, corrected: true };
 }
 
-const TYPOS: Typo[][] = [
-  [typo(SEGMENTS[0]!, "tostada", 3, "r"), typo(SEGMENTS[0]!, "tráfico", 4, "g")],
-  [typo(SEGMENTS[1]!, "huevos", 2, "w")],
-  [typo(SEGMENTS[2]!, "bicicleta", 4, "x")],
-];
+/** One language's S3 texts and the scripts recorded over them. */
+export interface UnlimitedPack {
+  start: string;
+  pieces: string[];
+  segments: string[];
+  /** One keystroke script per segment, recorded at a steady 78 PPM with a few corrected typos. */
+  segmentScripts: Script[];
+  /** The scripts the replay plays: faster, and the last one stops LAST_LEFT chars before its end. */
+  played: Script[];
+}
 
-/** One keystroke script per segment, recorded at a steady 78 PPM with a few corrected typos. */
-export const SEGMENT_SCRIPTS: Script[] = SEGMENTS.map((text, i) =>
-  buildScript(text, { seed: 310 + i, wpm: 78, typos: [...(TYPOS[i] ?? [])].sort((a, b) => a.index - b.index) }),
-);
+export function unlimitedPack(start: string, pieces: string[], typos: SegmentTypo[]): UnlimitedPack {
+  const segments = segmentsOf(start, pieces);
+  const segmentScripts = segments.map((text, i) =>
+    buildScript(text, {
+      seed: 310 + i,
+      wpm: 78,
+      typos: typos
+        .filter(([seg]) => seg === i)
+        .map(([, word, offset, typed]) => typo(text, word, offset, typed))
+        .sort((a, b) => a.index - b.index),
+    }),
+  );
+  const played = segmentScripts.map((script, i) => {
+    let steps = script.steps;
+    if (i === segmentScripts.length - 1) {
+      const stop = [...script.text].length - LAST_LEFT;
+      let cursor = 0;
+      const end = steps.findIndex((s) => (cursor += s.event.kind === "char" ? 1 : -1) === stop);
+      steps = steps.slice(0, end + 1);
+    }
+    return { ...script, steps: steps.map((s) => ({ ...s, atMs: s.atMs / SPEED })) };
+  });
+  return { start, pieces, segments, segmentScripts, played };
+}
 
-/** The script the replay plays: faster, and the last one stops LAST_LEFT chars before its end. */
-const PLAYED: Script[] = SEGMENT_SCRIPTS.map((script, i) => {
-  let steps = script.steps;
-  if (i === SEGMENT_SCRIPTS.length - 1) {
-    const stop = [...script.text].length - LAST_LEFT;
-    let cursor = 0;
-    const end = steps.findIndex((s) => (cursor += s.event.kind === "char" ? 1 : -1) === stop);
-    steps = steps.slice(0, end + 1);
-  }
-  return { ...script, steps: steps.map((s) => ({ ...s, atMs: s.atMs / SPEED })) };
-});
+const ES_PACK = unlimitedPack(START_TEXT, PIECES, [
+  [0, "tostada", 3, "r"],
+  [0, "tráfico", 4, "g"],
+  [1, "huevos", 2, "w"],
+  [2, "bicicleta", 4, "x"],
+]);
+
+export const SEGMENTS: string[] = ES_PACK.segments;
+export const SEGMENT_SCRIPTS: Script[] = ES_PACK.segmentScripts;
+
+/** Spanish pages: the app's Spanish corpus; English pages: the app's English corpus (./s3.en.ts). */
+export const S3_PACKS: Record<Locale, UnlimitedPack> = {
+  es: ES_PACK,
+  en: unlimitedPack(EN.START_TEXT, EN.PIECES, EN.TYPOS),
+};
 
 /**
  * The hint under the practice text. Copied verbatim from the app's src/features/practice/focus.ts
@@ -96,6 +131,8 @@ export interface DemoOptions {
   clock?: Clock;
   /** Something changed; `event` is the keystroke just applied and `expected` the char it was typed for. */
   onChange?: (keystroke?: { event: InputEvent; expected: string | undefined }) => void;
+  /** The texts and scripts to play: the Spanish ones by default. */
+  pack?: UnlimitedPack;
 }
 
 /**
@@ -105,7 +142,8 @@ export interface DemoOptions {
  * Demo edit: the replies are prerecorded and timed (REPLY_WAIT_MS, ARRIVES_AHEAD) instead of awaited.
  */
 export class UnlimitedDemo {
-  session = new TypingSession(START_TEXT, MODE);
+  readonly pack: UnlimitedPack;
+  session: TypingSession;
   /** Continuations appended so far. */
   segment = 0;
   /** A continuation is under way (the app's `continuing`). */
@@ -126,10 +164,12 @@ export class UnlimitedDemo {
 
   constructor(private readonly options: DemoOptions) {
     this.#clock = options.clock ?? timers;
+    this.pack = options.pack ?? ES_PACK;
+    this.session = new TypingSession(this.pack.start, MODE);
     // The still state (no JavaScript, reduced motion): the start text typed to its end, waiting.
     this.#load();
-    for (const step of SEGMENT_SCRIPTS[0]!.steps) this.#apply(toInput(step));
-    this.#drive(0, PLAYED[0]!.steps.length);
+    for (const step of this.pack.segmentScripts[0]!.steps) this.#apply(toInput(step));
+    this.#drive(0, this.pack.played[0]!.steps.length);
     this.#segmentDone();
   }
 
@@ -170,14 +210,14 @@ export class UnlimitedDemo {
     this.#hold = null;
     this.refreshing = false;
     this.#load();
-    for (const step of SEGMENT_SCRIPTS[0]!.steps.slice(0, LOOP_FROM)) this.#apply(toInput(step));
+    for (const step of this.pack.segmentScripts[0]!.steps.slice(0, LOOP_FROM)) this.#apply(toInput(step));
     this.#drive(0, LOOP_FROM);
     this.options.onChange?.();
     if (playing) this.play();
   }
 
   #load() {
-    this.session = new TypingSession(START_TEXT, MODE);
+    this.session = new TypingSession(this.pack.start, MODE);
     this.segment = 0;
     this.continuing = false;
     this.askedAt = null;
@@ -210,12 +250,12 @@ export class UnlimitedDemo {
   #arrives() {
     const s = this.session;
     const ahead = ARRIVES_AHEAD[this.segment] ?? 0;
-    if (this.continuing && this.segment < PIECES.length && ahead > 0 && s.chars.length - s.cursor <= ahead) this.#append();
+    if (this.continuing && this.segment < this.pack.pieces.length && ahead > 0 && s.chars.length - s.cursor <= ahead) this.#append();
   }
 
   /** The reply arrived: the piece is appended after a single space and typing goes on. */
   #append() {
-    const piece = continuationPiece(this.session.chars, PIECES[this.segment]!);
+    const piece = continuationPiece(this.session.chars, this.pack.pieces[this.segment]!);
     this.continuing = false;
     this.session.extend(piece);
     this.segment++;
@@ -226,7 +266,7 @@ export class UnlimitedDemo {
   #drive(index: number, from = 0) {
     this.#typing = index;
     this.#driver = new ReplayDriver(
-      PLAYED[index]!,
+      this.pack.played[index]!,
       (e) => this.#apply({ ...e, tMs: this.#offset + Math.round(e.tMs * SPEED) }),
       { reducedMotion: this.options.reducedMotion, clock: this.#clock, from, onDone: () => this.#segmentDone() },
     );
@@ -235,7 +275,7 @@ export class UnlimitedDemo {
   /** A piece's keystrokes ran out: type the next one, after its continuation if it has not arrived yet. */
   #segmentDone() {
     const index = this.#typing;
-    if (index + 1 >= PLAYED.length) {
+    if (index + 1 >= this.pack.played.length) {
       this.#later(REST_MS, () => {
         this.refreshing = true;
         this.options.onChange?.();

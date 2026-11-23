@@ -8,23 +8,38 @@
   - the keyboard: the app's Keyboard.svelte, copied (src/sim/keyboard/Keyboard.svelte).
   A recorded replay types one text per prerecorded UnlockStatus (src/sim/data/s6.ts); each result unlocks the
   next key of the app's order. Replay only, so the screen is inert; never starts on its own under
-  prefers-reduced-motion. Edits to the extracted code are marked "Demo edit".
+  prefers-reduced-motion. Edits to the extracted code are marked "Demo edit". On the English pages (`locale`
+  "en") the app's UI is translated (src/sim/i18n/), the texts and order are English (src/sim/data/s6.en.ts) and
+  the keyboard is English (US).
 -->
 <script lang="ts">
   import { onMount } from "svelte";
   import "../../sim/app.css";
-  import { ES_QWERTY } from "../../sim/data/es-qwerty";
-  import { STAGES, STILL_STAGE } from "../../sim/data/s6";
-  import { sequencesFor } from "../../sim/data/sequences";
+  import type { Locale } from "../../i18n/paths";
+  import { STAGES as ES_STAGES, STILL_STAGE } from "../../sim/data/s6";
+  import { STAGES as EN_STAGES } from "../../sim/data/s6.en";
+  import { KEYBOARD_UI, PRACTICE_UI, RESULTS_UI } from "../../sim/i18n/app";
   import type { SimStrings } from "../../sim/i18n/s2";
+  import { UNLOCK_UI } from "../../sim/i18n/s6";
   import Keyboard from "../../sim/keyboard/Keyboard.svelte";
   import { type Flash, highlightsFor, keyForChar } from "../../sim/keyboard/keys";
+  import { KEYBOARDS } from "../../sim/keyboard/locale";
   import { type InputEvent, TypingSession } from "../../sim/practice/engine";
-  import { charLabel, formatPercent, formatTime, formatWpm } from "../../sim/practice/format";
+  import { charLabel, formatTime, formatWpm } from "../../sim/practice/format";
   import { ReplayDriver, toInput } from "../../sim/replay";
-  import { lockedKeys, progressLine, unlockNotice } from "../../sim/unlock/unlock";
+  import { lockedKeys } from "../../sim/unlock/unlock";
 
-  let { strings: t }: { strings: SimStrings } = $props();
+  let { strings: t, locale = "es" }: { strings: SimStrings; locale?: Locale } = $props();
+
+  // The page's language is fixed for the island's life. Spanish: the app as it is; English: translated UI,
+  // English texts and the English (US) layout.
+  // svelte-ignore state_referenced_locally
+  const lang: Locale = locale;
+  const { layout: LAYOUT, sequencesFor } = KEYBOARDS[lang];
+  const STAGES = lang === "en" ? EN_STAGES : ES_STAGES;
+  const p = PRACTICE_UI[lang];
+  const r = RESULTS_UI[lang];
+  const u = UNLOCK_UI[lang];
 
   const MODE = "backspace-correct";
   const noop = () => {};
@@ -49,9 +64,9 @@
   const stage = $derived(STAGES[index]!);
   // The result of a session that unlocked a key already reads the new status: the key lights up with the notice.
   const status = $derived(phase === "results" && stage.unlocks ? STAGES[index + 1]!.status : stage.status);
-  const locked = $derived(lockedKeys(ES_QWERTY, status));
-  const unlockLine = $derived(progressLine(status));
-  const notice = $derived(unlockNotice(stage.unlocks));
+  const locked = $derived(lockedKeys(LAYOUT, status));
+  const unlockLine = $derived(u.progressLine(status));
+  const notice = $derived(u.notice(stage.unlocks));
 
   const view = $derived.by(() => {
     void tick;
@@ -73,7 +88,7 @@
     now = event.tMs;
     tick++;
     if (flashKey && event.kind === "char") {
-      const code = keyForChar(ES_QWERTY, event.ch);
+      const code = keyForChar(LAYOUT, event.ch);
       if (code) flash = { code, ok: event.ch === expected };
     }
   }
@@ -183,7 +198,7 @@
   {/if}
   <p class="sr-only" aria-live="polite">{announcement}</p>
   <!-- A picture of the app at work: no focus stops inside, the text alternative above says what it shows. -->
-  <div class="pt-frame" lang="es" inert>
+  <div class="pt-frame" lang={lang} inert>
     <div class="pt-app">
       <!-- Demo edit: the app's header is left out (the hero shows it); a <div class="main">, not <main>. -->
       <div class="main">
@@ -192,41 +207,41 @@
             <!-- src/features/practice/Results.svelte -->
             <section class="results">
               <!-- Demo edit: the app's <h2> is a <p class="h2">, so the demo adds no heading to the website. -->
-              <p class="h2">Resultado</p>
+              <p class="h2">{r.title}</p>
               {#if notice}<p class="goal-met">{notice}</p>{/if}
               <dl class="figures">
-                <div class="main"><dt>PPM netas</dt><dd>{formatWpm(view.stats.netWpm)}</dd></div>
-                <div><dt>PPM brutas</dt><dd>{formatWpm(view.stats.grossWpm)}</dd></div>
-                <div><dt>Precisión</dt><dd>{formatPercent(view.stats.accuracy)}</dd></div>
-                <div><dt>Tiempo</dt><dd>{formatTime(view.stats.durationMs)}</dd></div>
-                <div><dt>Errores</dt><dd>{view.stats.errors}</dd></div>
+                <div class="main"><dt>{r.netWpm}</dt><dd>{formatWpm(view.stats.netWpm)}</dd></div>
+                <div><dt>{r.grossWpm}</dt><dd>{formatWpm(view.stats.grossWpm)}</dd></div>
+                <div><dt>{p.accuracy}</dt><dd>{p.percent(view.stats.accuracy)}</dd></div>
+                <div><dt>{p.time}</dt><dd>{formatTime(view.stats.durationMs)}</dd></div>
+                <div><dt>{r.errors}</dt><dd>{view.stats.errors}</dd></div>
               </dl>
               {#if failed.length > 0}
                 <p class="failed">
-                  Caracteres fallados:
+                  {r.failed}
                   {#each failed as c, i (i)}<kbd>{charLabel(c)}</kbd>{/each}
                 </p>
               {:else}
-                <p class="note">Sin fallos.</p>
+                <p class="note">{r.noFailed}</p>
               {/if}
               <div class="actions">
-                <button type="button" class="primary" tabindex="-1">Siguiente texto <kbd>Intro</kbd></button>
-                <button type="button" tabindex="-1">Repetir <kbd>Esc</kbd></button>
+                <button type="button" class="primary" tabindex="-1">{r.next} <kbd>{r.enter}</kbd></button>
+                <button type="button" tabindex="-1">{r.repeat} <kbd>Esc</kbd></button>
               </div>
             </section>
           {:else}
             <div class="top">
-              <dl class="live" aria-label="Estadísticas en vivo">
-                <div><dt>PPM</dt><dd>{formatWpm(view.stats.netWpm)}</dd></div>
-                <div><dt>Pulsaciones/min</dt><dd>{formatWpm(view.stats.kpm)}</dd></div>
-                <div><dt>Precisión</dt><dd>{formatPercent(view.stats.accuracy)}</dd></div>
-                <div><dt>Tiempo</dt><dd>{formatTime(elapsed)}</dd></div>
+              <dl class="live" aria-label={p.liveStats}>
+                <div><dt>{p.wpm}</dt><dd>{formatWpm(view.stats.netWpm)}</dd></div>
+                <div><dt>{p.kpm}</dt><dd>{formatWpm(view.stats.kpm)}</dd></div>
+                <div><dt>{p.accuracy}</dt><dd>{p.percent(view.stats.accuracy)}</dd></div>
+                <div><dt>{p.time}</dt><dd>{formatTime(elapsed)}</dd></div>
               </dl>
             </div>
-            <p class="kind">Corpus local</p>
-            {#if unlockLine}<p class="kind" aria-label="Desbloqueo progresivo">{unlockLine}</p>{/if}
+            <p class="kind">{p.localCorpus}</p>
+            {#if unlockLine}<p class="kind" aria-label={u.label}>{unlockLine}</p>{/if}
             <!-- Demo edit: no style attribute (the website's CSP); the typography variables are at their defaults. -->
-            <div id={`${uid}-text`} role="region" aria-label="Texto de práctica" data-cursor="bar">
+            <div id={`${uid}-text`} role="region" aria-label={p.practiceText} data-cursor="bar">
               <!-- No whitespace inside: the text uses white-space: pre-wrap. -->
               <p class="text dim">{#each view.chars as c, i (i)}<span
                     class="ch {view.states[i]}"
@@ -238,7 +253,7 @@
         </section>
       </div>
       <footer>
-        <Keyboard layout={ES_QWERTY} {highlights} {flash} heat={null} {locked} />
+        <Keyboard layout={LAYOUT} {highlights} {flash} heat={null} {locked} strings={KEYBOARD_UI[lang]} />
       </footer>
     </div>
   </div>

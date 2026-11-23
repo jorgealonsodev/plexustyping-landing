@@ -3,23 +3,32 @@
   driven by the app's MetronomeController on an in-browser MetronomeApi (demoApi.ts). A prerecorded text is
   typed to the beat; when it ends, the app's Results lines show the rhythm ("Ritmo: desvío medio ±X ms") and,
   with "Tempo adaptativo" on, the next text's tempo from the app's adaptTempo. The pulse runs on its own (never
-  under prefers-reduced-motion); the sound plays only after the visitor presses its button.
+  under prefers-reduced-motion); the sound plays only after the visitor presses its button. On the English pages
+  (`locale` "en") the app's UI is translated (src/sim/i18n/s5.ts) and the text is English (src/sim/data/s5.en.ts).
 -->
 <script lang="ts">
   import { onMount } from "svelte";
   import "../../sim/app.css";
-  import { type Run, OFF_BEAT, ON_BEAT, START, STILL_TYPED, TEXT } from "../../sim/data/s5";
-  import type { S5Strings } from "../../sim/i18n/s5";
-  import { type BeatAnchor, type MetronomeSettings, rhythmSummary, tempoChangeFor, tempoNotice, toConfig } from "../../sim/metronome/beat";
+  import type { Locale } from "../../i18n/paths";
+  import { type Run, OFF_BEAT, ON_BEAT, START, STILL_TYPED, S5_TEXTS } from "../../sim/data/s5";
+  import { PRACTICE_UI, RESULTS_UI } from "../../sim/i18n/app";
+  import { METRONOME_UI, type S5Strings } from "../../sim/i18n/s5";
+  import { type BeatAnchor, type MetronomeSettings, rhythmSummary, tempoChangeFor, toConfig } from "../../sim/metronome/beat";
   import { MetronomeController } from "../../sim/metronome/controller";
   import { DemoMetronome } from "../../sim/metronome/demoApi";
   import MetronomeQuick from "../../sim/metronome/MetronomeQuick.svelte";
   import PracticeText from "../../sim/personalize/PracticeText.svelte";
   import type { CharState } from "../../sim/practice/engine";
 
-  let { strings: t }: { strings: S5Strings } = $props();
+  let { strings: t, locale = "es" }: { strings: S5Strings; locale?: Locale } = $props();
 
-  const CHARS = [...TEXT];
+  // The page's language is fixed for the island's life. Spanish: the app as it is; English: translated UI and text.
+  // svelte-ignore state_referenced_locally
+  const lang: Locale = locale;
+  const m = METRONOME_UI[lang];
+  const practiceText = PRACTICE_UI[lang].practiceText;
+
+  const CHARS = [...S5_TEXTS[lang]];
   const RUNS: Run[] = [ON_BEAT, OFF_BEAT];
   /** Beats the finished text's result rests before the next text starts. */
   const REST_BEATS = 6;
@@ -199,25 +208,25 @@
   {/if}
   <p class="sr-only" aria-live="polite">{announcement}</p>
 
-  <div class="pt-app" lang="es">
+  <div class="pt-app" lang={lang}>
     <div class="main">
       <!-- Practice.svelte's .top row holds the beat dot and its quick panel (open here, in its own room). -->
       <div class="quick">
-        <MetronomeQuick anchor={shown} metronome={settings} onChange={change} startOpen inline {running} />
+        <MetronomeQuick anchor={shown} metronome={settings} onChange={change} startOpen inline {running} strings={lang === "es" ? undefined : m} />
       </div>
       <div class="practice">
-        <p class="kind">Texto de práctica</p>
-        <PracticeText chars={CHARS} {states} cursor={typed} />
+        <p class="kind">{practiceText}</p>
+        <PracticeText chars={CHARS} {states} cursor={typed} label={practiceText} />
         <!-- Results.svelte's rhythm and tempo lines (Demo edit: under the next text, not on a results screen). -->
-        <section class="results" aria-label="Resultado del texto anterior">
-          <p class="h2">Resultado</p>
+        <section class="results" aria-label={m.previousResult}>
+          <p class="h2">{RESULTS_UI[lang].title}</p>
           {#if result.rhythm}
             <p class="rhythm">
-              Ritmo: desvío medio ±{Math.round(result.rhythm.meanAbsMs)} ms
-              <span class="note">· adelantadas {Math.round(result.rhythm.earlyPct)}% / atrasadas {Math.round(result.rhythm.latePct)}%</span>
+              {m.rhythm(result.rhythm.meanAbsMs)}
+              <span class="note">{m.rhythmShares(result.rhythm.earlyPct, result.rhythm.latePct)}</span>
             </p>
           {/if}
-          {#if result.tempo}<p class="rhythm">{tempoNotice(result.tempo)}</p>{/if}
+          {#if result.tempo}<p class="rhythm">{m.tempoNotice(result.tempo)}</p>{/if}
         </section>
       </div>
     </div>

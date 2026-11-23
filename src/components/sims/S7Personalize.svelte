@@ -4,33 +4,38 @@
   app's practice-text CSS (src/sim/personalize/PracticeText.svelte). A theme's colours are the app's
   typingColors() output, fetched from /sim/themes/<id>.json only when chosen and set on this demo's window with
   style.setProperty (never on <html>); a font's files load only when chosen. A gentle autoplay tours a few
-  themes until the visitor touches a control; never under prefers-reduced-motion.
+  themes until the visitor touches a control; never under prefers-reduced-motion. On the English pages (`locale`
+  "en") the settings are translated (src/sim/i18n/s7.ts) and the sample is English (src/sim/data/s7.en.ts).
 -->
 <script lang="ts">
   import { onMount } from "svelte";
   import "../../sim/app.css";
-  import { SAMPLE, STATES, TOUR, TOUR_MS, TYPED } from "../../sim/data/s7";
-  import type { S7Strings } from "../../sim/i18n/s7";
-  import { CURSOR_BLINK_SETTING, CURSOR_SETTING, CURSOR_STYLES, DEFAULT_CURSOR_STYLE } from "../../sim/personalize/cursor";
+  import type { Locale } from "../../i18n/paths";
+  import { S7_SAMPLES, TOUR, TOUR_MS } from "../../sim/data/s7";
+  import { PRACTICE_UI } from "../../sim/i18n/app";
+  import { SETTINGS_UI, type S7Strings } from "../../sim/i18n/s7";
+  import { CURSOR_STYLES, DEFAULT_CURSOR_STYLE } from "../../sim/personalize/cursor";
   import { loadPracticeFont } from "../../sim/personalize/fontFiles";
-  import { DEFAULT_FONT_ID, FONT_GROUPS, FONT_SETTING, PRACTICE_FONTS, fontById, fontStyleVars } from "../../sim/personalize/fonts";
+  import { DEFAULT_FONT_ID, FONT_GROUPS, PRACTICE_FONTS, fontById, fontStyleVars } from "../../sim/personalize/fonts";
   import PracticeText from "../../sim/personalize/PracticeText.svelte";
   import SettingField from "../../sim/personalize/SettingField.svelte";
   import { THEMES } from "../../sim/personalize/themes.generated";
 
-  let { strings: t }: { strings: S7Strings } = $props();
+  let { strings: t, locale = "es" }: { strings: S7Strings; locale?: Locale } = $props();
 
-  // settings.ts DIM_PENDING_SETTING, copied (that module is not: the rest of it is the app's settings store).
-  const DIM_PENDING_SETTING = {
-    label: "Atenuar texto pendiente",
-    hint: "Baja el contraste del texto por escribir por debajo del nivel AA para que destaque lo escrito; desactívalo para recuperarlo.",
-  };
+  // The page's language is fixed for the island's life. Spanish: the app's settings as they are (settings.ts's
+  // DIM_PENDING_SETTING is copied into SETTINGS_UI.es); English: translated, over an English sample.
+  // svelte-ignore state_referenced_locally
+  const lang: Locale = locale;
+  const S = SETTINGS_UI[lang];
+  const { sample: SAMPLE, states: STATES, typed: TYPED } = S7_SAMPLES[lang];
+  const themeName = (th: { id: string; name: string }) => S.themeNames[th.id] ?? th.name;
   // AppearanceSection.svelte's groups. Demo edit: the two high-contrast themes get their own group, first, so
   // they are easy to find; there are no imported themes in the demo.
   const GROUPS = [
-    { label: "Alto contraste", themes: THEMES.filter((x) => x.highContrast) },
-    { label: "Oscuros", themes: THEMES.filter((x) => x.dark && !x.highContrast) },
-    { label: "Claros", themes: THEMES.filter((x) => !x.dark && !x.highContrast) },
+    { label: S.themeGroups.highContrast, themes: THEMES.filter((x) => x.highContrast) },
+    { label: S.themeGroups.dark, themes: THEMES.filter((x) => x.dark && !x.highContrast) },
+    { label: S.themeGroups.light, themes: THEMES.filter((x) => !x.dark && !x.highContrast) },
   ];
 
   const CHARS = [...SAMPLE];
@@ -74,7 +79,7 @@
       const vars = await fetchTheme(id);
       if (wanted !== id || !win) return;
       for (const [name, value] of Object.entries(vars)) win.style.setProperty(name, value);
-      if (announce) announcement = t.themeApplied.replace("{name}", THEMES.find((x) => x.id === id)?.name ?? id);
+      if (announce) announcement = t.themeApplied.replace("{name}", ((th) => (th ? themeName(th) : id))(THEMES.find((x) => x.id === id)));
     } catch {
       if (announce) announcement = t.themeFailed;
     }
@@ -156,13 +161,13 @@
   <p class="sr-only" aria-live="polite">{announcement}</p>
 
   <!-- The demo window: the theme's variables are set here, so the whole app (settings included) changes. -->
-  <div class="pt-app" lang="es" bind:this={win}>
+  <div class="pt-app" lang={lang} bind:this={win}>
     <div class="layout">
       <!-- SettingsModal.svelte's frame: header and one panel (Demo edit: only the settings this demo shows). -->
       <div class="settings" role="group" aria-labelledby={titleId}>
-        <div class="settings-header"><p class="h2" id={titleId}>Ajustes</p></div>
+        <div class="settings-header"><p class="h2" id={titleId}>{S.title}</p></div>
         <div class="panel">
-          <SettingField label="Tema" hint="Colores de toda la aplicación; se aplica al momento.">
+          <SettingField label={S.theme.label} hint={S.theme.hint}>
             {#snippet children({ id, hintId })}
               <select
                 {id}
@@ -176,7 +181,7 @@
                 {#each GROUPS as g (g.label)}
                   <optgroup label={g.label}>
                     {#each g.themes as th (th.id)}
-                      <option value={th.id} selected={th.id === themeId}>{th.name}</option>
+                      <option value={th.id} selected={th.id === themeId}>{themeName(th)}</option>
                     {/each}
                   </optgroup>
                 {/each}
@@ -184,7 +189,7 @@
             {/snippet}
           </SettingField>
 
-          <SettingField label={FONT_SETTING.label} hint="{FONT_SETTING.hint} {font.hint}">
+          <SettingField label={S.font.label} hint="{S.font.hint} {S.fontHints[font.id] ?? font.hint}">
             {#snippet children({ id, hintId })}
               <!-- TextSection.svelte. Demo edit: the select and the try-out field read the chosen family from
                    --practice-font (no style attributes); the options are not drawn in their own fonts, whose
@@ -201,9 +206,9 @@
                   }}
                 >
                   {#each FONT_GROUPS as g (g)}
-                    <optgroup label={g}>
+                    <optgroup label={S.fontGroups[g]}>
                       {#each PRACTICE_FONTS.filter((f) => f.group === g) as f (f.id)}
-                        <option value={f.id} selected={f.id === font.id}>{f.name}</option>
+                        <option value={f.id} selected={f.id === font.id}>{S.fontNames[f.id] ?? f.name}</option>
                       {/each}
                     </optgroup>
                   {/each}
@@ -211,8 +216,8 @@
                 <input
                   type="text"
                   class="preview in-font"
-                  aria-label="Prueba la fuente"
-                  placeholder="Escribe aquí para probarla: Ñandú 0O 1lI ¿{'{}'}?"
+                  aria-label={S.tryFont}
+                  placeholder={S.tryFontPlaceholder}
                   spellcheck="false"
                   autocomplete="off"
                   disabled={!ready}
@@ -222,7 +227,7 @@
             {/snippet}
           </SettingField>
 
-          <SettingField label={CURSOR_SETTING.label} hint={CURSOR_SETTING.hint}>
+          <SettingField label={S.cursor.label} hint={S.cursor.hint}>
             {#snippet children({ id, hintId })}
               <select
                 {id}
@@ -234,13 +239,13 @@
                 }}
               >
                 {#each CURSOR_STYLES as c (c.id)}
-                  <option value={c.id} selected={c.id === cursorStyle}>{c.name}</option>
+                  <option value={c.id} selected={c.id === cursorStyle}>{S.cursorStyles[c.id] ?? c.name}</option>
                 {/each}
               </select>
             {/snippet}
           </SettingField>
 
-          <SettingField toggle label={CURSOR_BLINK_SETTING.label} hint={CURSOR_BLINK_SETTING.hint}>
+          <SettingField toggle label={S.blink.label} hint={S.blink.hint}>
             {#snippet children({ id, hintId })}
               <input
                 {id}
@@ -256,7 +261,7 @@
             {/snippet}
           </SettingField>
 
-          <SettingField toggle label={DIM_PENDING_SETTING.label} hint={DIM_PENDING_SETTING.hint}>
+          <SettingField toggle label={S.dimPending.label} hint={S.dimPending.hint}>
             {#snippet children({ id, hintId })}
               <input
                 {id}
@@ -275,8 +280,8 @@
       </div>
 
       <div class="practice">
-        <p class="kind">Texto de práctica</p>
-        <PracticeText chars={CHARS} states={STATES} cursor={TYPED} {cursorStyle} {cursorBlink} dim={dimPending} />
+        <p class="kind">{PRACTICE_UI[lang].practiceText}</p>
+        <PracticeText chars={CHARS} states={STATES} cursor={TYPED} {cursorStyle} {cursorBlink} dim={dimPending} label={PRACTICE_UI[lang].practiceText} />
       </div>
     </div>
   </div>

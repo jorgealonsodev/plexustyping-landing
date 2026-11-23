@@ -1,6 +1,8 @@
 // Demo data of the S7 personalisation demo (labelled "demostración"): a sample practice text caught mid-way,
 // with one wrong char, so the theme's correct, error, cursor and pending colours all show.
+import type { Locale } from "../../i18n/paths";
 import type { CharState } from "../practice/engine";
+import * as EN from "./s7.en";
 
 export const SAMPLE =
   "El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja.";
@@ -17,3 +19,9 @@ export const TOUR = ["catppuccin-mocha", "dracula", "alto-contraste-oscuro", "gr
 
 /** Ms each theme of the tour stays. */
 export const TOUR_MS = 3200;
+
+/** The sample per site language (English: ./s7.en.ts). */
+export const S7_SAMPLES: Record<Locale, { sample: string; states: CharState[]; typed: number }> = {
+  es: { sample: SAMPLE, states: STATES, typed: TYPED },
+  en: { sample: EN.SAMPLE, states: EN.STATES, typed: EN.TYPED },
+};

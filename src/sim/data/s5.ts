@@ -2,7 +2,9 @@
 // One beat is one expected keystroke (the app's metronome). Each run types TEXT once; its offsets say how far
 // each keystroke fell from its beat, as a share of the beat interval (negative = early), so the replay and
 // the app's rhythmSummary/adaptTempo agree at any tempo the visitor picks.
+import type { Locale } from "../../i18n/paths";
 import type { MetronomeSettings } from "../metronome/beat";
+import { TEXT as EN_TEXT } from "./s5.en";
 
 export const TEXT = "ritmo constante";
 
@@ -37,3 +39,6 @@ export const OFF_BEAT: Run = {
 
 /** The still state (server render and reduced motion): this many chars of the current run typed. */
 export const STILL_TYPED = 8;
+
+/** The text per site language; both have one offset per char of the runs above (English: ./s5.en.ts). */
+export const S5_TEXTS: Record<Locale, string> = { es: TEXT, en: EN_TEXT };

@@ -4,13 +4,14 @@
   heatmap tints (the app's heat.ts levels and legend), then a new text arrives with the targets ("Practicando:
   ñ · qu · z") and words that contain them. Replay only: the screen is a picture the visitor watches, so it is
   inert. Never starts on its own under prefers-reduced-motion. The loop is website-only (as in HeroSim.svelte).
+  On the English pages (`locale` "en") the texts are the app's English corpus on the English (US) keyboard
+  (src/sim/data/demo.en.ts, s2.en.ts) and the app's UI is translated (src/sim/i18n/app.ts).
 -->
 <script lang="ts">
   import { onMount } from "svelte";
-  import { DIAGNOSTIC_SOURCE, HEAT_SCORES, TARGETS, TARGET_SOURCE } from "../../sim/data/demo";
-  import { ES_QWERTY } from "../../sim/data/es-qwerty";
-  import { S2_DIAGNOSTIC, S2_STILL_STEPS, S2_TARGETS, scoresAt } from "../../sim/data/s2";
-  import { sequencesFor } from "../../sim/data/sequences";
+  import type { Locale } from "../../i18n/paths";
+  import { DEMO_PACKS } from "../../sim/data/s1";
+  import { S2_PACKS } from "../../sim/data/s2";
   import type { SimStrings } from "../../sim/i18n/s2";
   import { heatScores } from "../../sim/keyboard/heat";
   import { type Flash, highlightsFor, keyForChar } from "../../sim/keyboard/keys";
@@ -18,11 +19,17 @@
   import PracticeScreen from "../../sim/practice/PracticeScreen.svelte";
   import { ReplayDriver, type Script, toInput } from "../../sim/replay";
 
-  let { strings: t }: { strings: SimStrings } = $props();
+  let { strings: t, locale = "es" }: { strings: SimStrings; locale?: Locale } = $props();
+
+  // The page's language is fixed for the island's life: its texts, layout and heat keyframes.
+  // svelte-ignore state_referenced_locally
+  const lang: Locale = locale;
+  const { layout: LAYOUT, sequencesFor, heatScores: HEAT_SCORES, targets: TARGETS, diagnosticSource: DIAGNOSTIC_SOURCE, targetSource: TARGET_SOURCE } = DEMO_PACKS[lang];
+  const { diagnostic: S2_DIAGNOSTIC, targets: S2_TARGETS, stillSteps: S2_STILL_STEPS, scoresAt } = S2_PACKS[lang];
 
   type Phase = "diagnostic" | "targets";
   const SCRIPTS: Record<Phase, Script> = { diagnostic: S2_DIAGNOSTIC, targets: S2_TARGETS };
-  const FULL_HEAT = heatScores(ES_QWERTY, HEAT_SCORES);
+  const FULL_HEAT = heatScores(LAYOUT, HEAT_SCORES);
   const MODE = "backspace-correct";
   const noop = () => {};
 
@@ -55,7 +62,7 @@
   const elapsed = $derived.by(() => (void tick, session.firstT === null ? 0 : Math.max(now - session.firstT, 0)));
   const sequences = $derived(sequencesFor(SCRIPTS[phase].text));
   const highlights = $derived(highlightsFor(sequences[view.cursor]));
-  const heat = $derived(phase === "targets" ? FULL_HEAT : heatScores(ES_QWERTY, scoresAt(step)));
+  const heat = $derived(phase === "targets" ? FULL_HEAT : heatScores(LAYOUT, scoresAt(step)));
   const source = $derived(phase === "targets" ? TARGET_SOURCE : DIAGNOSTIC_SOURCE);
   const targets = $derived(phase === "targets" ? TARGETS : []);
 
@@ -66,7 +73,7 @@
     step++;
     tick++;
     if (flashKey && event.kind === "char") {
-      const code = keyForChar(ES_QWERTY, event.ch);
+      const code = keyForChar(LAYOUT, event.ch);
       if (code) flash = { code, ok: event.ch === expected };
     }
   }
@@ -187,13 +194,13 @@
   {/if}
   <p class="sr-only" aria-live="polite">{announcement}</p>
   <!-- A picture of the app at work: no focus stops inside, the text alternative above says what it shows. -->
-  <div class="screen" lang="es" inert>
+  <div class="screen" lang={lang} inert>
     <PracticeScreen
       {view}
       {elapsed}
       {source}
       {targets}
-      layout={ES_QWERTY}
+      layout={LAYOUT}
       {highlights}
       {flash}
       {heat}
