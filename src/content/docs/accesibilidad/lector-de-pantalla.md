@@ -6,11 +6,13 @@ section: accesibilidad
 order: 2
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [accesibilidad]
 ---
 
 Con «Anunciar con lector de pantalla», en «Ajustes → Accesibilidad», PlexusTyping anuncia por tu lector de pantalla el siguiente carácter después de cada pulsación, cada tecla fallada, el inicio de cada texto nuevo y la línea de resultado. Usa una región `aria-live` educada, que no interrumpe. Está desactivado por defecto y, mientras lo está, no anuncia nada.
+
+Los anuncios siguen el [idioma de la interfaz](/docs/teclado-e-idiomas/idiomas-del-texto#idioma-de-la-interfaz); los ejemplos de esta página son los de la interfaz en español.
 
 ## Qué se anuncia
 

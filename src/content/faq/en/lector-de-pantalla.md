@@ -5,4 +5,4 @@ doc: accesibilidad/lector-de-pantalla
 lang: en
 ---
 
-Yes. It has a screen reader mode with `aria-live` announcements (in Spanish, like the interface), full keyboard navigation, a color-blind mode, two high-contrast themes, and it respects the system's reduced motion. More in [screen reader](/en/docs/accessibility/screen-reader).
+Yes. It has a screen reader mode with `aria-live` announcements (in the interface language), full keyboard navigation, a color-blind mode, two high-contrast themes, and it respects the system's reduced motion. More in [screen reader](/en/docs/accessibility/screen-reader).

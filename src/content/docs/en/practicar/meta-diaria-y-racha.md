@@ -6,17 +6,17 @@ section: practicar
 order: 7
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["progreso"]
 lang: en
 ---
 
-Each profile can have its own daily goal, in minutes or texts per day, set in Settings → Profiles. With a goal set, the header shows today's progress next to the profile name, for example “Hoy 12/20 min · racha 3” (today 12/20 min · streak 3). The streak counts the days in a row you met it.
+Each profile can have its own daily goal, in minutes or texts per day, set in Settings → Profiles. With a goal set, the header shows today's progress next to the profile name, for example “Today 12/20 min · streak 3”. The streak counts the days in a row you met it.
 
 ## Setting the goal
 
-1. Open “Ajustes” (settings) with <kbd>Ctrl</kbd>+<kbd>,</kbd> and go to Profiles.
-2. In “Meta diaria”, choose an option:
+1. Open “Settings” with <kbd>Ctrl</kbd>+<kbd>,</kbd> and go to Profiles.
+2. In “Daily goal”, choose an option:
 
 | Option | Values |
 |---|---|
@@ -37,9 +37,9 @@ The active profile's saved sessions (prose, words and code) that started today, 
 
 | Moment | Text |
 |---|---|
-| During the day | “Hoy 12/20 min · racha 3” or “Hoy 2/5 textos” (today 2/5 texts) |
-| Goal met | “Meta cumplida · racha 4” (goal met · streak 4) |
-| Results of the session that meets it | “¡Meta diaria cumplida!” (daily goal met!) |
+| During the day | “Today 12/20 min · streak 3” or “Today 2/5 texts” |
+| Goal met | “Goal met · streak 4” |
+| Results of the session that meets it | “Daily goal met!” |
 
 ## The streak
 
@@ -48,4 +48,4 @@ The active profile's saved sessions (prose, words and code) that started today, 
 - A day without sessions breaks it.
 - If you change the goal, the new one also applies to past days.
 
-In temporary mode, the goal and progress last until you close the app. Your practice per day also appears in the “Por día” (by day) view of the [history](/en/docs/progress/history-and-charts).
+In temporary mode, the goal and progress last until you close the app. Your practice per day also appears in the “By day” view of the [history](/en/docs/progress/history-and-charts).

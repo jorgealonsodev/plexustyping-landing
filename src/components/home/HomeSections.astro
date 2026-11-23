@@ -2,7 +2,7 @@
 /**
  * The home below the hero (surface brief STORY), in Spanish or English: how to learn touch typing with the
  * app (four steps, each linking its docs page; claims from src/content/docs), S2 weak spots, S3 unlimited text
- * (labeled for 0.1.1), the feature overview linking every feature page, and the download close with the
+ * (labeled as new in 0.2.0), the feature overview linking every feature page, and the download close with the
  * release facts as text (docs/seo-2026.md §C "Home"). Each block keeps its Spanish and English copy side
  * by side, so a Spanish edit is mirrored in the same place (site-pages S7).
  */
@@ -103,7 +103,7 @@ const href = (p: string) => localizePath(p, locale);
         <p>
           After the diagnostic text, PlexusTyping already knows what costs you. It measures the errors and the slowness of every
           character and every pair of letters, tints the keyboard by your errors and writes the next text with those units:
-          “Practicing: qu · z · x”.
+          “Practising: qu · z · x”.
         </p>
         <p><a href={href("/funciones/motor-adaptativo")}>How the adaptive engine works</a></p>
       </Fragment>
@@ -114,24 +114,24 @@ const href = (p: string) => localizePath(p, locale);
 
 {
   es ? (
-    <HomeSection id="texto-ilimitado" title="Un texto que no se acaba" badge="Próxima versión 0.1.1">
+    <HomeSection id="texto-ilimitado" title="Un texto que no se acaba" badge="Nuevo en la 0.2.0">
       <Fragment slot="copy">
         <p>
           Con la longitud «Ilimitado», el texto crece mientras escribes: al acercarte al final llega la continuación, de la IA o del
-          corpus local, sin pausas. <kbd>Esc</kbd> o «Terminar» puntúan lo escrito. La versión publicada, la {release.version}, ofrece
-          textos de 100 a 600 caracteres.
+          corpus local, sin pausas. <kbd>Esc</kbd> o «Terminar» puntúan lo escrito. También hay textos de 100 a 2000
+          caracteres, y la longitud se elige en la cabecera, junto a Prosa / Palabras / Código.
         </p>
         <p><a href="/funciones/texto-ilimitado">Más sobre el texto ilimitado</a></p>
       </Fragment>
       <FeatureSim sim="s3" />
     </HomeSection>
   ) : (
-    <HomeSection id="unlimited-text" title="A text that never runs out" badge="Next version 0.1.1">
+    <HomeSection id="unlimited-text" title="A text that never runs out" badge="New in 0.2.0">
       <Fragment slot="copy">
         <p>
-          With the “Ilimitado” (Unlimited) length, the text grows while you type: as you near the end the continuation arrives, from
-          the AI or the local corpus, without a pause. <kbd>Esc</kbd> or “Terminar” (Finish) scores what you typed. The released
-          version, {release.version}, offers texts of 100 to 600 characters.
+          With the “Unlimited” length, the text grows while you type: as you near the end the continuation arrives, from the AI or
+          the local corpus, without a pause. <kbd>Esc</kbd> or “End” scores what you typed. There are also texts of 100 to 2000
+          characters, and the length is chosen in the header, next to Prose / Words / Code.
         </p>
         <p><a href={href("/funciones/texto-ilimitado")}>More about unlimited text</a></p>
       </Fragment>
@@ -157,7 +157,7 @@ const href = (p: string) => localizePath(p, locale);
       <Fragment slot="copy">
         <p>
           Offline, with no account and no telemetry: your sessions stay on your computer. Every feature has its own page with a demo
-          and its documentation. The app's interface is in Spanish; the practice texts come in five languages, English among them.
+          and its documentation. The app's interface and its practice texts come in five languages, English among them.
         </p>
       </Fragment>
       <FeatureIndex {features} level={3} />
@@ -205,7 +205,7 @@ const href = (p: string) => localizePath(p, locale);
           <div><dt>Released</dt><dd><time datetime={isoDate(release.publishedAt)}>{formatDate(release.publishedAt, locale)}</time></dd></div>{" "}
           <div><dt>Systems</dt><dd>Linux x86_64 (.deb and .tar.gz), Windows 10 and 11, 64-bit</dd></div>{" "}
           <div><dt>License</dt><dd>MIT or Apache-2.0, <a href={APP_REPO_URL}>source on GitHub</a></dd></div>{" "}
-          <div><dt>App interface</dt><dd>Spanish only; practice texts in five languages</dd></div>{" "}
+          <div><dt>App interface</dt><dd>English, Spanish, Brazilian Portuguese, French and German</dd></div>{" "}
         </dl>
         <p class="mobile">
           On your phone? PlexusTyping is a desktop app: bookmark this page and open it on your computer.

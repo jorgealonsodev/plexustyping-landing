@@ -6,18 +6,18 @@ section: practicar
 order: 6
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["progreso", "motor-adaptativo"]
 lang: en
 ---
 
-Progressive unlock is a mode for beginners, off by default: you start with only the keyboard's home row and the app adds one key each time you master the active ones. You turn it on in Settings → Practice → “Desbloqueo progresivo” (progressive unlock). It only affects prose texts; the words and code modes ignore it.
+Progressive unlock is a mode for beginners, off by default: you start with only the keyboard's home row and the app adds one key each time you master the active ones. You turn it on in Settings → Practice → “Progressive unlock”. It only affects prose texts; the words and code modes ignore it.
 
 ## Turning it on
 
-1. Open “Ajustes” (settings) with <kbd>Ctrl</kbd>+<kbd>,</kbd> and go to Practice.
-2. Turn on “Desbloqueo progresivo”.
-3. Choose the “Velocidad objetivo” (target speed): 20, 30 (the default), 40 or 50 WPM.
+1. Open “Settings” with <kbd>Ctrl</kbd>+<kbd>,</kbd> and go to Practice.
+2. Turn on “Progressive unlock”.
+3. Choose the “Target speed”: 20, 30 (the default), 40 or 50 WPM.
 
 Progress is saved per profile, language and layout, and is kept even if you turn the mode off and on again.
 
@@ -49,7 +49,7 @@ First the home row (in Spanish: f j d k s l a ñ) and then the other letters by 
 ## Where you see the progress
 
 - The [on-screen keyboard](/en/docs/keyboard-and-languages/on-screen-keyboard-and-flashes) dims the keys still locked.
-- Above the text: “Teclas: 9/27 · siguiente: e” (keys: 9/27 · next: e).
-- In the results of the session that adds a key: “Nueva tecla desbloqueada: e” (new key unlocked: e).
+- Above the text: “Keys: 9/27 · next: e”.
+- In the results of the session that adds a key: “New key unlocked: e”.
 
 In temporary mode, progress lasts until you close the app. To measure how much you practice each day, use the [daily goal](/en/docs/practice/daily-goal-and-streak).

@@ -5,24 +5,24 @@ section: personalizacion
 order: 1
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [personalizacion, accesibilidad]
 lang: en
 ---
 
-PlexusTyping includes 59 color themes: the 57 PlexusTerm ones plus “Alto contraste oscuro” and “Alto contraste claro” (high contrast dark and light). Choose them in Settings → Appearance; they apply at once. You can also import up to 30 VS Code themes from a `.json` or `.jsonc` file, which appear in the same selector, under “Importados” (imported).
+PlexusTyping includes 59 color themes: the 57 PlexusTerm ones plus “High contrast dark” and “High contrast light”. Choose them in Settings → Appearance; they apply at once. You can also import up to 30 VS Code themes from a `.json` or `.jsonc` file, which appear in the same selector, under “Imported”.
 
 ## Choosing a theme
 
-The “Tema” selector groups the themes into “Oscuros”, “Claros” and “Importados” (dark, light and imported). The default theme is Catppuccin Mocha. The theme is saved per [profile](/en/docs/progress/profiles).
+The “Theme” selector groups the themes into “Dark”, “Light” and “Imported”. The default theme is Catppuccin Mocha. The theme is saved per [profile](/en/docs/progress/profiles).
 
 All bundled themes meet WCAG AA. The two high-contrast ones reach 7:1 for text: see [high contrast](/en/docs/accessibility/high-contrast).
 
 ## Importing a VS Code theme
 
 1. Open Settings → Appearance.
-2. Click “Importar tema de VS Code…” (import VS Code theme) and choose the theme file.
-3. The theme applies at once and stays under “Importados”.
+2. Click “Import VS Code theme…” and choose the theme file.
+3. The theme applies at once and stays under “Imported”.
 
 | Limit | Value |
 |---|---|
@@ -31,7 +31,7 @@ All bundled themes meet WCAG AA. The two high-contrast ones reach 7:1 for text: 
 | Imported themes | Up to 30 |
 | Same name | Replaces the theme imported earlier |
 
-“Eliminar tema importado” (delete imported theme) deletes the selected imported theme and goes back to the default theme. Imported themes are shared by all profiles.
+“Remove imported theme” deletes the selected imported theme and goes back to the default theme. Imported themes are shared by all profiles.
 
 ## Which colors are read
 

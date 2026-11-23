@@ -60,8 +60,9 @@ describe.skipIf(!built)("built English mirror (after pnpm build)", () => {
     for (const p of ["/funciones/modo-codigo", "/funciones/accesibilidad"]) expect(read(p), p).not.toContain("us-qwerty");
   });
 
-  it("says on English pages that the released app's interface is in Spanish", () => {
-    for (const p of ["/en", "/en/download", "/en/docs", "/en/features/ai"]) expect(read(p), p).toMatch(/the app(?:'|&#39;)s interface is in Spanish/);
+  it("says on every page, in the footer, that the app's interface comes in five languages (app v0.2.0, S17)", () => {
+    for (const p of ["/en", "/en/download", "/en/docs", "/en/features/ai"]) expect(read(p), p).toContain("interface in five languages");
+    for (const p of ["/", "/descargar", "/docs", "/funciones/ia"]) expect(read(p), p).toContain("interfaz en cinco idiomas");
   });
 
   it("has an English RSS feed linking to the English release notes", () => {

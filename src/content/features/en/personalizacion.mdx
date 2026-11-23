@@ -19,11 +19,11 @@ import FeatureSim from "../../../components/features/FeatureSim.astro";
 
 ## 59 themes, dark and light
 
-The 57 PlexusTerm themes plus “Alto contraste oscuro” and “Alto contraste claro” (high contrast dark and light), switched live in Settings → Appearance. The default theme is Catppuccin Mocha, the same one this website wears.
+The 57 PlexusTerm themes plus “High contrast dark” and “High contrast light”, switched live in Settings → Appearance. The default theme is Catppuccin Mocha, the same one this website wears.
 
 ## VS Code themes
 
-“Importar tema de VS Code…” (import VS Code theme) reads a color theme file (`.json` or `.jsonc`, with comments, up to 1 MB) and adds it to the selector, under “Importados” (imported). It takes the editor, cursor and selection colors and the terminal's 16 ANSI colors, which paint the keyboard and the code highlighting. Up to 30 imported themes are kept.
+“Import VS Code theme…” reads a color theme file (`.json` or `.jsonc`, with comments, up to 1 MB) and adds it to the selector, under “Imported”. It takes the editor, cursor and selection colors and the terminal's 16 ANSI colors, which paint the keyboard and the code highlighting. Up to 30 imported themes are kept.
 
 ## Ten fonts, all bundled
 
@@ -31,10 +31,8 @@ Roboto Mono, JetBrains Mono, Fira Code without ligatures, Source Code Pro, IBM P
 
 ## Five cursors
 
-“Resaltado” (highlight), the default, tints the next character and underlines it. There are also “Barra” (bar), a thin line between characters like Monkeytype's, “Bloque” (block), “Subrayado” (underline) and “Contorno” (outline); on an error they take the error color. “Cursor parpadeante” (blinking cursor), off by default, makes it blink, never with reduced motion.
-
-<p class="note"><span class="badge">Next version 0.1.1</span> “Barra” (bar) becomes the default cursor and blinking comes on: the cursor blinks while you wait and stays still while you type.</p>
+“Bar”, the default since 0.2.0, is a thin line between characters like Monkeytype's, with square corners. There are also “Highlight”, which tints the next character and underlines it, “Block”, “Underline” and “Outline”; on an error they take the error color. “Blinking cursor”, on by default, makes the cursor blink while you wait and stay still while you type, never with reduced motion.
 
 ## Dimmed pending text
 
-“Atenuar texto pendiente” (dim pending text), on by default, lowers the text you still have to type to a 2.5:1 contrast so what you typed stands out. Turning it off brings back the AA colors. High-contrast themes never dim. More options to read better under [Accessibility](/en/features/accessibility).
+“Dim pending text”, on by default, lowers the text you still have to type to a 2.5:1 contrast so what you typed stands out. Turning it off brings back the AA colors. High-contrast themes never dim. More options to read better under [Accessibility](/en/features/accessibility).

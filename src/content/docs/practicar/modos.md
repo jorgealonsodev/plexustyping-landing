@@ -7,11 +7,13 @@ section: practicar
 order: 1
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["modo-codigo", "motor-adaptativo"]
 ---
 
 PlexusTyping tiene tres modos de práctica, que se eligen con el selector «Prosa / Palabras / Código» de la cabecera, junto al engranaje. «Prosa» da frases, «Palabras» da palabras sueltas en minúscula y «Código» da fragmentos de programas. Cambiar de modo carga un texto nuevo al momento.
+
+A la izquierda del selector de modo, la cabecera tiene desde la versión 0.2.0 un selector de longitud: en prosa y palabras elige los caracteres del texto o «Ilimitado» ([longitud y texto ilimitado](/docs/practicar/longitud-y-texto-ilimitado)); en código, las líneas máximas.
 
 ## Comparación
 
@@ -35,7 +37,7 @@ Al elegir «Código», un selector junto al de modo elige el lenguaje: Python, J
 
 - <kbd>Enter</kbd> escribe el salto de línea y <kbd>Tab</kbd> escribe un tabulador o salta los espacios hasta la siguiente tabulación; las dos son pulsaciones medidas.
 - «Sangría» (Ajustes → Código): «Automática» rellena la sangría de la línea siguiente tras un salto de línea correcto; «Manual» te hace escribir cada espacio.
-- «Líneas máximas» (Ajustes → Código) fija el tamaño de los fragmentos, de 5 a 20 líneas (12 por defecto).
+- «Líneas máximas» (Ajustes → Código) fija el tamaño de los fragmentos, de 5 a 20 líneas (12 por defecto). En modo código, el selector de longitud de la cabecera ofrece 5, 8, 12, 16 o 20 líneas.
 
 Las sesiones de código tienen su propio modelo de debilidades, compartido por todos los lenguajes, así que los símbolos no afectan a tus métricas de prosa. Más en [cómo mide tus debilidades](/docs/motor-adaptativo/como-mide-tus-debilidades).
 

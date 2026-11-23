@@ -96,9 +96,12 @@ describe("features collection", () => {
     expect(e.body).toMatch(/<FeatureSim\s+sim="[a-z0-9]+"/);
   });
 
-  it("labels unlimited text as coming in version 0.1.1 (spec S2)", () => {
+  it("presents unlimited text as released in 0.2.0, with no «próxima versión» label (spec S17)", () => {
     const e = entries.find((x) => x.slug === "texto-ilimitado");
-    expect(`${e?.fields.lead} ${e?.body}`).toMatch(/próxima versión 0\.1\.1/i);
+    const all = `${e?.fields.description} ${e?.fields.lead} ${e?.body}`;
+    expect(all).not.toMatch(/próxima versión|0\.1\.1/i);
+    expect(e?.body).toContain('<span class="badge">Nuevo en la 0.2.0</span>');
+    expect(e?.body).toContain("2000");
   });
 
   it("orders the entries as the nav does", () => {

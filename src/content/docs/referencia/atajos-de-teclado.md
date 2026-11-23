@@ -5,11 +5,11 @@ section: referencia
 order: 1
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [accesibilidad, metronomo, modo-codigo]
 ---
 
-Estos son todos los atajos de teclado de PlexusTyping 0.1.0. Los globales funcionan desde la pantalla de práctica: `Ctrl+,` abre los ajustes, `Ctrl+H` el historial, `F5` carga un texto nuevo, `F4` enciende el metrónomo, `F2` muestra el teclado visual y `F6` lleva a la cabecera. Los atajos solo cuentan sin otros modificadores añadidos.
+Estos son todos los atajos de teclado de PlexusTyping 0.2.0. Los globales funcionan desde la pantalla de práctica: `Ctrl+,` abre los ajustes, `Ctrl+H` el historial, `F5` carga un texto nuevo, `F4` enciende el metrónomo, `F2` muestra el teclado visual y `F6` lleva a la cabecera. Los atajos solo cuentan sin otros modificadores añadidos.
 
 ## Globales
 
@@ -28,7 +28,7 @@ Con «Ajustes» o «Historial» abiertos, las teclas se quedan en la ventana: so
 
 | Tecla | Cuándo | Qué hace |
 |---|---|---|
-| `Esc` | Mientras escribes o en los resultados | Reinicia el texto |
+| `Esc` | Mientras escribes o en los resultados | Reinicia el texto; en un texto «Ilimitado», termina la sesión y puntúa lo escrito |
 | `Enter` | En los resultados | «Siguiente texto» (si el foco no está en un botón como «Repetir») |
 | `Retroceso` | Mientras escribes | Borra el último carácter, según el [modo de error](/docs/practicar/modos-de-error) |
 | `Enter` | Modo código | Salto de línea, medido como pulsación |
@@ -43,9 +43,9 @@ Con «Ajustes» o «Historial» abiertos, las teclas se quedan en la ventana: so
 |---|---|
 | `Ctrl+F` | Vuelve al buscador |
 | `Enter` en el buscador | Va al primer ajuste que coincide |
-| `Esc` | En el buscador con texto, borra la búsqueda; si no, cierra la ventana |
-| `↑` / `↓` | Sección anterior o siguiente en la lista de secciones |
-| `Inicio` / `Fin` | Primera o última sección |
+| `Esc` | Con una búsqueda activa, la borra desde cualquier punto de la ventana; si no, cierra la ventana |
+| `↑` / `↓` | Sección anterior o siguiente en la lista de secciones; termina una búsqueda activa |
+| `Inicio` / `Fin` | Primera o última sección; también terminan una búsqueda activa |
 | `Ctrl+,` | Cierra la ventana |
 
 ## Ventana «Historial»
@@ -62,9 +62,9 @@ Con «Ajustes» o «Historial» abiertos, las teclas se quedan en la ventana: so
 | `Enter` en el campo del tempo | Aplica el tempo escrito |
 | `Esc` | Cierra el panel y devuelve el foco al punto del pulso |
 
-## Próxima versión (0.1.1)
+## Texto ilimitado
 
-Con la longitud «Ilimitado», `Esc` termina la sesión y puntúa lo escrito en lugar de reiniciar. Consulta [Longitud y texto ilimitado](/docs/practicar/longitud-y-texto-ilimitado).
+Con la longitud «Ilimitado», `Esc` termina la sesión y puntúa lo escrito en lugar de reiniciar, igual que el botón «Terminar». Consulta [Longitud y texto ilimitado](/docs/practicar/longitud-y-texto-ilimitado).
 
 ## Relacionado
 

@@ -7,7 +7,7 @@ section: motor-adaptativo
 order: 2
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["motor-adaptativo", "ia", "modo-codigo"]
 lang: en
 ---
@@ -20,7 +20,7 @@ For every new text, PlexusTyping picks 2 or 3 targets among your worst-scored un
 2. Twice the number of targets are taken as candidates: the 4 worst with 2 targets, the 6 worst with 3.
 3. The targets are drawn among them, more likely the worse the score. Each candidate has a small extra probability, so one with a score of 0 can also come up.
 
-If there are few candidates, all are used. The targets are shown above the text: “Practicando: ñ · qu · z” (practicing: ñ · qu · z).
+If there are few candidates, all are used. The targets are shown above the text: “Practising: ñ · qu · z”.
 
 ## 2. Building the text
 
@@ -30,7 +30,7 @@ If there are few candidates, all are used. The targets are shown above the text:
 | Words | Real lowercase words; at least half contain a target |
 | Code (bundled snippets) | The snippet is chosen by how often it uses your weak symbols |
 | Prose with AI | A text is requested in your language, with the length and the topic; the targets are not requested |
-| Code with AI | The targets are requested, with how many times each must appear, according to the “Densidad” (density, 2× to 5×) |
+| Code with AI | The targets are requested, with how many times each must appear, according to the “Density” (2× to 5×) |
 
 In every case the text only uses characters your [layout](/en/docs/keyboard-and-languages/layouts) can type: with English (US), a Spanish text carries no ñ or accents. With [progressive unlock](/en/docs/practice/progressive-unlock), only the active characters.
 
@@ -38,12 +38,12 @@ In every case the text only uses characters your [layout](/en/docs/keyboard-and-
 
 | Label above the text | Source |
 |---|---|
-| “Texto de diagnóstico” (diagnostic text) | The language's fixed text, until the first session is saved |
-| “Generado con IA · …” (generated with AI) | The provider and model that generated it |
-| “Texto del caché” (cached text) | An AI text generated earlier and saved on your computer |
-| “Corpus local” (local corpus) | The app's offline generator |
+| “Diagnostic text” | The language's fixed text, until the first session is saved |
+| “AI-generated · …” | The provider and model that generated it |
+| “Cached text” | An AI text generated earlier and saved on your computer |
+| “Local corpus” | The app's offline generator |
 
-With the “IA” button in the header off, no request is made: new texts are saved AI texts of the same language and mode, rotating so they do not repeat, or the local corpus if there are none. More in [turn on the AI](/en/docs/ai/turn-on-ai) and [fallback chain, cache and usage](/en/docs/ai/fallback-cache-and-usage).
+With the “AI” button in the header off, no request is made: new texts are saved AI texts of the same language and mode, rotating so they do not repeat, or the local corpus if there are none. More in [turn on the AI](/en/docs/ai/turn-on-ai) and [fallback chain, cache and usage](/en/docs/ai/fallback-cache-and-usage).
 
 ## No waiting
 

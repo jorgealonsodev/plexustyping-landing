@@ -6,7 +6,7 @@ section: referencia
 order: 2
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [motor-adaptativo, progreso, metronomo]
 lang: en
 ---
@@ -15,14 +15,14 @@ This glossary defines the terms PlexusTyping shows, as the application calculate
 
 ## Speed and accuracy
 
-### WPM (words per minute, “PPM”)
+### WPM (words per minute)
 
 Speed in 5-character words per minute. PlexusTyping shows two:
 
 | Measure | Calculation |
 |---|---|
-| Gross WPM (“PPM brutas”) | (characters typed ÷ 5) ÷ minutes |
-| Net WPM (“PPM netas”) | (characters typed ÷ 5 − uncorrected errors) ÷ minutes, never below 0 |
+| Gross WPM | (characters typed ÷ 5) ÷ minutes |
+| Net WPM | (characters typed ÷ 5 − uncorrected errors) ÷ minutes, never below 0 |
 
 “Characters typed” is the cursor's final position. The history's charts and averages use net WPM.
 
@@ -30,19 +30,19 @@ Speed in 5-character words per minute. PlexusTyping shows two:
 
 A position the cursor has already passed whose last typed character is not the right one. It is subtracted from net WPM.
 
-### Accuracy (“precisión”)
+### Accuracy
 
-Correct character keystrokes ÷ character keystrokes, as a percentage. It counts every attempt, including those repeated at the same position with “Parar hasta corregir” (stop until corrected). Backspaces do not count. With no keystrokes, accuracy is 100 %.
+Correct character keystrokes ÷ character keystrokes, as a percentage. It counts every attempt, including those repeated at the same position with “Stop until corrected”. Backspaces do not count. With no keystrokes, accuracy is 100 %.
 
-### Errors (“errores”)
+### Errors
 
-Wrong character keystrokes. “Caracteres fallados” (missed characters) are the characters expected at those keystrokes.
+Wrong character keystrokes. “Missed characters” are the characters expected at those keystrokes.
 
 ### Keystrokes per minute (“pulsaciones por minuto”)
 
 Every applied keystroke, characters and backspaces, ÷ minutes.
 
-### Time (“tiempo”)
+### Time
 
 From the moment of the first keystroke to that of the last. The clock starts with the first key.
 
@@ -70,7 +70,7 @@ A unit's first sample is taken as is.
 
 The EMA of its error samples: 1 if the keystroke was wrong and 0 if it was right.
 
-### Slowness (“lentitud”)
+### Slowness
 
 How much slower than your usual pace a keystroke is, from 0 to 1:
 
@@ -88,9 +88,9 @@ score = 0.7 × error + 0.3 × slowness
 
 It goes from 0 to 1. Only units with at least 3 samples compete as targets.
 
-### Targets (“objetivos”)
+### Targets
 
-The weak units each text practices, 2 or 3 according to the “Objetivos” setting, shown as “Practicando: ñ · qu · z”. They are drawn at random among the worst, more likely the higher their score. More in [how it picks the texts](/en/docs/adaptive-engine/how-it-picks-texts).
+The weak units each text practices, 2 or 3 according to the “Targets” setting, shown as “Practising: ñ · qu · z”. They are drawn at random among the worst, more likely the higher their score. More in [how it picks the texts](/en/docs/adaptive-engine/how-it-picks-texts).
 
 ### Heatmap level
 
@@ -102,9 +102,9 @@ Each key takes the highest score of the characters it produces; a composed chara
 
 The metronome's beats per minute, from 30 to 300. One click equals one expected keystroke.
 
-### Rhythm offset (“desvío de ritmo”)
+### Rhythm deviation
 
-How many milliseconds before (negative, “adelantada”, early) or after (positive, “atrasada”, late) the nearest click each keystroke landed. The results show “Ritmo: desvío medio ±X ms” (rhythm: mean offset), the average absolute offset.
+How many milliseconds before (negative, “early”) or after (positive, “late”) the nearest click each keystroke landed. The results show “Rhythm: mean deviation ±X ms”, the average absolute offset.
 
 ## Progress
 
@@ -112,11 +112,11 @@ How many milliseconds before (negative, “adelantada”, early) or after (posit
 
 In [progressive unlock](/en/docs/practice/progressive-unlock), a key with at least 30 samples, an error (EMA) of 5 % or less and a median time per keystroke within the target speed: 12 000 ÷ WPM ms, that is, 400 ms at 30 WPM.
 
-### Streak (“racha”)
+### Streak
 
 Days in a row on which the current daily goal was met. See [daily goal and streak](/en/docs/practice/daily-goal-and-streak).
 
-### Diagnostic text (“texto de diagnóstico”)
+### Diagnostic text
 
 The fixed text every profile starts with until it saves its first session.
 

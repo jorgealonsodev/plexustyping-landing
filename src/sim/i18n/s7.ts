@@ -41,7 +41,7 @@ export const S7_STRINGS: Record<Locale, S7Strings> = {
     play: "Play",
     pause: "Pause",
     description:
-      "Demo of PlexusTyping's personalization on a sample text (the released app's interface is in Spanish; the demo shows it translated): the app's 59 themes, including the two high-contrast ones (“High contrast dark” and “High contrast light”), its 10 bundled fonts, the five cursor styles (bar, highlight, block, underline and outline), the blinking cursor and the dimmed pending text. The controls are real selectors: choose and the text changes at once.",
+      "Demo of PlexusTyping's personalization on a sample text: the app's 59 themes, including the two high-contrast ones (“High contrast dark” and “High contrast light”), its 10 bundled fonts, the five cursor styles (bar, highlight, block, underline and outline), the blinking cursor and the dimmed pending text. The controls are real selectors: choose and the text changes at once.",
     paused: "Demo paused.",
     playing: "Playing the demo.",
     themeApplied: "Theme: {name}.",

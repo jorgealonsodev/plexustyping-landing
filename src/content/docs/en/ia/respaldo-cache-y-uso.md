@@ -7,7 +7,7 @@ section: ia
 order: 4
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["ia"]
 lang: en
 ---
@@ -16,12 +16,12 @@ The fallback chain is the ordered list of AI providers PlexusTyping tries for ea
 
 ## Building the chain
 
-In Settings → AI → “Cadena de respaldo” (fallback chain):
+In Settings → AI → “Fallback chain”:
 
-1. Add providers with “Añadir proveedor” (add provider); each provider can appear only once.
-2. Order them with the “Subir” and “Bajar” (up and down) arrows; they are tried from top to bottom.
-3. Remove one with “Quitar” (remove).
-4. Check each one with “Probar conexión” (test connection).
+1. Add providers with “Add provider”; each provider can appear only once.
+2. Order them with the “Move up” and “Move down” arrows; they are tried from top to bottom.
+3. Remove one with “Remove”.
+4. Check each one with “Test connection”.
 
 How to configure each provider is in [providers and keys](/en/docs/ai/providers-and-keys).
 
@@ -40,13 +40,13 @@ A valid text must fit the length, use only characters your layout can type and c
 
 If the text does not come from the AI, a short note above it explains why. The source is always shown:
 
-- “Generado con IA · Claude · …” (generated with AI: provider and model)
-- “Texto del caché” (cached text)
-- “Corpus local” (local corpus)
+- “AI-generated · Claude · …” (provider and model)
+- “Cached text”
+- “Local corpus”
 
 ## The usage table
 
-The “Uso de la IA” (AI usage) table counts, per provider, the calls and the tokens of today and in total (“Llamadas”, “Tokens hoy”, “Tokens totales”: calls, tokens today, total tokens). “Actualizar” (refresh) reloads the data. It helps you watch what you spend with your keys. It is stored in the local database, like the cache of generated texts.
+The “AI usage” table counts, per provider, the calls and the tokens of today and in total (“Calls”, “Tokens today”, “Total tokens”). “Refresh” reloads the data. It helps you watch what you spend with your keys. It is stored in the local database, like the cache of generated texts.
 
 ## No waiting
 

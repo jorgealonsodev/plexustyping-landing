@@ -6,7 +6,7 @@ section: teclado-e-idiomas
 order: 3
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["distribuciones-e-idiomas", "accesibilidad"]
 ---
 

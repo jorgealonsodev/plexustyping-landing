@@ -5,7 +5,7 @@ section: ayuda
 order: 3
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [motor-adaptativo, ia]
 lang: en
 ---
@@ -22,12 +22,12 @@ PlexusTyping bugs are reported by opening an *issue* in the GitHub repository `j
 
 | Detail | Where to find it |
 |---|---|
-| Version | In the downloaded file's name, for example `plexustyping_0.1.0_amd64.deb` |
+| Version | In the downloaded file's name, for example `plexustyping_0.2.0_amd64.deb` |
 | System | Linux distribution and its version, or Windows 10 or 11 |
 | Package | `.deb`, `.tar.gz` or `.exe` installer |
 | Steps | What you did, what you expected and what happened |
-| Message | The exact text of the notice, for example “Metrónomo: No hay dispositivo de audio” |
-| Settings involved | Mode (“Prosa”, “Palabras” or “Código”), layout, language, error mode |
+| Message | The exact text of the notice, for example “Metronome: No audio device” |
+| Settings involved | Mode (“Prose”, “Words” or “Code”), layout, language, error mode |
 
 If the failure is in the AI, give the provider and the model. On Linux, when you run `plexustyping` from a terminal, the AI's failed attempts are written to the error output, without the key: you can copy those lines.
 

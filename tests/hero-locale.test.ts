@@ -142,10 +142,9 @@ describe("HeroSim locale (S9)", () => {
 });
 
 describe("Hero copy (S9)", () => {
-  it("says on /en that the demo shows the app translated and the released app is in Spanish", () => {
+  it("no longer says on /en that the released app is in Spanish (app v0.2.0 has an English UI, S17)", () => {
     const d = ui("en").heroSim.description;
-    expect(d).toContain("the demo shows it translated");
-    expect(d).toContain("the released app's interface is in Spanish");
+    expect(d).not.toMatch(/in Spanish|translated/);
     expect(d).toContain("qu, z and x");
     expect(d).not.toContain("ñ");
   });

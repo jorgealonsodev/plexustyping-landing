@@ -21,7 +21,7 @@ export const S6_STRINGS: Record<Locale, SimStrings> = {
   en: {
     title: "PlexusTyping · demo",
     caption:
-      "Progressive unlock. You start on the home row and each time you master the active keys one more unlocks; texts use only the active keys. Sped-up demo: in the app each key takes several sessions. The released app's interface is in Spanish; the demo shows it translated.",
+      "Progressive unlock. You start on the home row and each time you master the active keys one more unlocks; texts use only the active keys. Sped-up demo: in the app each key takes several sessions.",
     play: "Play",
     pause: "Pause",
     description:

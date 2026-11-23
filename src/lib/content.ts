@@ -94,11 +94,11 @@ export async function getFaq(locale: Locale = "es") {
  */
 /**
  * SoftwareApplication featureList: what the released app does today, from the features collection
- * (unlimited text ships with 0.1.1, site-pages spec S2). Shared by the home and /descargar so both
- * copies of the one app entity agree.
+ * (every feature page, unlimited text included since app v0.2.0, site-pages S17). Shared by the home and
+ * /descargar so both copies of the one app entity agree.
  */
 export async function appFeatureList(locale: Locale): Promise<string[]> {
-  return (await getFeatures(locale)).filter((f) => featureSlug(f) !== "texto-ilimitado").map((f) => f.data.h1);
+  return (await getFeatures(locale)).map((f) => f.data.h1);
 }
 
 const TITLE_SUFFIX_RE = / · PlexusTyping$/;

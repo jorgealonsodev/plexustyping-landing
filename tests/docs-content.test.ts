@@ -132,7 +132,7 @@ describe.each(mine.map((d) => [d.id, d] as const))("P4a doc %s", (_id, doc) => {
     expect(doc.front.title?.length).toBeLessThanOrEqual(60);
     expect(doc.front.description?.length).toBeGreaterThanOrEqual(80);
     expect(doc.front.description?.length).toBeLessThanOrEqual(155);
-    expect(doc.front.appVersion).toBe("0.1.0");
+    expect(doc.front.appVersion).toBe("0.2.0");
     expect(doc.front.published).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(doc.front.updated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(doc.front.features).toMatch(/^\[.+\]$/);

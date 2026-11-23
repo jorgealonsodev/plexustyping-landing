@@ -5,11 +5,11 @@ section: ayuda
 order: 2
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [ia, metronomo, texto-ilimitado]
 ---
 
-Esta página reúne los problemas más habituales de PlexusTyping 0.1.0 y cómo resolverlos: la falta de WebKitGTK en Linux, el aviso de SmartScreen en Windows, un metrónomo que no suena, una IA que no responde y el modo temporal. Cada apartado indica el mensaje que verás en la app y el paso que lo soluciona.
+Esta página reúne los problemas más habituales de PlexusTyping 0.2.0 y cómo resolverlos: la falta de WebKitGTK en Linux, el aviso de SmartScreen en Windows, un metrónomo que no suena, una IA que no responde y el modo temporal. Cada apartado indica el mensaje que verás en la app y el paso que lo soluciona.
 
 ## Linux: falta WebKitGTK 4.1
 
@@ -69,9 +69,9 @@ En Linux, si ejecutas la app desde un terminal, cada intento fallido se registra
 
 **Solución:** pasa el ratón por el aviso para ver el error exacto. El archivo es `plexustyping.sqlite3`, en la carpeta de datos de la app; la ruta de cada sistema está en [Dónde se guardan los datos](/docs/ajustes/donde-se-guardan-los-datos).
 
-## Texto ilimitado (próxima versión 0.1.1)
+## Texto ilimitado
 
-La longitud «Ilimitado» llega en la versión 0.1.1. Si la continuación del texto no llega, la app avisa con «No se pudo continuar el texto: …; reintentando…» y vuelve a pedirla; al final del texto espera con «Generando más texto…». Consulta [Longitud y texto ilimitado](/docs/practicar/longitud-y-texto-ilimitado).
+Si la continuación de un texto «Ilimitado» no llega, la app avisa con «No se pudo continuar el texto: …; reintentando…» y vuelve a pedirla; al final del texto espera con «Generando más texto…». Si la IA tarda o falla, el texto sigue con textos del corpus local, con una nota que explica el motivo. Consulta [Longitud y texto ilimitado](/docs/practicar/longitud-y-texto-ilimitado).
 
 ## ¿No está tu problema?
 

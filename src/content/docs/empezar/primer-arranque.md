@@ -7,7 +7,7 @@ section: empezar
 order: 6
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["motor-adaptativo", "distribuciones-e-idiomas"]
 ---
 
@@ -20,6 +20,8 @@ La distribución de teclado de la app debe coincidir con la del sistema operativ
 1. Pulsa <kbd>Ctrl</kbd>+<kbd>,</kbd> (o el botón del engranaje de la cabecera) para abrir «Ajustes».
 2. En «Teclado» → «Distribución», elige la tuya. Cambiarla carga un texto nuevo.
 3. En «Práctica» → «Idioma», elige el idioma de los textos.
+
+La interfaz aparece en el idioma del ordenador si es español, inglés, portugués, francés o alemán, y si no en inglés. Para cambiarla, ve a «Apariencia» → «Idioma de la interfaz».
 
 Las ocho distribuciones están en [distribuciones de teclado](/docs/teclado-e-idiomas/distribuciones) y los cinco idiomas en [idiomas del texto](/docs/teclado-e-idiomas/idiomas-del-texto).
 

@@ -5,7 +5,7 @@ section: ajustes
 order: 2
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [personalizacion, accesibilidad]
 ---
 
@@ -29,11 +29,14 @@ El buscador de la parte superior de «Ajustes» muestra solo los ajustes cuyo no
 
 ## Teclas
 
+Desde la versión 0.2.0, `Esc` borra una búsqueda activa aunque el foco esté en otro control, y moverse por las pestañas de secciones con las flechas termina la búsqueda.
+
 | Tecla | Qué hace |
 |---|---|
 | `Ctrl+F` | Vuelve al buscador y selecciona lo escrito |
 | `Enter` | Lleva el foco al primer ajuste que coincide |
-| `Esc` | Borra la búsqueda; un segundo `Esc` cierra la ventana |
+| `Esc` | Borra la búsqueda desde cualquier punto de la ventana y vuelve al buscador; un segundo `Esc` cierra la ventana |
+| `↑` / `↓`, `Inicio` / `Fin` en las pestañas | Cambian de sección y terminan la búsqueda, como un clic en la pestaña |
 
 ## Relacionado
 

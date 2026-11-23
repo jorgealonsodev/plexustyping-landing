@@ -6,18 +6,20 @@ section: ia
 order: 3
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["ia"]
 lang: en
 ---
 
 The “ChatGPT (tu suscripción)” (your subscription) provider generates the texts with your ChatGPT plan instead of an API key. It uses OpenAI's official sign-in for local open-source applications, still in preview. Usage counts against your plan's quota, and a plan error never falls back to spending your keys.
 
+The provider keeps its Spanish name, “ChatGPT (tu suscripción)”, in every interface language.
+
 ## Signing in
 
 1. In Settings → AI, add “ChatGPT (tu suscripción)” to the fallback chain.
-2. Click “Iniciar sesión con ChatGPT” (sign in with ChatGPT). OpenAI's sign-in page opens in your browser.
-3. Meanwhile, the app shows “Esperando al navegador…” (waiting for the browser) with a “Cancelar” (cancel) button.
+2. Click “Sign in with ChatGPT”. OpenAI's sign-in page opens in your browser.
+3. Meanwhile, the app shows “Waiting for the browser…” with a “Cancel” button.
 4. When you finish, the app shows the account's email and whether plan usage is enabled.
 5. Choose the model from your plan's list.
 
@@ -25,8 +27,8 @@ If you deny access, cancel or take more than 5 minutes, nothing is saved and the
 
 ## Usage and limits
 
-- Usage counts against your ChatGPT plan, with its own limits. “Gestionar uso” (manage usage) opens your account's usage page on chatgpt.com.
-- When you reach the limit you see “Has alcanzado el límite de tu plan de ChatGPT” (you have reached your ChatGPT plan's limit).
+- Usage counts against your ChatGPT plan, with its own limits. “Manage usage” opens your account's usage page on chatgpt.com.
+- When you reach the limit you see “You have reached the limit of your ChatGPT plan”.
 
 ## No silent switch to your keys
 
@@ -34,7 +36,7 @@ A plan error (limit reached, plan usage unavailable or not enabled, ineligible a
 
 ## Signing out
 
-“Cerrar sesión” (sign out) revokes the session at OpenAI and deletes the tokens from your computer. If OpenAI cannot confirm the revocation, the app says “No se pudo confirmar la revocación” (the revocation could not be confirmed), but the tokens are deleted anyway. Afterwards you can sign in with the same account or another.
+“Sign out” revokes the session at OpenAI and deletes the tokens from your computer. If OpenAI cannot confirm the revocation, the app says “The revocation could not be confirmed”, but the tokens are deleted anyway. Afterwards you can sign in with the same account or another.
 
 ## Privacy
 

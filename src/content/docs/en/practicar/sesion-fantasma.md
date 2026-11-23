@@ -7,7 +7,7 @@ section: practicar
 order: 5
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["progreso", "motor-adaptativo"]
 lang: en
 ---
@@ -18,7 +18,7 @@ When you type a text you have typed before, a second, translucent cursor moves a
 
 The ghost runs when there is a record for exactly that text:
 
-- when you press “Repetir” (repeat) on the results;
+- when you press “Repeat” on the results;
 - with the diagnostic text;
 - with any text that comes up again.
 
@@ -27,16 +27,16 @@ The record is your best session with that text in the same profile and the same 
 ## How to read it
 
 1. The ghost waits at the start until your first key.
-2. While you type, the difference shows “+1,2 s” if you are behind or “−0,8 s” if you are ahead, measured at the last position you reached.
+2. While you type, the difference shows “+1.2 s” if you are behind or “−0.8 s” if you are ahead, measured at the last position you reached.
 3. If it reaches the end before you, it stays there.
-4. In the results you see “Récord anterior: 52 PPM” (previous record: 52 WPM) and, if you beat it, “¡Nuevo récord para este texto!” (new record for this text).
+4. In the results you see “Previous record: 52 WPM” and, if you beat it, “New record for this text!”.
 
 A record set in this attempt is the ghost of the next one.
 
 ## Turning it on or off
 
 - The ghost button in the header (lit while it is active).
-- Settings → Practice → “Sesión fantasma” (ghost session).
+- Settings → Practice → “Ghost session”.
 
 ## Details
 

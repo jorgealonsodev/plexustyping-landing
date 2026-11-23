@@ -64,14 +64,14 @@ export const S8_STRINGS: Record<Locale, S8Strings> = {
     pause: "Pause",
     hint: "Click and type",
     description:
-      "Demo with sample data: PlexusTyping's code mode. A Python, TypeScript or Rust snippet with syntax highlighting types itself with automatic indentation: Enter is a measured line break and the next line's indentation fills in by itself. The language picker switches snippets. You can type yourself: click the demo or Tab to its typing field; Enter breaks the line, Backspace corrects and Esc restarts the snippet. In the demo Tab leaves the field; in the app it also indents. Inside the demo the app's labels are translated; the app's own interface is in Spanish.",
+      "Demo with sample data: PlexusTyping's code mode. A Python, TypeScript or Rust snippet with syntax highlighting types itself with automatic indentation: Enter is a measured line break and the next line's indentation fills in by itself. The language picker switches snippets. You can type yourself: click the demo or Tab to its typing field; Enter breaks the line, Backspace corrects and Esc restarts the snippet. In the demo Tab leaves the field; in the app it also indents. Inside the demo the app shows its English interface.",
     paused: "Demo paused.",
     playing: "Playing the demo.",
     restarted: "Snippet restarted.",
     finished: "Snippet finished: {wpm} WPM, {accuracy} accuracy.",
     windowTitle: "PlexusTyping · demo",
     caption:
-      "Code mode: 15 languages with syntax highlighting; Enter and Tab are measured keys and indentation can be automatic. Sample data; the app's interface is in Spanish.",
+      "Code mode: 15 languages with syntax highlighting; Enter and Tab are measured keys and indentation can be automatic. Sample data.",
     app: {
       tagline: "From brain to fingers.",
       profile: "Main",

@@ -27,7 +27,7 @@ export async function collectLlmsData(site: URL): Promise<LlmsData> {
     summary:
       "Tutor de mecanografía adaptativo, gratuito y de código abierto (MIT o Apache-2.0) para Linux y Windows: practica tus puntos débiles con textos del corpus local o, opcionalmente, generados con IA.",
     intro: [
-      "Funciona sin cuenta, sin telemetría y sin conexión. La interfaz de la app está solo en español; los textos de práctica pueden estar en español, inglés, portugués de Brasil, francés o alemán.",
+      "Funciona sin cuenta, sin telemetría y sin conexión. La interfaz de la app (desde la versión 0.2.0) y los textos de práctica están en español, inglés, portugués de Brasil, francés y alemán; el idioma de la interfaz sigue al del ordenador y se cambia en Ajustes → Apariencia.",
     ],
     pages: [
       { title: "Inicio", path: ROUTES.home },
@@ -60,7 +60,7 @@ export async function collectLlmsData(site: URL): Promise<LlmsData> {
     })),
     faq: faq.map((q) => ({ question: q.data.question, answer: markdownToPlainText(q.body ?? ""), path: `/docs/${q.data.doc}` })),
     english: {
-      note: "The site in English, under /en. The app's interface is in Spanish only; the practice texts can be in Spanish, English, Brazilian Portuguese, French or German.",
+      note: "The site in English, under /en. The app's interface (since version 0.2.0) and the practice texts come in English, Spanish, Brazilian Portuguese, French and German; the interface follows the computer's language and is changed in Settings → Appearance.",
       pages: [
         { title: "Home", path: en(ROUTES.home) },
         { title: "Download", path: en(ROUTES.download), description: "Installers for Linux and Windows with their SHA-256 sums." },

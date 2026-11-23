@@ -5,7 +5,7 @@ section: referencia
 order: 3
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [ia, metronomo, distribuciones-e-idiomas]
 lang: en
 ---
@@ -35,7 +35,7 @@ There is no macOS version.
 | Resource | What for | Without it |
 |---|---|---|
 | Internet connection | AI texts and signing in with ChatGPT | The app works with the local corpus |
-| Audio output device | Metronome (uses the default device) | Notice “Metrónomo: No hay dispositivo de audio” (metronome: no audio device) |
+| Audio output device | Metronome (uses the default device) | Notice “Metronome: No audio device” |
 | System keychain (Secret Service on Linux, Credential Manager on Windows) | Saving AI API keys | No key can be saved |
 
 The app window measures at least 720 × 480 pixels.

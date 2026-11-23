@@ -1,8 +1,8 @@
 ---
 /**
  * The nine feature pages as a list of links (name + summary), for /funciones (h2 per feature) and the
- * home's overview (h3), in the entries' language. Texto ilimitado carries its "Próxima versión 0.1.1" /
- * "Next version 0.1.1" label (spec S2).
+ * home's overview (h3), in the entries' language. Texto ilimitado carries a "Nuevo en la 0.2.0" /
+ * "New in 0.2.0" label: it shipped with app v0.2.0 (site-pages S17).
  */
 import type { CollectionEntry } from "astro:content";
 import type { Locale } from "../../i18n/paths";
@@ -16,9 +16,9 @@ interface Props {
 
 const { features, level = 2 } = Astro.props;
 const Heading = level === 2 ? "h2" : "h3";
-const UPCOMING: Record<Locale, Record<string, string>> = {
-  es: { "texto-ilimitado": "Próxima versión 0.1.1" },
-  en: { "texto-ilimitado": "Next version 0.1.1" },
+const BADGES: Record<Locale, Record<string, string>> = {
+  es: { "texto-ilimitado": "Nuevo en la 0.2.0" },
+  en: { "texto-ilimitado": "New in 0.2.0" },
 };
 ---
 
@@ -29,7 +29,7 @@ const UPCOMING: Record<Locale, Record<string, string>> = {
         <Heading class="name">
           <a href={featurePath(featureSlug(f), f.data.lang)}>{f.data.h1}</a>
         </Heading>
-        {UPCOMING[f.data.lang][featureSlug(f)] && <p class="badge">{UPCOMING[f.data.lang][featureSlug(f)]}</p>}
+        {BADGES[f.data.lang][featureSlug(f)] && <p class="badge">{BADGES[f.data.lang][featureSlug(f)]}</p>}
         <p class="summary">{f.data.description}</p>
         <svg class="arrow" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14m-5-5 5 5-5 5" />

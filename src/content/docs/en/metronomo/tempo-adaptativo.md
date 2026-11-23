@@ -6,7 +6,7 @@ section: metronomo
 order: 3
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["metronomo", "motor-adaptativo"]
 lang: en
 ---
@@ -16,7 +16,7 @@ With the adaptive tempo, the metronome readjusts its tempo after each text: it r
 ## Turning it on
 
 1. [Turn on the metronome](/en/docs/metronome/basics) with <kbd>F4</kbd>.
-2. Turn on “Tempo adaptativo” (adaptive tempo) in Settings → Metronome or in the [quick panel](/en/docs/metronome/quick-panel).
+2. Turn on “Adaptive tempo” in Settings → Metronome or in the [quick panel](/en/docs/metronome/quick-panel).
 3. Type a whole text without changing the tempo by hand.
 
 ## The rule
@@ -29,10 +29,10 @@ Only a finished text typed entirely at a single tempo counts.
 | Accuracy below 90 % or a mean offset above 20 % of the interval | Down one step |
 | Any other case | Stays |
 
-A step is 5 % of the tempo, with a minimum of 2 BPM, always within 30–300 BPM. The mean offset is the results' “Ritmo: desvío medio ±X ms” (rhythm: mean offset ±X ms).
+A step is 5 % of the tempo, with a minimum of 2 BPM, always within 30–300 BPM. The mean offset is the results' “Rhythm: mean deviation ±X ms”.
 
 ## What you see
 
-The results show the change, for example “Tempo: 60 → 63 BPM”, or “Tempo: se mantiene en 60 BPM” (tempo: stays at 60 BPM). The new tempo is saved in the “Tempo” setting and used for the next text.
+The results show the change, for example “Tempo: 60 → 63 BPM”, or “Tempo: stays at 60 BPM”. The new tempo is saved in the “Tempo” setting and used for the next text.
 
 If you change the tempo by hand, that value becomes the new starting point. The tempo is a setting shared by all [profiles](/en/docs/progress/profiles).

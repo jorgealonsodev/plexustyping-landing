@@ -1,11 +1,11 @@
 ---
 title: "Mapa de la ventana de ajustes"
-description: "Las nueve secciones de «Ajustes» (Práctica, Texto, Teclado, Metrónomo, Código, Apariencia, Accesibilidad, IA y Perfiles) y qué hay en cada una."
+description: "Las nueve secciones de «Ajustes», de Práctica a Perfiles, y qué hay en cada una, con el idioma de la interfaz en Apariencia."
 section: ajustes
 order: 1
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [personalizacion, progreso, ia]
 ---
 
@@ -18,13 +18,13 @@ La ventana «Ajustes» se abre con `Ctrl+,` o con el botón del engranaje de la 
 | Idioma | Español, English, Português (Brasil), Français, Deutsch | Español |
 | Modo de error | Permitir seguir, Parar hasta corregir, Borrar con Retroceso | Permitir seguir |
 | Objetivos | 2 o 3 unidades débiles por texto | 2 |
-| Longitud | 100, 200, 300, 450 o 600 caracteres | 300 |
+| Longitud | 100, 200, 300, 450, 600, 800, 1000, 1500 o 2000 caracteres, o Ilimitado | 300 |
 | Estadísticas en vivo | Activado o desactivado | Activado |
 | Sesión fantasma | Activado o desactivado | Activado |
 | Desbloqueo progresivo | Activado o desactivado, por perfil | Desactivado |
 | Velocidad objetivo | 20, 30, 40 o 50 PPM | 30 PPM |
 
-Más en [Modos de error](/docs/practicar/modos-de-error), [Sesión fantasma](/docs/practicar/sesion-fantasma) y [Desbloqueo progresivo](/docs/practicar/desbloqueo-progresivo). Las longitudes de 800 a 2000 caracteres y la opción «Ilimitado» llegan en la próxima versión (0.1.1): consulta [Longitud y texto ilimitado](/docs/practicar/longitud-y-texto-ilimitado).
+Más en [Modos de error](/docs/practicar/modos-de-error), [Sesión fantasma](/docs/practicar/sesion-fantasma) y [Desbloqueo progresivo](/docs/practicar/desbloqueo-progresivo). La longitud también se elige en la cabecera, junto a Prosa / Palabras / Código: consulta [Longitud y texto ilimitado](/docs/practicar/longitud-y-texto-ilimitado).
 
 ## Texto
 
@@ -65,7 +65,7 @@ Consulta [Uso básico del metrónomo](/docs/metronomo/uso-basico).
 
 ## Apariencia
 
-«Tema», con 59 temas incluidos y los importados, e «Importar tema de VS Code…». Consulta [Temas e importación de VS Code](/docs/personalizacion/temas-y-vscode).
+«Tema», con 59 temas incluidos y los importados, «Importar tema de VS Code…» e «Idioma de la interfaz»: Español, English, Português (Brasil), Français o Deutsch, o «Automático (idioma del sistema: …)», que sigue el idioma del ordenador (inglés si no es ninguno de ellos). El idioma de la interfaz es el mismo para todos los perfiles y no cambia el idioma del texto de práctica, que se elige en Práctica → Idioma. Consulta [Temas e importación de VS Code](/docs/personalizacion/temas-y-vscode) e [Idiomas del texto](/docs/teclado-e-idiomas/idiomas-del-texto).
 
 ## Accesibilidad
 

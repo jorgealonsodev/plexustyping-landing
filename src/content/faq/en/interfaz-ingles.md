@@ -5,4 +5,4 @@ doc: teclado-e-idiomas/idiomas-del-texto
 lang: en
 ---
 
-No. The app's interface is in Spanish only. What you can choose is the language of the practice text: Spanish, English, Brazilian Portuguese, French or German. More in [text languages](/en/docs/keyboard-and-languages/text-languages).
+Yes. Since version 0.2.0 the interface comes in five languages: Español, English, Português (Brasil), Français and Deutsch. On first start it follows the computer's language, and English when that one is not supported. Change it in “Settings → Appearance → Interface language”, separately from the practice-text language, which can be Spanish, English, Brazilian Portuguese, French or German. More in [text languages](/en/docs/keyboard-and-languages/text-languages).

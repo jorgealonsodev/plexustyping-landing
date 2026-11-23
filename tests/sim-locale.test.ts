@@ -165,7 +165,7 @@ describe("English pages: the app's interface labels translated", () => {
     expect(GHOST_UI.en.delta(-800)).toBe("−0.8 s");
     expect(GHOST_UI.en.recordLines(63, 70, true)).toEqual(["Previous record: 63 WPM", "New record for this text!"]);
     expect(UNLIMITED_UI.en.generating).toBe("Generating more text…");
-    expect(UNLIMITED_UI.en.hint(true, false, true)).toBe("Esc finish · F4 metronome · F6 menu");
+    expect(UNLIMITED_UI.en.hint(true, false, true)).toBe("Esc end · F4 metronome · F6 menu");
     expect(METRONOME_UI.en.tempoNotice({ from: 100, to: 105 })).toBe("Tempo: 100 → 105 BPM");
     expect(METRONOME_UI.en.tempoNotice({ from: 100, to: 100 })).toBe("Tempo: stays at 100 BPM");
     expect(METRONOME_UI.en.sounds).toEqual({ click: "Click", wood: "Wood", beep: "Beep" });

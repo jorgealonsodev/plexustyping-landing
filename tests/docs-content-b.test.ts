@@ -61,7 +61,7 @@ describe("docs sections progreso…proyecto (P4b)", () => {
 
   it.each(pages.map((p) => [p.id, p] as const))("%s: frontmatter matches its folder and app version", (id, p) => {
     expect(p.frontmatter).toMatch(new RegExp(`^section: ${id.split("/")[0]}$`, "m"));
-    expect(p.frontmatter).toMatch(/^appVersion: "0\.1\.0"$/m);
+    expect(p.frontmatter).toMatch(/^appVersion: "0\.2\.0"$/m);
     expect(p.frontmatter).toMatch(/^features: \[[a-z-]+(, [a-z-]+)*\]$/m);
   });
 

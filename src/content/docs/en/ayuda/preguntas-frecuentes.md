@@ -6,7 +6,7 @@ section: ayuda
 order: 1
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [motor-adaptativo, ia]
 lang: en
 ---
@@ -24,7 +24,7 @@ This page sums up the most common questions about PlexusTyping with a short answ
 | Where is my data? | In a local SQLite database, with no account and no telemetry. | [Where data is stored](/en/docs/settings/where-data-is-stored) |
 | Which systems does it run on? | Linux x86_64 and 64-bit Windows 10 and 11. | [System requirements](/en/docs/reference/system-requirements) |
 | Which keyboard layouts does it support? | Eight, from Español (España) to English (Colemak). | [Layouts](/en/docs/keyboard-and-languages/layouts) |
-| Is the interface in English? | No, the interface is in Spanish only; the texts can be in five languages. | [Text languages](/en/docs/keyboard-and-languages/text-languages) |
+| Is the interface in English? | Yes, and in Español, Português (Brasil), Français and Deutsch; change it in “Settings → Appearance → Interface language”, separately from the text language. | [Text languages](/en/docs/keyboard-and-languages/text-languages) |
 | How does it choose what to practice? | It measures error and slowness per character and bigram and picks the weakest units. | [How it measures your weak spots](/en/docs/adaptive-engine/how-it-measures-weak-spots) |
 | Does it update itself? | No. Download the new version and install it. | [Update and uninstall](/en/docs/getting-started/update-and-uninstall) |
 | Can several people use it? | Yes, with separate local profiles. | [Profiles](/en/docs/progress/profiles) |

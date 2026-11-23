@@ -5,4 +5,4 @@ doc: practicar/modos
 lang: en
 ---
 
-Yes. The “Código” (code) mode offers snippets of 5 to 20 lines in 15 languages, with syntax highlighting; Enter and Tab count as keys and their statistics are kept apart from prose. More in [practice modes](/en/docs/practice/modes).
+Yes. The “Code” mode offers snippets of 5 to 20 lines in 15 languages, with syntax highlighting; Enter and Tab count as keys and their statistics are kept apart from prose. More in [practice modes](/en/docs/practice/modes).

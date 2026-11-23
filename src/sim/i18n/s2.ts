@@ -32,7 +32,7 @@ export const S2_STRINGS: Record<Locale, SimStrings> = {
   en: {
     title: "PlexusTyping · demo",
     caption:
-      "Your weak spots. As you type, the keyboard is tinted by each key's errors and slowness; the next text practices those keys and combinations (qu, z, x). Demo data. The released app's interface is in Spanish; the demo shows it translated.",
+      "Your weak spots. As you type, the keyboard is tinted by each key's errors and slowness; the next text practices those keys and combinations (qu, z, x). Demo data.",
     play: "Play",
     pause: "Pause",
     description:

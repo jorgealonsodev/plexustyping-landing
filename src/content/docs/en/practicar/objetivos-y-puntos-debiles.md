@@ -1,22 +1,22 @@
 ---
 title: "Targets and weak spots · PlexusTyping"
-description: "What “Practicando: ñ · qu · z” and “Tus puntos débiles” mean in PlexusTyping, and how to choose 2 or 3 targets per text."
+description: "What “Practising: ñ · qu · z” and “Your weak spots” mean in PlexusTyping, and how to choose 2 or 3 targets per text."
 h1: "Targets and weak spots"
 section: practicar
 order: 4
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["motor-adaptativo"]
 lang: en
 ---
 
-Every adaptive text practices 2 or 3 weak units: single characters or pairs of consecutive letters, such as “qu” or “rr”. They appear above the text, for example “Practicando: ñ · qu · z” (practicing: ñ · qu · z), and the results then show your updated weak spots. Choose how many in Settings → Practice → “Objetivos”.
+Every adaptive text practices 2 or 3 weak units: single characters or pairs of consecutive letters, such as “qu” or “rr”. They appear above the text, for example “Practising: ñ · qu · z”, and the results then show your updated weak spots. Choose how many in Settings → Practice → “Targets”.
 
 ## Choosing how many targets
 
-1. Open “Ajustes” (settings) with <kbd>Ctrl</kbd>+<kbd>,</kbd>.
-2. In Practice → “Objetivos”, choose 2 (the default) or 3.
+1. Open “Settings” with <kbd>Ctrl</kbd>+<kbd>,</kbd>.
+2. In Practice → “Targets”, choose 2 (the default) or 3.
 3. The change applies from the next text.
 
 With more targets, each text spreads the practice over more units.
@@ -25,8 +25,8 @@ With more targets, each text spreads the practice over more units.
 
 | Place | What it shows |
 |---|---|
-| Above the text | The text's source and “Practicando:” (practicing) followed by the targets |
-| Results | “Tus puntos débiles” (your weak spots, or “Tus puntos débiles en código” in code), with the note “El siguiente texto los practica.” (the next text practices them) |
+| Above the text | The text's source and “Practising:” followed by the targets |
+| Results | “Your weak spots” (or “Your weak spots in code” in code), with the note “The next text practises them.” |
 | On-screen keyboard | The [heatmap](/en/docs/adaptive-engine/heatmap), if it is on |
 
 ## The diagnostic text

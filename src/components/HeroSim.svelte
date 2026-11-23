@@ -3,7 +3,7 @@
   app) scored by the app's TypingSession. A recorded replay types when the visitor does not; it stops the moment
   the visitor types, and never starts on its own under prefers-reduced-motion. The input handling mirrors the
   app's Practice.svelte (takeText/onInput/onKeydown/applyEvent); the loop and the replay are website-only.
-  On the English pages (`locale` "en", S9 of odd/tasks/site-pages.md) the app's labels are translated and the
+  On the English pages (`locale` "en", S9 of odd/tasks/site-pages.md) the app's labels are its English ones and the
   texts are the app's English corpus on the English (US) keyboard (src/sim/data/s1.ts DEMO_PACKS); without a
   locale the demo is the Spanish one.
 -->

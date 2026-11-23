@@ -6,7 +6,7 @@ section: teclado-e-idiomas
 order: 3
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["distribuciones-e-idiomas", "accesibilidad"]
 lang: en
 ---
@@ -17,7 +17,7 @@ The on-screen keyboard is a keyboard drawn below the text, with your layout's la
 
 - Press <kbd>F2</kbd>.
 - Or click the logo key in the header: the bar under its P lights up green while the keyboard is visible.
-- Or use Settings → Keyboard → “Teclado visual” (on-screen keyboard).
+- Or use Settings → Keyboard → “On-screen keyboard”.
 
 ## What it shows
 
@@ -36,13 +36,13 @@ With [progressive unlock](/en/docs/practice/progressive-unlock), keys still lock
 
 | Setting | What it does | Default |
 |---|---|---|
-| Teclado visual (on-screen keyboard, <kbd>F2</kbd>) | Shows the on-screen keyboard | On |
-| Destellos (flashes) | Pressed keys light up green or red | On |
-| Mapa de calor (heatmap) | Tints each key by your errors and slowness | Off |
+| On-screen keyboard (<kbd>F2</kbd>) | Shows the on-screen keyboard | On |
+| Flashes | Pressed keys light up green or red | On |
+| Heatmap | Tints each key by your errors and slowness | Off |
 
 ## Alternative colors and reduced motion
 
-- With “Modo daltónico” (color-blind mode) on, flashes use blue and orange (`#0072B2` and `#E69F00`, from the Okabe–Ito palette), the same in every theme, and a wrong key's label is underlined in bold.
+- With “Colour-blind mode” on, flashes use blue and orange (`#0072B2` and `#E69F00`, from the Okabe–Ito palette), the same in every theme, and a wrong key's label is underlined in bold.
 - If the system asks for reduced motion, the pressed key is underlined in the flash color instead of flashing.
 
 ## Accents and dead keys

@@ -6,7 +6,7 @@ section: empezar
 order: 1
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["motor-adaptativo", "ia", "distribuciones-e-idiomas"]
 ---
 
@@ -24,16 +24,17 @@ Los detalles están en [cómo mide tus debilidades](/docs/motor-adaptativo/como-
 
 ## Qué incluye
 
-| Área | Qué hay en la versión 0.1.0 |
+| Área | Qué hay en la versión 0.2.0 |
 |---|---|
 | Práctica | Modos «Prosa», «Palabras» y «Código», tres [modos de error](/docs/practicar/modos-de-error), [sesión fantasma](/docs/practicar/sesion-fantasma) y [desbloqueo progresivo](/docs/practicar/desbloqueo-progresivo) |
 | Teclado | Ocho [distribuciones](/docs/teclado-e-idiomas/distribuciones) y un [teclado visual](/docs/teclado-e-idiomas/teclado-visual-y-destellos) con mapa de calor |
 | Idiomas del texto | Español, inglés, portugués de Brasil, francés y alemán, con corpus local |
+| Interfaz | Los mismos cinco idiomas: Español, English, Português (Brasil), Français y Deutsch |
 | Código | 15 lenguajes de programación, con resaltado de sintaxis |
 | Ritmo | [Metrónomo](/docs/metronomo/uso-basico) de 30 a 300 BPM con tempo adaptativo |
 | IA opcional | Cinco proveedores, entre ellos tu suscripción de ChatGPT ([activar la IA](/docs/ia/activar-la-ia)) |
 
-La interfaz de la app está solo en español. Los textos de práctica pueden estar en cualquiera de los cinco idiomas.
+La interfaz de la app está en cinco idiomas: al empezar sigue el idioma del ordenador, y si no es ninguno de ellos usa el inglés. Se cambia en «Ajustes → Apariencia → Idioma de la interfaz», aparte del idioma de los textos de práctica. Esta documentación cita las etiquetas de la interfaz en español.
 
 ## Privacidad y datos
 

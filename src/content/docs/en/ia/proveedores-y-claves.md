@@ -7,7 +7,7 @@ section: ia
 order: 2
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["ia"]
 lang: en
 ---
@@ -24,13 +24,13 @@ PlexusTyping supports five AI providers: Claude (Anthropic), OpenAI, Google Gemi
 | OpenCode Go | API key |
 | “ChatGPT (tu suscripción)” (your subscription) | Sign-in in the browser, no key ([sign in with ChatGPT](/en/docs/ai/sign-in-with-chatgpt)) |
 
-Each provider in the chain has its model: choose it from the provider's list or type it with “Otro…” (other). With OpenCode Go's reasoning models, the app asks for the lowest reasoning effort so short texts arrive quickly.
+Each provider in the chain has its model: choose it from the provider's list or type it with “Other…”. With OpenCode Go's reasoning models, the app asks for the lowest reasoning effort so short texts arrive quickly.
 
 ## Saving and deleting a key
 
-1. In Settings → AI, type the key in the provider's “Clave de API” (API key) field.
-2. Click “Guardar clave” (save key). The status changes to “Guardada” (saved).
-3. To remove it, click “Borrar clave” (delete key). The status goes back to “Sin clave” (no key).
+1. In Settings → AI, type the key in the provider's “API key” field.
+2. Click “Save key”. The status changes to “Saved”.
+3. To remove it, click “Delete key”. The status goes back to “No key”.
 
 ## Where they are stored
 
@@ -41,8 +41,8 @@ Each provider in the chain has its model: choose it from the provider's list or 
 
 Keys are stored with the service `com.plexustyping.app` and the account `ai:<provider>`. They are never written to the database or the logs, and never returned to the interface.
 
-If the system has no working keychain, you see “Llavero no disponible” (keychain unavailable) and no key can be saved. The app keeps working with the local corpus.
+If the system has no working keychain, you see “Keychain unavailable” and no key can be saved. The app keeps working with the local corpus.
 
 ## What each provider charges
 
-Calls with an API key are billed to your account with the provider. The “Uso de la IA” (AI usage) table counts calls and tokens per provider so you can watch the spending: [fallback chain, cache and usage](/en/docs/ai/fallback-cache-and-usage). What data each provider receives is in [what is sent and what is not](/en/docs/ai/what-is-sent).
+Calls with an API key are billed to your account with the provider. The “AI usage” table counts calls and tokens per provider so you can watch the spending: [fallback chain, cache and usage](/en/docs/ai/fallback-cache-and-usage). What data each provider receives is in [what is sent and what is not](/en/docs/ai/what-is-sent).

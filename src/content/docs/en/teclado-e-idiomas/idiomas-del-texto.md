@@ -6,12 +6,12 @@ section: teclado-e-idiomas
 order: 2
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["distribuciones-e-idiomas"]
 lang: en
 ---
 
-PlexusTyping generates practice texts in five languages: Spanish (the default), English, Brazilian Portuguese, French and German. The language is chosen in Settings → Practice → “Idioma” (language) and changing it loads a new text. Each language has its own local corpus, so offline practice works in all of them.
+PlexusTyping generates practice texts in five languages: Spanish (the default), English, Brazilian Portuguese, French and German. The language is chosen in Settings → Practice → “Text language” and changing it loads a new text. Each language has its own local corpus, so offline practice works in all of them.
 
 ## The five languages
 
@@ -23,7 +23,7 @@ PlexusTyping generates practice texts in five languages: Spanish (the default), 
 | Français | French |
 | Deutsch | German |
 
-The app's interface is in Spanish only; the chosen language is the language of the practice texts.
+The language chosen here is the language of the practice texts; the language of menus and notices is separate (below).
 
 ## What each corpus includes
 
@@ -40,6 +40,16 @@ The language and the [keyboard layout](/en/docs/keyboard-and-languages/layouts) 
 ## What each session saves
 
 Every saved session records its language: you see it in the history and in the `idioma` (language) column of the [exported CSV](/en/docs/progress/export-csv). Code mode does not depend on the language.
+
+## Interface language
+
+Since version 0.2.0, the app's interface (menus, settings, notices, screen reader announcements and error messages) comes in the same five languages: Español, English, Português (Brasil), Français and Deutsch.
+
+- **On first start** it follows the computer's language: the first of its preferred languages that the app has. When it has none of them, it is English.
+- **To change it**, choose another one in “Settings → Appearance → Interface language”; the change applies at once. “Automatic (system language: …)” follows the computer again.
+- **It is independent** of the text language: changing one does not change the other. You can practice German texts with the interface in English, for example.
+- **It is the same for every profile**, unlike the text language.
+- Numbers, percentages and dates follow the format of the interface language.
 
 ## Per profile
 

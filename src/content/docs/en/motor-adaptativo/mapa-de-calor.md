@@ -7,22 +7,22 @@ section: motor-adaptativo
 order: 3
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["motor-adaptativo", "accesibilidad"]
 lang: en
 ---
 
-The heatmap tints every key of the on-screen keyboard by your error and slowness score, and marks it with a level from 1 to 5 so it does not depend on color alone. It is off by default; turn it on in Settings → Keyboard → “Mapa de calor”. A legend below the keyboard explains the five levels.
+The heatmap tints every key of the on-screen keyboard by your error and slowness score, and marks it with a level from 1 to 5 so it does not depend on color alone. It is off by default; turn it on in Settings → Keyboard → “Heatmap”. A legend below the keyboard explains the five levels.
 
 ## Turning it on
 
 1. Show the on-screen keyboard with <kbd>F2</kbd> if it is hidden.
-2. Open “Ajustes” (settings) with <kbd>Ctrl</kbd>+<kbd>,</kbd> and go to Keyboard.
-3. Turn on “Mapa de calor”.
+2. Open “Settings” with <kbd>Ctrl</kbd>+<kbd>,</kbd> and go to Keyboard.
+3. Turn on “Heatmap”.
 
 ## How to read it
 
-The legend says: “Errores por tecla: 1 muy pocos, 2 pocos, 3 algunos, 4 bastantes, 5 muchos” (errors per key: 1 very few, 2 few, 3 some, 4 quite a few, 5 many).
+The legend says: “Errors per key: 1 very few, 2 few, 3 some, 4 quite a few, 5 many”.
 
 | Level | Meaning |
 |---|---|

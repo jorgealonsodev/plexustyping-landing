@@ -89,15 +89,16 @@ describe.skipIf(!built)("home on-page SEO for the target query (after pnpm build
     });
   }
 
-  it("keeps the note on /en that the released app's interface is in Spanish", () => {
+  it("says on /en that the demo shows the app's English interface, one of five (app v0.2.0, S17)", () => {
     const note = text(parse(readFileSync(join(DIST, "en.html"), "utf8")).querySelector("main .hero .note")?.text);
-    expect(note).toBe("The demo shows the app translated; the released app's interface is in Spanish.");
+    expect(note).toBe("The demo shows the app's English interface, one of its five languages.");
   });
 });
 
 /**
  * T9 (S12, S2, S4): the «Cómo aprender» section right after the hero, a 40–50 word answer and four
- * linked steps in an `<ol>`; and the 0.1.1 label of the unlimited-text section as a badge, not a `<p>`.
+ * linked steps in an `<ol>`; and the label of the unlimited-text section as a badge, not a `<p>` (since S17 the
+ * label says the feature is new in 0.2.0).
  * Step texts follow src/content/docs: progressive unlock is off by default and skips the diagnostic
  * text (app ai::first_text), so the diagnostic step is for people who already type.
  */
@@ -114,7 +115,7 @@ const HOWTO = {
       "Practica cada día: fija una meta diaria de minutos o de textos, y la racha cuenta los días seguidos en que la cumples.",
     ],
     unlimited: "Un texto que no se acaba",
-    badge: "Próxima versión 0.1.1",
+    badge: "Nuevo en la 0.2.0",
   },
   en: {
     file: "en.html",
@@ -128,7 +129,7 @@ const HOWTO = {
       "Practice every day: set a daily goal in minutes or texts, and the streak counts the days in a row you meet it.",
     ],
     unlimited: "A text that never runs out",
-    badge: "Next version 0.1.1",
+    badge: "New in 0.2.0",
   },
 } as const;
 
@@ -139,7 +140,7 @@ const STEP_LINKS = [
   "/docs/practicar/meta-diaria-y-racha",
 ];
 
-describe.skipIf(!built)("home «Cómo aprender» steps and the 0.1.1 badge (after pnpm build)", () => {
+describe.skipIf(!built)("home «Cómo aprender» steps and the unlimited-text badge (after pnpm build)", () => {
   for (const locale of ["es", "en"] as const) {
     const h = HOWTO[locale];
     const doc = () => parse(readFileSync(join(DIST, h.file), "utf8"));
@@ -187,7 +188,7 @@ describe.skipIf(!built)("home «Cómo aprender» steps and the 0.1.1 badge (afte
         });
       });
 
-      it("shows the 0.1.1 label as a badge, so the first <p> after the unlimited-text H2 explains it", () => {
+      it("shows the 0.2.0 label as a badge, so the first <p> after the unlimited-text H2 explains it", () => {
         const d = doc();
         const h2 = d.querySelectorAll("main h2").find((x) => text(x.text) === h.unlimited);
         expect(h2).toBeTruthy();

@@ -5,7 +5,7 @@ section: accesibilidad
 order: 5
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [accesibilidad, metronomo]
 lang: en
 ---
@@ -18,7 +18,7 @@ PlexusTyping respects the operating system's reduced motion preference (`prefers
 |---|---|---|
 | Transitions and animations | Active | None, anywhere in the app |
 | Pressed key on the on-screen keyboard | Green or red flash | Underline in the flash color |
-| [Blinking cursor](/en/docs/personalization/cursor) | Blinks if you turn it on | Never blinks |
+| [Blinking cursor](/en/docs/personalization/cursor) | Blinks while you wait (on by default) | Never blinks |
 | Metronome dot | Lights up on every beat | Lights up on every beat, without a transition |
 
 ## How to turn it on

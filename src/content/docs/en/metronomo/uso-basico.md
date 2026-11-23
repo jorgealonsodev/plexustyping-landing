@@ -7,7 +7,7 @@ section: metronomo
 order: 1
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["metronomo"]
 lang: en
 ---
@@ -16,16 +16,16 @@ PlexusTyping's metronome beats a steady rhythm so you type each key on the pulse
 
 ## Turning it on and configuring it
 
-1. Press <kbd>F4</kbd>, or open “Ajustes” (settings) with <kbd>Ctrl</kbd>+<kbd>,</kbd> and turn on “Metrónomo” (metronome).
+1. Press <kbd>F4</kbd>, or open “Settings” with <kbd>Ctrl</kbd>+<kbd>,</kbd> and turn on “Metronome”.
 2. Adjust the options:
 
 | Setting | Values | Default |
 |---|---|---|
 | Tempo | 30 to 300 BPM | 60 BPM |
-| Sonido (sound) | “Clic”, “Madera” or “Bip” (click, wood or beep) | “Clic” |
-| Volumen (volume) | 0 to 100 % | 80 % |
-| Acento (accent) | One every N beats, from 0 (no accent) to 16 | Every 4 |
-| Tempo adaptativo (adaptive tempo) | On or off | Off |
+| Sound | “Click”, “Wood” or “Beep” | “Click” |
+| Volume | 0 to 100% | 80% |
+| Accent | One every N beats, from 0 (no accent) to 16 | Every 4 |
+| Adaptive tempo | On or off | Off |
 
 To change it without leaving the text, use the [quick panel](/en/docs/metronome/quick-panel).
 
@@ -39,9 +39,9 @@ Next to the live statistics, a dot lights up on every beat (accented ones in ano
 
 ## The rhythm offset
 
-Every character you type records how many milliseconds it landed before (“adelantada”, early, a negative value) or after (“atrasada”, late, a positive value) the nearest click. In the results you see:
+Every character you type records how many milliseconds it landed before (“early”, a negative value) or after (“late”, a positive value) the nearest click. In the results you see:
 
-- “Ritmo: desvío medio ±X ms” (rhythm: mean offset ±X ms): the average absolute offset.
+- “Rhythm: mean deviation ±X ms”: the average absolute offset.
 - The share of early and late keys.
 
 Offsets are saved per keystroke, and the session saves the BPM when a single tempo covered the whole text (the BPM column of the [history](/en/docs/progress/history-and-charts)). Changing the tempo restarts the pulse.

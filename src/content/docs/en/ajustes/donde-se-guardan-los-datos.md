@@ -5,7 +5,7 @@ section: ajustes
 order: 3
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [progreso, ia]
 lang: en
 ---
@@ -38,10 +38,10 @@ The `chatgpt-auth.json` file stores the tokens of [sign in with ChatGPT](/en/doc
 
 ## Temporary mode
 
-If the database cannot be opened, the app keeps working with a temporary in-memory store and the header shows “Sin guardar: modo temporal” (not saved: temporary mode). In that mode:
+If the database cannot be opened, the app keeps working with a temporary in-memory store and the header shows “Not saving: temporary mode”. In that mode:
 
 - Sessions last until you close the app.
-- The history shows “Aún no hay sesiones guardadas.” (no saved sessions yet).
+- The history shows “No saved sessions yet.”.
 - The daily goal and progressive unlock only last until you close the app.
 
 ## When uninstalling

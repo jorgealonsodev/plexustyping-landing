@@ -1,5 +1,5 @@
 <!--
-  S3 "Texto ilimitado" demo (PRD §8; app feature "Ilimitado", próxima versión 0.1.1): the app's practice
+  S3 "Texto ilimitado" demo (PRD §8; app feature "Ilimitado", new in app v0.2.0): the app's practice
   screen (src/sim/practice/PracticeScreen.svelte, extracted from the app) driven by UnlimitedDemo
   (src/sim/data/s3.ts), which runs the app's unlimited-text logic (src/sim/practice/unlimited.ts) over a
   recorded replay. Replay only, accelerated, pausable; never starts on its own under prefers-reduced-motion.
@@ -111,7 +111,7 @@
 <div class="sim" bind:this={root}>
   <p class="sr-only">{t.description}</p>
   <div class="controls">
-    <span class="upcoming">{t.upcoming}</span>
+    <span class="upcoming">{t.badge}</span>
     {#if ready}
       <button type="button" class="play" aria-label={wantPlay ? t.pause : t.play} title={wantPlay ? t.pause : t.play} onclick={togglePlay}>
         {#if wantPlay}

@@ -6,7 +6,7 @@ section: teclado-e-idiomas
 order: 2
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["distribuciones-e-idiomas"]
 ---
 
@@ -22,7 +22,7 @@ PlexusTyping genera textos de práctica en cinco idiomas: español (el predeterm
 | Français | Francés |
 | Deutsch | Alemán |
 
-La interfaz de la app está solo en español; el idioma elegido es el de los textos de práctica.
+El idioma elegido aquí es el de los textos de práctica; el de los menús y avisos es aparte (más abajo).
 
 ## Qué incluye cada corpus
 
@@ -39,6 +39,16 @@ El idioma y la [distribución de teclado](/docs/teclado-e-idiomas/distribuciones
 ## Qué guarda cada sesión
 
 Cada sesión guardada registra su idioma: lo verás en el historial y en la columna `idioma` del [CSV exportado](/docs/progreso/exportar-csv). El modo código no depende del idioma.
+
+## Idioma de la interfaz
+
+Desde la versión 0.2.0, la interfaz de la app (menús, ajustes, avisos, anuncios para lector de pantalla y mensajes de error) está en los mismos cinco idiomas: Español, English, Português (Brasil), Français y Deutsch.
+
+- **Al empezar** sigue el idioma del ordenador: el primero de sus idiomas preferidos que la app tenga. Si no tiene ninguno, usa el inglés.
+- **Para cambiarlo**, elige otro en «Ajustes → Apariencia → Idioma de la interfaz»; el cambio se aplica al momento. «Automático (idioma del sistema: …)» vuelve a seguir al ordenador.
+- **Es independiente** del idioma del texto: cambiar uno no cambia el otro. Puedes practicar textos en alemán con la interfaz en español, por ejemplo.
+- **Es el mismo para todos los perfiles**, a diferencia del idioma del texto.
+- Los números, porcentajes y fechas siguen el formato del idioma de la interfaz.
 
 ## Por perfil
 

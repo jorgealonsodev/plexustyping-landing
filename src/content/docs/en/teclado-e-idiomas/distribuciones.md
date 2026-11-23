@@ -7,12 +7,12 @@ section: teclado-e-idiomas
 order: 1
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["distribuciones-e-idiomas"]
 lang: en
 ---
 
-PlexusTyping includes eight keyboard layouts, chosen in Settings → Keyboard → “Distribución” (layout). The layout decides how the on-screen keyboard is drawn and which characters can appear in the texts. It must match the one set in your operating system, because keystrokes arrive from the system keyboard.
+PlexusTyping includes eight keyboard layouts, chosen in Settings → Keyboard → “Layout”. The layout decides how the on-screen keyboard is drawn and which characters can appear in the texts. It must match the one set in your operating system, because keystrokes arrive from the system keyboard.
 
 ## The eight layouts
 
@@ -30,7 +30,7 @@ PlexusTyping includes eight keyboard layouts, chosen in Settings → Keyboard �
 ## Changing layout
 
 1. Set the same layout in your operating system.
-2. In PlexusTyping, open “Ajustes” (settings) with <kbd>Ctrl</kbd>+<kbd>,</kbd> and go to Keyboard → “Distribución”.
+2. In PlexusTyping, open “Settings” with <kbd>Ctrl</kbd>+<kbd>,</kbd> and go to Keyboard → “Layout”.
 3. Choose yours. A new text loads at once.
 
 ## What the layout changes

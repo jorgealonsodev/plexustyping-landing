@@ -84,7 +84,7 @@ export const S9_STRINGS: Record<Locale, S9Strings> = {
     },
     promptTitle: "La petición, tal cual",
     promptNote:
-      "Con el desbloqueo progresivo se añaden los caracteres permitidos y, en «Ilimitado» (próxima versión), el final del texto ya generado. En código pide además un fragmento de 5 a 20 líneas con los caracteres objetivo.",
+      "Con el desbloqueo progresivo se añaden los caracteres permitidos y, en «Ilimitado», el final del texto ya generado. En código pide además un fragmento de 5 a 20 líneas con los caracteres objetivo.",
     reply: "Generado con IA · Claude",
     packets: ["Siguiente texto", "Petición", '{"text": "…"}', "Texto validado"],
     keptTitle: "Nunca sale de tu equipo",
@@ -94,12 +94,12 @@ export const S9_STRINGS: Record<Locale, S9Strings> = {
     play: "Play",
     pause: "Pause",
     description:
-      "Demo with sample data: what goes to the AI provider when PlexusTyping asks for a text. The interface has no network access: it asks the Rust core for the next text, and the core reads the key from the system keychain and sends the request to the provider. For prose only the language, the length and the topic travel; for code, also the programming language, the target characters and the allowed characters. What you type never leaves your computer. The provider answers with the text, the core validates it and the interface shows it as “Generated with AI · Claude”. Inside the demo the app's labels are translated; the app's own interface is in Spanish.",
+      "Demo with sample data: what goes to the AI provider when PlexusTyping asks for a text. The interface has no network access: it asks the Rust core for the next text, and the core reads the key from the system keychain and sends the request to the provider. For prose only the language, the length and the topic travel; for code, also the programming language, the target characters and the allowed characters. What you type never leaves your computer. The provider answers with the text, the core validates it and the interface shows it as “Generated with AI · Claude”. Inside the demo the app shows its English interface.",
     paused: "Demo paused.",
     playing: "Playing the demo.",
     windowTitle: "PlexusTyping · demo",
     caption:
-      "Private AI: requests leave only from the Rust core, carrying only what the text needs. Sample data; the app's interface is in Spanish.",
+      "Private AI: requests leave only from the Rust core, carrying only what the text needs. Sample data.",
     kindLabel: "Text type",
     kinds: { prose: "Prose", code: "Code" },
     nodes: {
@@ -136,7 +136,7 @@ export const S9_STRINGS: Record<Locale, S9Strings> = {
     },
     promptTitle: "The request, as sent",
     promptNote:
-      "With progressive unlock the allowed characters are added and, in “Unlimited” length (next version), the end of the text already generated. For code it also asks for a 5 to 20 line snippet with the target characters. The app writes its requests in Spanish.",
+      "With progressive unlock the allowed characters are added and, in “Unlimited” length, the end of the text already generated. For code it also asks for a 5 to 20 line snippet with the target characters. The app writes its requests in Spanish.",
     reply: "Generated with AI · Claude",
     packets: ["Next text", "Request", '{"text": "…"}', "Validated text"],
     keptTitle: "Never leaves your computer",

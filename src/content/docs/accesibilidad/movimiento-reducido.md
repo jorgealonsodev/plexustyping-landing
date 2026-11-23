@@ -5,7 +5,7 @@ section: accesibilidad
 order: 5
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [accesibilidad, metronomo]
 ---
 
@@ -17,7 +17,7 @@ PlexusTyping respeta la preferencia de movimiento reducido del sistema operativo
 |---|---|---|
 | Transiciones y animaciones | Activas | Ninguna, en toda la app |
 | Tecla pulsada en el teclado visual | Destello verde o rojo | Subrayado en el color del destello |
-| [Cursor parpadeante](/docs/personalizacion/cursor) | Parpadea si lo activas | No parpadea nunca |
+| [Cursor parpadeante](/docs/personalizacion/cursor) | Parpadea mientras esperas (activado por defecto) | No parpadea nunca |
 | Punto del metrónomo | Se enciende en cada pulso | Se enciende en cada pulso, sin transición |
 
 ## Cómo activarlo

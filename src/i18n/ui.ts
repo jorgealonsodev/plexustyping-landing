@@ -26,7 +26,7 @@ export interface UiStrings {
     published: string;
     platforms: string;
     license: string;
-    /** English site only: the released app's interface is Spanish (PRODUCT.md), said on every page. */
+    /** The released app's interface languages (app v0.2.0, site-pages S17), said on every page. */
     appLanguage?: string;
   };
   /** Shared chrome of the content layouts (breadcrumbs, docs meta, sidebar, TOC). */
@@ -44,7 +44,7 @@ export interface UiStrings {
     /** og:image:alt of the generated cards: "{title} · PlexusTyping". */
     ogAlt: string;
   };
-  /** The S1 hero demo around the app screen (whose own UI is the app's Spanish one, translated on /en). */
+  /** The S1 hero demo around the app screen (the app's own Spanish UI on Spanish pages, its English UI on /en). */
   heroSim: HeroSimStrings;
 }
 
@@ -82,7 +82,12 @@ export const UI: Record<Locale, UiStrings> = {
       otherLanguage: "English",
       darkTheme: "Tema oscuro",
     },
-    release: { published: "publicada el", platforms: "Linux y Windows", license: "MIT o Apache-2.0" },
+    release: {
+      published: "publicada el",
+      platforms: "Linux y Windows",
+      license: "MIT o Apache-2.0",
+      appLanguage: "interfaz en cinco idiomas",
+    },
     layout: {
       breadcrumbs: "Migas de pan",
       home: "Inicio",
@@ -129,7 +134,7 @@ export const UI: Record<Locale, UiStrings> = {
       published: "released on",
       platforms: "Linux and Windows",
       license: "MIT or Apache-2.0",
-      appLanguage: "the app's interface is in Spanish",
+      appLanguage: "interface in five languages",
     },
     layout: {
       breadcrumbs: "Breadcrumbs",
@@ -149,7 +154,7 @@ export const UI: Record<Locale, UiStrings> = {
       play: "Play",
       pause: "Pause",
       description:
-        "Demo with sample data: the PlexusTyping practice screen typing on its own (the released app's interface is in Spanish; the demo shows it translated). It shows the live stats (words per minute, keystrokes per minute, accuracy and time), the text with right and wrong characters, and the on-screen keyboard highlighting the next key. After the diagnostic text, the keyboard is tinted by each key's errors and the next text practices qu, z and x. You can type yourself: click the demo or Tab to its typing field; Esc restarts the text.",
+        "Demo with sample data: the PlexusTyping practice screen typing on its own. It shows the live stats (words per minute, keystrokes per minute, accuracy and time), the text with right and wrong characters, and the on-screen keyboard highlighting the next key. After the diagnostic text, the keyboard is tinted by each key's errors and the next text practices qu, z and x. You can type yourself: click the demo or Tab to its typing field; Esc restarts the text.",
       paused: "Demo paused.",
       playing: "Demo playing.",
       restarted: "Text restarted.",

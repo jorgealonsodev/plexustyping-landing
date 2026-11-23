@@ -7,7 +7,7 @@ section: metronomo
 order: 2
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["metronomo", "accesibilidad"]
 lang: en
 ---
@@ -26,12 +26,12 @@ With the metronome on, the pulse dot and the BPM shown next to the live statisti
 |---|---|
 | Tempo − / + | Lowers or raises the tempo to the previous or next multiple of 5 BPM |
 | Tempo (field) | Type the exact tempo; it applies on <kbd>Enter</kbd> or when you leave the field, within 30–300 BPM |
-| Sonido (sound) | “Clic”, “Madera” or “Bip” (click, wood or beep) |
-| Volumen (volume) | From 0 to 100 % |
-| Acento cada (accent every) | Every how many beats the accent sounds (0 = no accent) |
-| Tempo adaptativo (adaptive tempo) | Turns the [adaptive tempo](/en/docs/metronome/adaptive-tempo) on or off |
-| Apagar F4 (turn off, F4) | Turns the metronome off |
-| Cerrar (close) | Closes the panel |
+| Sound | “Click”, “Wood” or “Beep” |
+| Volume | From 0 to 100% |
+| Accent every | Every how many beats the accent sounds (0 = no accent) |
+| Adaptive tempo | Turns the [adaptive tempo](/en/docs/metronome/adaptive-tempo) on or off |
+| Turn off F4 | Turns the metronome off |
+| Close | Closes the panel |
 
 They are the same settings as Settings → Metronome: a change in one place shows in the other.
 

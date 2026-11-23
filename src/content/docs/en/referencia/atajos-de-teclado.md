@@ -5,32 +5,32 @@ section: referencia
 order: 1
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [accesibilidad, metronomo, modo-codigo]
 lang: en
 ---
 
-These are all the keyboard shortcuts of PlexusTyping 0.1.0. The global ones work from the practice screen: `Ctrl+,` opens the settings, `Ctrl+H` the history, `F5` loads a new text, `F4` turns on the metronome, `F2` shows the on-screen keyboard and `F6` goes to the header. Shortcuts only count without other modifiers added.
+These are all the keyboard shortcuts of PlexusTyping 0.2.0. The global ones work from the practice screen: `Ctrl+,` opens the settings, `Ctrl+H` the history, `F5` loads a new text, `F4` turns on the metronome, `F2` shows the on-screen keyboard and `F6` goes to the header. Shortcuts only count without other modifiers added.
 
 ## Global
 
 | Shortcut | What it does |
 |---|---|
-| `Ctrl+,` | Opens or closes “Ajustes” (settings) |
-| `Ctrl+H` | Opens or closes the “Historial” (history) |
+| `Ctrl+,` | Opens or closes “Settings” |
+| `Ctrl+H` | Opens or closes the “History” |
 | `F5` | Discards the current text and loads a new one |
 | `F4` | Turns the metronome on or off |
 | `F2` | Shows or hides the on-screen keyboard; also works inside the windows |
 | `F6` | From the practice field, moves focus to the header's first control |
 
-With “Ajustes” or “Historial” open, keys stay in the window: only `F2` reaches the application.
+With “Settings” or “History” open, keys stay in the window: only `F2` reaches the application.
 
 ## In the practice text
 
 | Key | When | What it does |
 |---|---|---|
-| `Esc` | While typing or on the results | Restarts the text |
-| `Enter` | On the results | “Siguiente texto” (next text), if focus is not on a button such as “Repetir” (repeat) |
+| `Esc` | While typing or on the results | Restarts the text; in an “Unlimited” text, ends the session and scores what you typed |
+| `Enter` | On the results | “Next text”, if focus is not on a button such as “Repeat” |
 | `Backspace` | While typing | Deletes the last character, according to the [error mode](/en/docs/practice/error-modes) |
 | `Enter` | Code mode | Line break, measured as a keystroke |
 | `Tab` | Code mode | Indentation: types a tab or skips the spaces to the next tab stop; measured as a keystroke |
@@ -38,18 +38,18 @@ With “Ajustes” or “Historial” open, keys stay in the window: only `F2` r
 
 `Esc` only restarts from the practice field, never from another control. `Ctrl+Backspace` does not delete.
 
-## “Ajustes” window
+## “Settings” window
 
 | Key | What it does |
 |---|---|
 | `Ctrl+F` | Returns to the search box |
 | `Enter` in the search box | Goes to the first matching setting |
-| `Esc` | In the search box with text, clears the search; otherwise, closes the window |
-| `↑` / `↓` | Previous or next section in the section list |
-| `Home` / `End` | First or last section |
+| `Esc` | With an active search, clears it from anywhere in the window; otherwise, closes the window |
+| `↑` / `↓` | Previous or next section in the section list; ends an active search |
+| `Home` / `End` | First or last section; they also end an active search |
 | `Ctrl+,` | Closes the window |
 
-## “Historial” window
+## “History” window
 
 | Key | What it does |
 |---|---|
@@ -63,9 +63,9 @@ With “Ajustes” or “Historial” open, keys stay in the window: only `F2` r
 | `Enter` in the tempo field | Applies the typed tempo |
 | `Esc` | Closes the panel and returns focus to the pulse dot |
 
-## Next version (0.1.1)
+## Unlimited text
 
-With the “Ilimitado” (unlimited) length, `Esc` ends the session and scores what you typed instead of restarting. See [length and unlimited text](/en/docs/practice/length-and-unlimited-text).
+With the “Unlimited” length, `Esc` ends the session and scores what you typed instead of restarting, like the “End” button. See [length and unlimited text](/en/docs/practice/length-and-unlimited-text).
 
 ## Related
 

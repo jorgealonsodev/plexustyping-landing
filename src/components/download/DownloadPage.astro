@@ -96,6 +96,7 @@ const docs = (
             <span>Versión {m.version}</span>
             <span>Publicada el <time datetime={isoDate(m.publishedAt)}>{published}</time></span>
             <span>MIT o Apache-2.0</span>
+            <span>Interfaz en cinco idiomas</span>
             <a href={m.releaseUrl}>Notas de la versión {m.version} en GitHub</a>
             <a href={RELEASE_LATEST_URL}>Ver la última versión en GitHub</a>
           </p>
@@ -112,7 +113,7 @@ const docs = (
             <span>Version {m.version}</span>
             <span>Released on <time datetime={isoDate(m.publishedAt)}>{published}</time></span>
             <span>MIT or Apache-2.0</span>
-            <span>App interface in Spanish</span>
+            <span>Interface in five languages</span>
             <a href={m.releaseUrl}>Release notes for version {m.version} on GitHub</a>
             <a href={RELEASE_LATEST_URL}>See the latest release on GitHub</a>
           </p>
@@ -328,7 +329,7 @@ cd {tarDir}
               </tbody>
             </table>
           </div>
-          <p>No hay versión para macOS ni AppImage. La interfaz de la app está en español; los textos de práctica, en cinco idiomas.</p>
+          <p>No hay versión para macOS ni AppImage. La interfaz de la app y los textos de práctica están en cinco idiomas: español, inglés, portugués de Brasil, francés y alemán.</p>
         </section>
       ) : (
         <section aria-labelledby="requirements">
@@ -357,7 +358,7 @@ cd {tarDir}
               </tbody>
             </table>
           </div>
-          <p>There is no macOS version and no AppImage. The app's interface is in Spanish; the practice texts come in five languages.</p>
+          <p>There is no macOS version and no AppImage. The app's interface and the practice texts come in five languages: English, Spanish, Brazilian Portuguese, French and German.</p>
         </section>
       )
     }

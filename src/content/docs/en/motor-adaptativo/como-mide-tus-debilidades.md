@@ -7,7 +7,7 @@ section: motor-adaptativo
 order: 1
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: ["motor-adaptativo"]
 lang: en
 ---
@@ -21,7 +21,7 @@ The engine works with **units**:
 - **Characters:** every character of the text, including the space and, in code, the line break and the tab.
 - **Bigrams:** two consecutive expected characters, such as “qu” or “rr”, as long as neither is whitespace.
 
-Each keystroke updates the expected character and the bigram that ends in it. Repeated keystrokes at the same position also count (for example, with “Parar hasta corregir”, stop until corrected).
+Each keystroke updates the expected character and the bigram that ends in it. Repeated keystrokes at the same position also count (for example, with “Stop until corrected”).
 
 ## A unit's score
 
@@ -48,4 +48,4 @@ Each [profile](/en/docs/progress/profiles) has its own models, shared by all its
 
 - To choose each text's targets: [how it picks the texts](/en/docs/adaptive-engine/how-it-picks-texts).
 - To tint the keyboard: [heatmap](/en/docs/adaptive-engine/heatmap).
-- In the results, as “Tus puntos débiles” (your weak spots): [targets and weak spots](/en/docs/practice/targets-and-weak-spots).
+- In the results, as “Your weak spots”: [targets and weak spots](/en/docs/practice/targets-and-weak-spots).

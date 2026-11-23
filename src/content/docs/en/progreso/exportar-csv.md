@@ -1,24 +1,24 @@
 ---
 title: "Export the history to CSV"
-description: "“Exportar CSV” saves your sessions to the downloads folder as a standard UTF-8 CSV. File name, columns and format."
+description: "“Export CSV” saves your sessions to the downloads folder as a standard UTF-8 CSV. File name, columns and format."
 section: progreso
 order: 2
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [progreso]
 lang: en
 ---
 
-The history's “Exportar CSV” (export CSV) button saves the sessions of the active filter to your downloads folder, in a file called `plexustyping-sesiones-AAAAMMDD.csv` with the local date. It never overwrites an existing file: it adds `-2`, `-3`… to the name. When it finishes it shows “Exportado: <ruta> (N sesiones)” (exported: path, N sessions).
+The history's “Export CSV” button saves the sessions of the active filter to your downloads folder, in a file called `plexustyping-sesiones-AAAAMMDD.csv` with the local date. It never overwrites an existing file: it adds `-2`, `-3`… to the name. When it finishes it shows “Exported: <path> (N sessions)”.
 
 ## How to export
 
 1. Open the history with `Ctrl+H`.
-2. Choose the filter: “Todo”, “Prosa”, “Palabras” or “Código” (all, prose, words or code).
-3. In the “Sesiones” (sessions) view, click “Exportar CSV”.
+2. Choose the filter: “All”, “Prose”, “Words” or “Code”.
+3. In the “Sessions” view, click “Export CSV”.
 
-Export is only in the “Sesiones” view. If the filter has no sessions, nothing is written and “No hay sesiones que exportar.” (no sessions to export) appears.
+Export is only in the “Sessions” view. If the filter has no sessions, nothing is written and “There are no sessions to export.” appears.
 
 ## File format
 

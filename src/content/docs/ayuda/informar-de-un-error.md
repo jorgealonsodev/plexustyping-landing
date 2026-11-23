@@ -5,7 +5,7 @@ section: ayuda
 order: 3
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [motor-adaptativo, ia]
 ---
 
@@ -21,7 +21,7 @@ Los errores de PlexusTyping se informan abriendo una *issue* en el repositorio d
 
 | Dato | Dónde encontrarlo |
 |---|---|
-| Versión | En el nombre del archivo descargado, por ejemplo `plexustyping_0.1.0_amd64.deb` |
+| Versión | En el nombre del archivo descargado, por ejemplo `plexustyping_0.2.0_amd64.deb` |
 | Sistema | Distribución de Linux y su versión, o Windows 10 u 11 |
 | Paquete | `.deb`, `.tar.gz` o instalador `.exe` |
 | Pasos | Qué hiciste, qué esperabas y qué pasó |

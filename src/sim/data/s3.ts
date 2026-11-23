@@ -1,4 +1,4 @@
-// S3 "Texto ilimitado" (PRD §8; app feature "Ilimitado", próxima versión 0.1.1): prerecorded data and the
+// S3 "Texto ilimitado" (PRD §8; app feature "Ilimitado", released in 0.2.0): prerecorded data and the
 // replay that drives the app's unlimited-text logic (src/sim/practice/unlimited.ts, copied from the app).
 // Demostración: the texts are sentences of the app's Spanish corpus at app commit
 // 14f64cf2b9619deca9d99c2dbb3a2358586c5390 (crates/plexustyping-corpus/data/es/sentences.txt), unchanged and

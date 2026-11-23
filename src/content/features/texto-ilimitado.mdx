@@ -1,8 +1,8 @@
 ---
 title: "Texto ilimitado para practicar mecanografía · PlexusTyping"
-description: "Próxima versión 0.1.1: un texto que crece mientras escribes, con la continuación generada sin interrumpirte. Esc o «Terminar» puntúan lo escrito."
+description: "Desde la 0.2.0, un texto que crece mientras escribes, con la continuación generada sin interrumpirte. Esc o «Terminar» puntúan lo escrito."
 h1: "Texto ilimitado"
-lead: "Llega en la próxima versión 0.1.1: con la longitud «Ilimitado», el texto de práctica crece mientras escribes. Al acercarte al final, PlexusTyping genera la continuación con IA o con el corpus local y la añade sin interrumpirte. Sirve para sesiones largas de prosa o palabras; Esc o «Terminar» puntúan lo escrito."
+lead: "Con la longitud «Ilimitado», el texto de práctica crece mientras escribes. Al acercarte al final, PlexusTyping genera la continuación con IA o con el corpus local y la añade sin interrumpirte. Sirve para sesiones largas de prosa o palabras; Esc o «Terminar» puntúan lo escrito."
 order: 3
 updated: 2026-11-23
 docs:
@@ -11,7 +11,7 @@ docs:
 ---
 import FeatureSim from "../../components/features/FeatureSim.astro";
 
-<p class="note"><span class="badge">Próxima versión 0.1.1</span> La versión publicada, la 0.1.0, ofrece textos de 100 a 600 caracteres. El texto ilimitado y las longitudes de 800 a 2000 caracteres llegan con la 0.1.1.</p>
+<p class="note"><span class="badge">Nuevo en la 0.2.0</span> El texto ilimitado, las longitudes de 800 a 2000 caracteres y el selector de longitud de la cabecera llegaron con la versión 0.2.0.</p>
 
 <FeatureSim sim="s3" />
 
@@ -21,19 +21,20 @@ Empiezas con un texto de unos 600 caracteres. Cuando llegas a la mitad, o cuando
 
 En prosa, la continuación la escribe la IA a partir de los últimos 400 caracteres, en el mismo idioma. Sin IA, o si falla, sigue un texto del corpus local con una nota que lo explica. En el modo palabras siempre siguen más palabras del corpus. El modo código no usa esta opción y mantiene su límite de líneas.
 
-Si llegas al final antes que la continuación, el texto espera con «Generando más texto…» y sigue en cuanto llega.
+Si llegas al final antes que la continuación, el texto espera con «Generando más texto…» y sigue en cuanto llega. Si la IA tarda o falla, la continuación sale del corpus local.
 
 ## Cómo termina la sesión
 
-<kbd>Esc</kbd> o el botón «Terminar» cierran la sesión y puntúan lo que has escrito como una sesión completa: resultados, historial, estadísticas, meta diaria y desbloqueo progresivo. Si terminas sin escribir nada, se descarta y se carga otro texto. «Repetir» vuelve a poner solo el texto que escribiste, como un texto normal.
+<kbd>Esc</kbd> o el botón «Terminar» cierran la sesión y puntúan lo que has escrito como una sesión completa: resultados, historial, estadísticas, meta diaria y desbloqueo progresivo. Si terminas sin escribir nada, se descarta y se carga otro texto. «Repetir» vuelve a poner solo la parte que escribiste, como un texto normal.
 
 Los textos ilimitados no corren contra la sesión fantasma, y el tempo adaptativo del [metrónomo](/funciones/metronomo) no cambia después de ellos.
 
 ## Longitudes disponibles
 
-| Versión | Longitudes |
+| Opción | Longitudes |
 | --- | --- |
-| 0.1.0 (publicada) | 100, 200, 300 (por defecto), 450 y 600 caracteres |
-| 0.1.1 (próxima) | Además 800, 1000, 1500 y 2000 caracteres, e «Ilimitado» |
+| Caracteres | 100, 200, 300 (por defecto), 450, 600, 800, 1000, 1500 y 2000 |
+| Sin límite | «Ilimitado», en prosa y palabras |
+| Dónde se elige | En la cabecera, junto a Prosa / Palabras / Código, o en Ajustes → Práctica → «Longitud» |
 
 Para continuar el texto solo se envía a la IA el texto ya generado, nunca lo que escribes. Más detalles en [IA opcional](/funciones/ia).

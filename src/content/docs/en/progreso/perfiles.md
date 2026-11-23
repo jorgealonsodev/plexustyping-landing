@@ -5,7 +5,7 @@ section: progreso
 order: 3
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [progreso]
 lang: en
 ---
@@ -18,10 +18,10 @@ The active profile's name appears in the header. Clicking it opens Settings → 
 
 | Action | What it does |
 |---|---|
-| “Nuevo perfil” (new profile) | Creates a profile with the active one's language and layout. It does not become active until you click “Usar”. |
-| “Usar” (use) | Switches to the chosen profile. |
-| “Renombrar” (rename) | Changes the name. |
-| “Borrar” (delete) | Deletes the profile with all its sessions, keystrokes and statistics. |
+| “New profile” | Creates a profile with the active one's language and layout. It does not become active until you click “Use”. |
+| “Use” | Switches to the chosen profile. |
+| “Rename” | Changes the name. |
+| “Delete” | Deletes the profile with all its sessions, keystrokes and statistics. |
 
 Names have 1 to 40 characters and cannot repeat, ignoring case.
 
@@ -40,9 +40,9 @@ Switching profile applies its layout, language and theme, loads a new text and s
 
 ## Deleting a profile
 
-“Borrar” asks before acting:
+“Delete” asks before acting:
 
-> “Se borrarán el historial y las estadísticas de «nombre». ¿Continuar?”
+> The history and statistics of “name” will be deleted. Continue?
 > (The history and statistics of “name” will be deleted. Continue?)
 
 - It cannot be undone.

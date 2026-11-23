@@ -47,7 +47,7 @@ export const S5_STRINGS: Record<Locale, S5Strings> = {
     soundOn: "Hear the metronome",
     soundOff: "Mute",
     description:
-      "Demo with sample data of the PlexusTyping metronome (the released app's interface is in Spanish; the demo shows it translated): the pulse dot lights on every beat, yellow on accents; a text is typed to the beat and, once finished, the mean rhythm offset and the adaptive tempo for the next text appear. The quick panel changes the tempo (30 to 300 BPM, with − and + or by typing it), the sound (Click, Wood or Beep), the volume and the accent. It makes no sound until you press “Hear the metronome”.",
+      "Demo with sample data of the PlexusTyping metronome: the pulse dot lights on every beat, yellow on accents; a text is typed to the beat and, once finished, the mean rhythm offset and the adaptive tempo for the next text appear. The quick panel changes the tempo (30 to 300 BPM, with − and + or by typing it), the sound (Click, Wood or Beep), the volume and the accent. It makes no sound until you press “Hear the metronome”.",
     paused: "Demo paused.",
     playing: "Playing the demo.",
     soundStarted: "Sound on.",

@@ -5,12 +5,12 @@ section: accesibilidad
 order: 3
 published: 2026-11-23
 updated: 2026-11-23
-appVersion: "0.1.0"
+appVersion: "0.2.0"
 features: [accesibilidad, distribuciones-e-idiomas]
 lang: en
 ---
 
-“Modo daltónico” (color-blind mode), in Settings → Accessibility, changes the on-screen keyboard's flashes: instead of green for a hit and red for an error, it uses the blue `#0072B2` and the orange `#E69F00` of the Okabe–Ito palette, the same in every theme. In addition, a wrong key's label is underlined in bold. It is off by default.
+“Colour-blind mode”, in Settings → Accessibility, changes the on-screen keyboard's flashes: instead of green for a hit and red for an error, it uses the blue `#0072B2` and the orange `#E69F00` of the Okabe–Ito palette, the same in every theme. In addition, a wrong key's label is underlined in bold. It is off by default.
 
 ## What changes
 
@@ -20,7 +20,7 @@ lang: en
 | Error flash | Red | Orange `#E69F00` |
 | Wrong key | Color only | Color and label underlined in bold |
 
-The setting's hint sums it up: “Destellos en azul y naranja en lugar de verde y rojo; una tecla errónea se subraya.” (flashes in blue and orange instead of green and red; a wrong key is underlined).
+The setting's hint sums it up: “Blue and orange flashes instead of green and red; a wrong key is underlined.”.
 
 ## Other cues that do not depend on color
 
