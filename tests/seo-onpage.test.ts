@@ -3,10 +3,10 @@
  * fixture dist/ written to a temporary directory: a valid site passes, and each template line fails
  * when its element is removed.
  */
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import { checkSite } from "../src/lib/onpage/check";
 
 const SITE = "https://plexus.example";
@@ -160,8 +160,14 @@ const INDEXABLE = [
   "/privacidad",
 ];
 
+const created: string[] = [];
+afterAll(() => {
+  for (const dir of created) rmSync(dir, { recursive: true, force: true });
+});
+
 function writeSite(fx: Fixture, opts: { sitemap?: string[]; robots?: string; skipOg?: boolean } = {}): string {
   const dir = mkdtempSync(join(tmpdir(), "onpage-"));
+  created.push(dir);
   for (const [file, page] of Object.entries(fx)) {
     mkdirSync(dirname(join(dir, file)), { recursive: true });
     writeFileSync(join(dir, file), html(page));
