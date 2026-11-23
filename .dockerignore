@@ -8,6 +8,7 @@ dist
 .atl
 .claude
 .impeccable
+.playwright-mcp
 odd
 tests
 coverage

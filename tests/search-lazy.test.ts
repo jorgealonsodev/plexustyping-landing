@@ -83,7 +83,9 @@ describe.skipIf(!built)("built site (after pnpm build)", () => {
       expect(html, file).not.toMatch(/<script[^>]*\bsrc=/);
       expect(html, file).not.toMatch(/<script[^>]*type="module"/);
       expect(html, file).not.toMatch(/modulepreload|rel="preload"[^>]*as="(script|fetch)"/);
-      expect(html, file).not.toContain("/pagefind/");
+      // The speculation rules name /pagefind/* only to exclude it from prefetching (seo-gaps S7).
+      const withoutRules = html.replace(/<script type="speculationrules">[^<]*<\/script>/g, "");
+      expect(withoutRules, file).not.toContain("/pagefind/");
       expect(html, file).toContain(SEARCH_BOOTSTRAP);
     }
   });

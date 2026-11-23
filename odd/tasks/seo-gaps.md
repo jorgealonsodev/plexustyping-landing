@@ -22,15 +22,15 @@ Deferred (need the owner or an external service, not in scope): real domain, rel
 
 | ID | Specs | Route | Status | Commit |
 |---|---|---|---|---|
-| T1 | S1 | inline | done, tests/seo-deploy-guard.test.ts | |
-| T2 | S2 | inline | done, shallow-clone test | |
-| T3 | S3 | inline | done, CLS 0.12 → 0 measured | |
-| T4 | S4 | inline | done, check:seo rule | |
-| T5 | S5 | inline | done (4 pages) | |
-| T6 | S6 | inline | done | |
-| T7 | S7 | inline | done, 0 CSP errors | |
-| T8 | S8 | inline | done | |
-| T9 | S9 | inline | pending live check | |
+| T1 | S1 | inline | done, tests/seo-deploy-guard.test.ts | 1328d63 |
+| T2 | S2 | inline | done, shallow-clone test | 1328d63 |
+| T3 | S3 | inline | done, CLS 0.12 → 0 measured | 78f5070 |
+| T4 | S4 | inline | done, check:seo rule | 78f5070 |
+| T5 | S5 | inline | done (4 pages) | 1328d63 |
+| T6 | S6 | inline | done | 78f5070 |
+| T7 | S7 | inline | done, 0 CSP errors | 1328d63 |
+| T8 | S8 | inline | done | 78f5070 |
+| T9 | S9 | inline | done, live nginx probes | 1328d63 |
 | T10 | S10 | inline | dropped (L4) | |
 
 Route evidence: every unit is under ~100 changed lines, so no writer trigger applies; all run inline.
@@ -43,3 +43,5 @@ Route evidence: every unit is under ~100 changed lines, so no writer trigger app
 - L4 S10 dropped: the wordmark image shows the English tagline "Adaptive typing" as part of the binding logo (PRODUCT.md), and alt text should say what the image shows; translating it would describe text that isn't there.
 - L5 Evidence: `pnpm test` 32 files / 613 tests pass; `pnpm check` 0 errors; `pnpm build` OK; `pnpm check:seo` 68 indexable pages, 0 errors, 9 pending /en links (P6). Playwright at 390×844, 4× CPU, ~1.6 Mbps, 150 ms: docs CLS 0 (was 0.12), /docs 0.007, home 0.002; home LCP 616–660 ms warm (text element); speculation rules present, 0 CSP console errors; desktop docs grid keeps the sidebar left of the article.
 - L6 S6 refined while implementing: `inLanguage` on SoftwareApplication describes the app (its UI is Spanish), not the page, so it was kept; the contradiction was the per-locale `url`/`downloadUrl` under one `@id`.
+- L7 Live Docker probes (image built from the working tree): without SITE_URL the build warns, home has noindex and no canonical, sitemap 68/68 <lastmod>, `/404` 404, `/descargar.html` `/index` `/index.html` `/en.html` 301 in one hop, `/docs/` 301, Pagefind fragments `immutable`, `pagefind.js` revalidates, no `.git` in the runtime image. With `SITE_URL=https://plexustyping.test`: no noindex, absolute canonical and robots Sitemap on that host, the four S5 docs pages noindex and out of the sitemap. Risk: item 5 (deploy: Dockerfile, compose, nginx) for 1328d63.
+- L8 Independent verifier: S1–S9 PASS with its own Docker and curl probes; one blocker: after `pnpm build`, `tests/search-lazy.test.ts` failed because the inline speculation rules contain "/pagefind/*" (L5's 613 had run before a build, so the built-site block was skipped). Fixed by ignoring the speculation-rules body in that check, plus a new built-site test that every page's CSP meta carries the rules' hash; `pnpm test` after a build: 32 files, 614 passed. Also `.playwright-mcp` added to `.dockerignore`. Kept as manual probes (they need Docker): the nginx smoke list in L7.

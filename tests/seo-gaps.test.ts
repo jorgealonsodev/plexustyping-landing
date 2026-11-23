@@ -1,5 +1,6 @@
 /** Regression tests for odd/tasks/seo-gaps.md (S3, S5). */
-import { readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { isNoindexPath } from "../src/data/routes";
 
@@ -56,5 +57,22 @@ describe("speculation rules (S7)", async () => {
 describe("home hero hydration (S8)", () => {
   it("hydrates the above-the-fold demo when the browser is idle, not during the first input", () => {
     expect(readFileSync("src/components/HomeHero.astro", "utf8")).toMatch(/<HeroSim client:idle /);
+  });
+});
+
+describe.skipIf(!existsSync("dist/index.html"))("built site (after pnpm build): speculation rules and CSP (S7)", () => {
+  const html = (dir: string): string[] =>
+    readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+      e.isDirectory() ? html(join(dir, e.name)) : e.name.endsWith(".html") ? [join(dir, e.name)] : [],
+    );
+
+  it("every page that inlines the rules allows them by hash in its CSP meta", async () => {
+    const { SPECULATION_RULES_HASH } = await import("../src/scripts/speculation");
+    const pages = html("dist").filter((f) => readFileSync(f, "utf8").includes('type="speculationrules"'));
+    expect(pages.length).toBeGreaterThan(10);
+    for (const file of pages) {
+      const csp = /http-equiv="content-security-policy" content="([^"]+)"/.exec(readFileSync(file, "utf8"))?.[1] ?? "";
+      expect(csp, file).toContain(`'${SPECULATION_RULES_HASH}'`);
+    }
   });
 });
