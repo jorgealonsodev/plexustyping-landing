@@ -12,6 +12,7 @@
   import type { Locale } from "../../i18n/paths";
   import { DEMO_PACKS } from "../../sim/data/s1";
   import { S2_PACKS } from "../../sim/data/s2";
+  import { KEYBOARD_UI, PRACTICE_UI } from "../../sim/i18n/app";
   import type { SimStrings } from "../../sim/i18n/s2";
   import { heatScores } from "../../sim/keyboard/heat";
   import { type Flash, highlightsFor, keyForChar } from "../../sim/keyboard/keys";
@@ -196,6 +197,8 @@
   <!-- A picture of the app at work: no focus stops inside, the text alternative above says what it shows. -->
   <div class="screen" lang={lang} inert>
     <PracticeScreen
+      strings={PRACTICE_UI[lang]}
+      keyboardStrings={KEYBOARD_UI[lang]}
       {view}
       {elapsed}
       {source}

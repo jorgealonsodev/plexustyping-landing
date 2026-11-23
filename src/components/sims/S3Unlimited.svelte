@@ -12,7 +12,7 @@
   import { onMount } from "svelte";
   import type { Locale } from "../../i18n/paths";
   import { S3_PACKS, UnlimitedDemo } from "../../sim/data/s3";
-  import { PRACTICE_UI } from "../../sim/i18n/app";
+  import { KEYBOARD_UI, PRACTICE_UI } from "../../sim/i18n/app";
   import { type S3Strings, UNLIMITED_UI } from "../../sim/i18n/s3";
   import { type Flash, highlightsFor, keyForChar } from "../../sim/keyboard/keys";
   import { KEYBOARDS } from "../../sim/keyboard/locale";
@@ -131,6 +131,8 @@
   <p class="sr-only" aria-live="polite">{announcement}</p>
   <div class="screen" lang={lang}>
     <PracticeScreen
+      strings={PRACTICE_UI[lang]}
+      keyboardStrings={KEYBOARD_UI[lang]}
       {view}
       {elapsed}
       source={PRACTICE_UI[lang].localCorpus}
