@@ -12,7 +12,7 @@ features: ["ia"]
 lang: en
 ---
 
-The fallback chain is the ordered list of AI providers PlexusTyping tries for each text, up to five. If one fails or takes too long, it moves to the next; if all fail, the text comes from the cache or the local corpus, with a notice. So an AI failure never leaves you without a text.
+The fallback chain is the ordered list of AI providers PlexusTyping tries for each text, up to five. If one fails or takes too long, it moves to the next; if all fail, the text comes from the cache or the local corpus, with a notice. So an AI failure never leaves you without a text or repeats one.
 
 ## Building the chain
 
