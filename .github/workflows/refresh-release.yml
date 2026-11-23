@@ -33,6 +33,9 @@ jobs:
           ref: main
           # Full history: the build dates sitemap <lastmod> from git (src/lib/lastmod.ts).
           fetch-depth: 0
+          # The write token is not stored in .git/config: dependency install scripts, the build and the
+          # tests never see it. Only the push step below receives it.
+          persist-credentials: false
 
       # pnpm version from package.json "packageManager" (pnpm@10.34.5), as the Dockerfile's corepack.
       - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
@@ -68,10 +71,12 @@ jobs:
 
       - name: Commit and push the snapshot to main
         if: steps.refresh.outputs.changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tag="$(node -p 'require("./src/data/release-snapshot.json").tag_name')"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- src/data/release-snapshot.json
           git commit -m "chore(release): update the download data to ${tag}"
-          git push origin HEAD:main
+          git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
