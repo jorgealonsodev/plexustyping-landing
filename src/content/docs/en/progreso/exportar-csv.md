@@ -15,7 +15,7 @@ The history's “Exportar CSV” (export CSV) button saves the sessions of the a
 ## How to export
 
 1. Open the history with `Ctrl+H`.
-2. Choose the filter: Todo, Prosa, Palabras or Código (all, prose, words or code).
+2. Choose the filter: “Todo”, “Prosa”, “Palabras” or “Código” (all, prose, words or code).
 3. In the “Sesiones” (sessions) view, click “Exportar CSV”.
 
 Export is only in the “Sesiones” view. If the filter has no sessions, nothing is written and “No hay sesiones que exportar.” (no sessions to export) appears.

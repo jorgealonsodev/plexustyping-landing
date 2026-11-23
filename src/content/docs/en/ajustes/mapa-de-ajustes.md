@@ -18,14 +18,14 @@ The app's interface is in Spanish. In the app, the sections are called “Práct
 
 | Setting | Options | Default |
 |---|---|---|
-| Idioma (language) | Español, English, Português (Brasil), Français, Deutsch | Español |
-| Modo de error (error mode) | Permitir seguir, Parar hasta corregir, Borrar con Retroceso | Permitir seguir |
-| Objetivos (targets) | 2 or 3 weak units per text | 2 |
-| Longitud (length) | 100, 200, 300, 450 or 600 characters | 300 |
-| Estadísticas en vivo (live statistics) | On or off | On |
-| Sesión fantasma (ghost session) | On or off | On |
-| Desbloqueo progresivo (progressive unlock) | On or off, per profile | Off |
-| Velocidad objetivo (target speed) | 20, 30, 40 or 50 WPM | 30 WPM |
+| “Idioma” (language) | Español, English, Português (Brasil), Français, Deutsch | Español |
+| “Modo de error” (error mode) | “Permitir seguir”, “Parar hasta corregir”, “Borrar con Retroceso” | “Permitir seguir” |
+| “Objetivos” (targets) | 2 or 3 weak units per text | 2 |
+| “Longitud” (length) | 100, 200, 300, 450 or 600 characters | 300 |
+| “Estadísticas en vivo” (live statistics) | On or off | On |
+| “Sesión fantasma” (ghost session) | On or off | On |
+| “Desbloqueo progresivo” (progressive unlock) | On or off, per profile | Off |
+| “Velocidad objetivo” (target speed) | 20, 30, 40 or 50 WPM | 30 WPM |
 
 More in [error modes](/en/docs/practice/error-modes), [ghost session](/en/docs/practice/ghost-session) and [progressive unlock](/en/docs/practice/progressive-unlock). The 800 to 2000 character lengths and the “Ilimitado” (unlimited) option arrive in the next version (0.1.1): see [length and unlimited text](/en/docs/practice/length-and-unlimited-text).
 
@@ -37,10 +37,10 @@ More in [error modes](/en/docs/practice/error-modes), [ghost session](/en/docs/p
 
 | Setting | Default |
 |---|---|
-| Distribución (layout; 8 layouts) | Español (España) |
-| Teclado visual (on-screen keyboard, `F2`) | On |
-| Destellos (flashes) | On |
-| Mapa de calor (heatmap) | Off |
+| “Distribución” (layout; 8 layouts) | Español (España) |
+| “Teclado visual” (on-screen keyboard, `F2`) | On |
+| “Destellos” (flashes) | On |
+| “Mapa de calor” (heatmap) | Off |
 
 See [layouts](/en/docs/keyboard-and-languages/layouts) and [on-screen keyboard and flashes](/en/docs/keyboard-and-languages/on-screen-keyboard-and-flashes).
 
@@ -48,12 +48,12 @@ See [layouts](/en/docs/keyboard-and-languages/layouts) and [on-screen keyboard a
 
 | Setting | Range or options | Default |
 |---|---|---|
-| Metrónomo (`F4`) | On or off | Off |
-| Tempo | 30–300 BPM | 60 BPM |
-| Tempo adaptativo (adaptive tempo) | On or off | Off |
-| Sonido (sound) | Clic, Madera, Bip (click, wood, beep) | Clic |
-| Volumen (volume) | 0–100 % | 80 % |
-| Acento (accent) | Every 0–16 beats (0 = no accent) | Every 4 |
+| “Metrónomo” (`F4`) | On or off | Off |
+| “Tempo” | 30–300 BPM | 60 BPM |
+| “Tempo adaptativo” (adaptive tempo) | On or off | Off |
+| “Sonido” (sound) | “Clic”, “Madera”, “Bip” (click, wood, beep) | “Clic” |
+| “Volumen” (volume) | 0–100 % | 80 % |
+| “Acento” (accent) | Every 0–16 beats (0 = no accent) | Every 4 |
 
 See [metronome basics](/en/docs/metronome/basics).
 
@@ -63,8 +63,8 @@ See [metronome basics](/en/docs/metronome/basics).
 
 | Setting | Options | Default |
 |---|---|---|
-| Sangría (indentation) | Automática al pulsar Enter (automatic on Enter), Manual | Automatic on Enter |
-| Líneas máximas (maximum lines) | 5–20 | 12 |
+| “Sangría” (indentation) | “Automática al pulsar Enter” (automatic on Enter), “Manual” | Automatic on Enter |
+| “Líneas máximas” (maximum lines) | 5–20 | 12 |
 
 ## Appearance (“Apariencia”)
 

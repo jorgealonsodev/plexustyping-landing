@@ -22,7 +22,7 @@ PlexusTyping supports five AI providers: Claude (Anthropic), OpenAI, Google Gemi
 | OpenAI | API key |
 | Google Gemini | API key |
 | OpenCode Go | API key |
-| ChatGPT (tu suscripción, your subscription) | Sign-in in the browser, no key ([sign in with ChatGPT](/en/docs/ai/sign-in-with-chatgpt)) |
+| “ChatGPT (tu suscripción)” (your subscription) | Sign-in in the browser, no key ([sign in with ChatGPT](/en/docs/ai/sign-in-with-chatgpt)) |
 
 Each provider in the chain has its model: choose it from the provider's list or type it with “Otro…” (other). With OpenCode Go's reasoning models, the app asks for the lowest reasoning effort so short texts arrive quickly.
 

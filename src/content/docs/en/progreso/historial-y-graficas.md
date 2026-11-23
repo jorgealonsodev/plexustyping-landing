@@ -10,14 +10,14 @@ features: [progreso, motor-adaptativo]
 lang: en
 ---
 
-The history shows every saved session of the active profile. Open it with `Ctrl+H` or the clock button in the header. A filter picks which sessions you see (Todo, Prosa, Palabras or Código: all, prose, words or code) and a selector switches between three views: “Sesiones” (sessions), “Por día” (by day) and “Por carácter” (by character).
+The history shows every saved session of the active profile. Open it with `Ctrl+H` or the clock button in the header. A filter picks which sessions you see (“Todo”, “Prosa”, “Palabras” or “Código”: all, prose, words or code) and a selector switches between three views: “Sesiones” (sessions), “Por día” (by day) and “Por carácter” (by character).
 
 ## Filter and views
 
 | Control | Options | What it changes |
 |---|---|---|
-| Filter | Todo · Prosa · Palabras · Código | The sessions every view uses |
-| View | Sesiones · Por día · Por carácter | What the window shows |
+| Filter | “Todo · Prosa · Palabras · Código” | The sessions every view uses |
+| View | “Sesiones · Por día · Por carácter” | What the window shows |
 
 Every view follows the active filter. `Esc`, the `×` button, a click outside the window or `Ctrl+H` again close the history and return focus to the text.
 

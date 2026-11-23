@@ -27,7 +27,7 @@ PlexusTyping bugs are reported by opening an *issue* in the GitHub repository `j
 | Package | `.deb`, `.tar.gz` or `.exe` installer |
 | Steps | What you did, what you expected and what happened |
 | Message | The exact text of the notice, for example “Metrónomo: No hay dispositivo de audio” |
-| Settings involved | Mode (Prosa, Palabras or Código), layout, language, error mode |
+| Settings involved | Mode (“Prosa”, “Palabras” or “Código”), layout, language, error mode |
 
 If the failure is in the AI, give the provider and the model. On Linux, when you run `plexustyping` from a terminal, the AI's failed attempts are written to the error output, without the key: you can copy those lines.
 

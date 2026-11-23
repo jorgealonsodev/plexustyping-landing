@@ -42,7 +42,7 @@ Switching profile applies its layout, language and theme, loads a new text and s
 
 “Borrar” asks before acting:
 
-> Se borrarán el historial y las estadísticas de «nombre». ¿Continuar?
+> “Se borrarán el historial y las estadísticas de «nombre». ¿Continuar?”
 > (The history and statistics of “name” will be deleted. Continue?)
 
 - It cannot be undone.

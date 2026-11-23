@@ -18,7 +18,7 @@ PlexusTyping's AI is optional: it makes the practice texts more varied, but the 
 
 1. Open “Ajustes” (settings) with <kbd>Ctrl</kbd>+<kbd>,</kbd> and go to the “IA” (AI) section.
 2. Turn on “Usar IA para generar textos”.
-3. Click “Añadir proveedor” (add provider) and choose one: Claude, OpenAI, Google Gemini, OpenCode Go or ChatGPT (tu suscripción, your subscription).
+3. Click “Añadir proveedor” (add provider) and choose one: Claude, OpenAI, Google Gemini, OpenCode Go or “ChatGPT (tu suscripción)” (your subscription).
 4. Choose the model from the provider's list or type it with “Otro…” (other).
 5. Paste your API key and click “Guardar clave” (save key). ChatGPT has no key: click “Iniciar sesión con ChatGPT” (sign in with ChatGPT) ([sign in with ChatGPT](/en/docs/ai/sign-in-with-chatgpt)).
 6. Click “Probar conexión” (test connection). If all goes well you see “Conexión correcta” (connection OK).
