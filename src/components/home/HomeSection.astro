@@ -1,18 +1,22 @@
 ---
 // One home section below the hero: heading and copy on the 65rem column of the hero's window, then the
-// section's demonstration or list (default slot). `id` names the heading for aria-labelledby.
+// section's demonstration or list (default slot). `id` names the heading for aria-labelledby. `badge` is a
+// short label shown as a pill under the heading (e.g. «Próxima versión 0.1.1»), so the copy's first
+// paragraph stays the section's explanation.
 interface Props {
   id: string;
   title: string;
   band?: boolean;
+  badge?: string;
 }
-const { id, title, band = false } = Astro.props;
+const { id, title, band = false, badge } = Astro.props;
 ---
 
 <section class:list={["home-section", { band }]} aria-labelledby={id}>
   <div class="inner">
     <header class="copy">
       <h2 {id}>{title}</h2>
+      {badge && <span class="badge">{badge}</span>}
       <slot name="copy" />
     </header>
     <slot />
@@ -56,7 +60,7 @@ const { id, title, band = false } = Astro.props;
   .copy :global(a) {
     color: var(--link);
   }
-  .copy :global(.badge) {
+  .badge {
     justify-self: start;
     padding: 0.125rem 0.625rem;
     border-radius: 999px;

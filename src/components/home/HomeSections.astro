@@ -1,6 +1,7 @@
 ---
 /**
- * The home below the hero (surface brief STORY), in Spanish or English: S2 weak spots, S3 unlimited text
+ * The home below the hero (surface brief STORY), in Spanish or English: how to learn touch typing with the
+ * app (four steps, each linking its docs page; claims from src/content/docs), S2 weak spots, S3 unlimited text
  * (labeled for 0.1.1), the feature overview linking every feature page, and the download close with the
  * release facts as text (docs/seo-2026.md §C "Home"). Each block keeps its Spanish and English copy side
  * by side, so a Spanish edit is mirrored in the same place (site-pages S7).
@@ -25,6 +26,64 @@ const { features, release, locale = "es" } = Astro.props;
 const es = locale === "es";
 const href = (p: string) => localizePath(p, locale);
 ---
+
+{
+  es ? (
+    <HomeSection id="como-aprender" title="Cómo aprender mecanografía con PlexusTyping">
+      <Fragment slot="copy">
+        <p>
+          Aprender mecanografía con PlexusTyping lleva cuatro pasos: instalarlo, elegir cómo empezar, escribir y practicar a diario. Si
+          empiezas desde cero, activa el desbloqueo progresivo y avanza tecla a tecla desde la fila central. Si ya escribes, la app
+          mide qué teclas y pares de letras te cuestan y los practicas.
+        </p>
+      </Fragment>
+      <ol class="steps" role="list">
+        <li><span><a href="/descargar">Descarga e instala PlexusTyping</a> en Linux o Windows.</span></li>
+        <li><span>
+          Si empiezas desde cero, <a href="/docs/practicar/desbloqueo-progresivo">activa el desbloqueo progresivo</a> en Ajustes →
+          Práctica. Viene desactivado: al activarlo empiezas solo con la fila central y la app añade una tecla cada vez que dominas
+          las activas.
+        </span></li>
+        <li><span>
+          Si ya escribes, empieza por el texto de diagnóstico: la app
+          <a href="/docs/motor-adaptativo/como-mide-tus-debilidades">mide tus errores y tu lentitud</a> en cada carácter y en cada par
+          de letras, y adapta los textos siguientes.
+        </span></li>
+        <li><span>
+          Practica cada día: <a href="/docs/practicar/meta-diaria-y-racha">fija una meta diaria</a> de minutos o de textos, y la
+          racha cuenta los días seguidos en que la cumples.
+        </span></li>
+      </ol>
+    </HomeSection>
+  ) : (
+    <HomeSection id="how-to-learn" title="How to learn touch typing with PlexusTyping">
+      <Fragment slot="copy">
+        <p>
+          Learning touch typing with PlexusTyping takes four steps: install it, choose how to start, type and practice daily. If you
+          start from scratch, turn on progressive unlock and move key by key from the home row. If you already type, the app measures
+          which keys and letter pairs cost you.
+        </p>
+      </Fragment>
+      <ol class="steps" role="list">
+        <li><span><a href={href("/descargar")}>Download and install PlexusTyping</a> on Linux or Windows.</span></li>
+        <li><span>
+          If you start from scratch, <a href={href("/docs/practicar/desbloqueo-progresivo")}>turn on progressive unlock</a> in Settings
+          → Practice. It is off by default: once on, you start with only the home row and the app adds one key each time you master
+          the active ones.
+        </span></li>
+        <li><span>
+          If you already type, start with the diagnostic text: the app
+          <a href={href("/docs/motor-adaptativo/como-mide-tus-debilidades")}>measures your errors and your slowness</a> on every
+          character and every pair of letters, and adapts the next texts.
+        </span></li>
+        <li><span>
+          Practice every day: <a href={href("/docs/practicar/meta-diaria-y-racha")}>set a daily goal</a> in minutes or texts, and the
+          streak counts the days in a row you meet it.
+        </span></li>
+      </ol>
+    </HomeSection>
+  )
+}
 
 {
   es ? (
@@ -55,9 +114,8 @@ const href = (p: string) => localizePath(p, locale);
 
 {
   es ? (
-    <HomeSection id="texto-ilimitado" title="Un texto que no se acaba">
+    <HomeSection id="texto-ilimitado" title="Un texto que no se acaba" badge="Próxima versión 0.1.1">
       <Fragment slot="copy">
-        <p class="badge">Próxima versión 0.1.1</p>
         <p>
           Con la longitud «Ilimitado», el texto crece mientras escribes: al acercarte al final llega la continuación, de la IA o del
           corpus local, sin pausas. <kbd>Esc</kbd> o «Terminar» puntúan lo escrito. La versión publicada, la {release.version}, ofrece
@@ -68,9 +126,8 @@ const href = (p: string) => localizePath(p, locale);
       <FeatureSim sim="s3" />
     </HomeSection>
   ) : (
-    <HomeSection id="unlimited-text" title="A text that never runs out">
+    <HomeSection id="unlimited-text" title="A text that never runs out" badge="Next version 0.1.1">
       <Fragment slot="copy">
-        <p class="badge">Next version 0.1.1</p>
         <p>
           With the “Ilimitado” (Unlimited) length, the text grows while you type: as you near the end the continuation arrives, from
           the AI or the local corpus, without a pause. <kbd>Esc</kbd> or “Terminar” (Finish) scores what you typed. The released
@@ -159,6 +216,48 @@ const href = (p: string) => localizePath(p, locale);
 }
 
 <style>
+  /* The four learning steps: hairline rows like the feature index, the number as a keycap of the app's keyboard. */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+    column-gap: clamp(1.5rem, 4vw, 3rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+    border-bottom: 1px solid var(--border);
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 1rem;
+    padding: 1.375rem 0;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    counter-increment: step;
+  }
+  .steps li > span {
+    padding-top: 0.25rem;
+  }
+  .steps li::before {
+    content: counter(step);
+    display: grid;
+    place-items: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--key-border);
+    border-bottom-width: 3px;
+    border-radius: 0.5rem;
+    background: var(--key-bg);
+    color: var(--key-fg);
+    font-family: var(--mono);
+    font-weight: 700;
+  }
+  .steps a {
+    color: var(--link);
+    font-weight: 600;
+  }
   .all {
     color: var(--muted);
   }
