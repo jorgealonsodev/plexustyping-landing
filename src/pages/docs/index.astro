@@ -12,6 +12,7 @@ import { localizePath } from "../../i18n/paths";
 import { ui } from "../../i18n/ui";
 import Base from "../../layouts/Base.astro";
 import { docPath, getDocs } from "../../lib/content";
+import { ogImagePath } from "../../lib/og/cards";
 import { breadcrumbListNode, type Crumb } from "../../lib/seo/jsonld";
 
 const locale = "es";
@@ -34,7 +35,7 @@ const description =
   "Guías de PlexusTyping: instalar en Linux y Windows, practicar, motor adaptativo, IA opcional, metrónomo, distribuciones, progreso y ajustes.";
 ---
 
-<Base {title} {description} {locale} path="/docs" translated={false} pageType="docs-index" jsonLd={[breadcrumbListNode(site, crumbs)]}>
+<Base {title} {description} {locale} path="/docs" translated={false} pageType="docs-index" ogImage={ogImagePath("docs")} jsonLd={[breadcrumbListNode(site, crumbs)]}>
   <div class="index">
     <Breadcrumbs {crumbs} {locale} />
     <header class="head">

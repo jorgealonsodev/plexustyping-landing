@@ -20,4 +20,5 @@ export const OG_PAGES: OgPageCard[] = [
   { slug: "preguntas-frecuentes", title: "Preguntas frecuentes", locale: "es" },
   { slug: "privacidad", title: "Privacidad", locale: "es" },
   { slug: "licencias", title: "Licencias y créditos", locale: "es" },
+  { slug: "docs", title: "Documentación de PlexusTyping", locale: "es" },
 ];
