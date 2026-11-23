@@ -12,16 +12,32 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
 - S6. Download page (PRD §6.12, §12): artifacts, sizes and SHA-256 sums of the latest GitHub release of `jorgealonsodev/plexustyping`, read at build time with a committed snapshot as fallback (the Docker build in Portainer may have no token or network).
 - S8. "mira las tendencias en seo en 2026, y haz que la web sea lo mas optima posible" / "es importate que el seo on page sea lo mas optimo posible": SEO follows current (late 2026) guidance verified with sources, on top of PRD §10; every page type has an on-page template (title, description, h1–h3, first-paragraph answer, internal links, breadcrumbs, alt text, dates, JSON-LD, Open Graph) enforced by an automated check over the built HTML.
 - S9. English simulations: user reported "los textos no cambian a ingles cuando pasamos a ingles" and decided "todo en ingles": on `/en` pages every simulation shows English everywhere: the app's interface labels translated, English practice text from the app's English corpus, and the English (US) keyboard layout. The Spanish pages keep the app's real Spanish UI. The English pages keep the statement that the released app's interface is in Spanish (PRODUCT.md).
+- S10. Docs slug contract (parent decision, 2026-11-23, derived from PRD §7 so feature, FAQ and docs writers link the same URLs): `/docs/<section>/<page>` with
+  - empezar: que-es-plexustyping, instalar-linux-deb, instalar-linux-tar, instalar-windows, verificar-descarga, primer-arranque, actualizar-y-desinstalar
+  - practicar: modos, longitud-y-texto-ilimitado, modos-de-error, objetivos-y-puntos-debiles, sesion-fantasma, desbloqueo-progresivo, meta-diaria-y-racha
+  - motor-adaptativo: como-mide-tus-debilidades, como-elige-los-textos, mapa-de-calor
+  - ia: activar-la-ia, proveedores-y-claves, iniciar-sesion-con-chatgpt, respaldo-cache-y-uso, que-se-envia
+  - metronomo: uso-basico, panel-rapido, tempo-adaptativo
+  - teclado-e-idiomas: distribuciones, idiomas-del-texto, teclado-visual-y-destellos
+  - progreso: historial-y-graficas, exportar-csv, perfiles
+  - personalizacion: temas-y-vscode, fuentes, cursor, tipografia, texto-pendiente-atenuado
+  - accesibilidad: teclado, lector-de-pantalla, modo-daltonico, alto-contraste, movimiento-reducido
+  - ajustes: mapa-de-ajustes, buscador, donde-se-guardan-los-datos
+  - referencia: atajos-de-teclado, glosario, requisitos-del-sistema
+  - ayuda: preguntas-frecuentes, solucion-de-problemas, informar-de-un-error
+  - proyecto: privacidad, licencias-y-creditos, codigo-fuente-y-contribuir, notas-de-version
 - S7. Assumption: English mirror (`/en/…`, PRD F6) is a later task of this feature, after the Spanish content is approved; until then English routes exist only for the home.
 
 ## Tasks
 
-- [ ] P0 · S3, S4, S5, S8 · delegated (parallel with P1, P1b; in progress 2026-11-23) · shared foundation: content collections + schema, layouts (FeatureLayout, DocsLayout with sidebar/breadcrumbs/TOC, ProsePage), SEO/JSON-LD helpers, nav wired to real routes, sitemap + robots + RSS plumbing, release-data module with snapshot · commit: —
+- [x] P0 · S3, S4, S5, S8 · delegated (parallel with P1, P1b) · shared foundation: content collections + schema, layouts (FeatureLayout, DocsLayout with sidebar/breadcrumbs/TOC, ProsePage), SEO/JSON-LD helpers, nav wired to real routes, sitemap + robots + RSS plumbing, release-data module with snapshot · commit: 793baa8, 9b62f0d, 9b6070a, a62851e; parent: 95ebb3a, 5a9cf1c, 59d2fc3
 - [x] P1 · S3 · delegated, worktree agent-ae1054 (resumed 2026-11-23 from uncommitted S8 partial) · simulations S8 (code mode), S9 (AI privacy diagram), S10 (accessibility) with preview pages · commit: eaf49f7, 88981df, a3182d4 (worktree branch, not merged yet)
-- [ ] P1b · S9 · delegated, worktree agent-aa2e6 (in progress 2026-11-23) · localize simulations S1–S7 for `/en` (labels, English corpus text, en-US layout and key sequences) · commit: —
-- [ ] P2 · S1–S4 · delegated, worktree · home below the hero (S2, S3 sections, feature overview, download close) and `/funciones` + nine feature pages mounting the simulations · commit: —
-- [ ] P3 · S1, S2, S6 · delegated, worktree · `/descargar` · commit: —
-- [ ] P4 · S1, S2, S4, S5 · delegated, worktrees · documentation content (Spanish), split by section across writers · commit: —
+- [ ] P1b · S9 · delegated, worktree agent-aa2e6; partial e6499a7 (S2–S7 data/strings, S5–S7 full); remainder P1c · localize simulations S1–S7 for `/en` (labels, English corpus text, en-US layout and key sequences) · commit: —
+- [ ] P1c · S9 · delegated, worktree · finish S9: PracticeScreen strings, HeroSim/HomeHero locale, en hero copy · commit: —
+- [ ] P2 · S1–S4, S6 · delegated, worktree · includes P3 (`/descargar`, same Persuade world) · home below the hero (S2, S3 sections, feature overview, download close) and `/funciones` + nine feature pages mounting the simulations · commit: —
+- [ ] P3 · merged into P2 · `/descargar` · commit: —
+- [ ] P4a · S1, S2, S4, S5, S10 · delegated, worktree · docs sections empezar…teclado-e-idiomas, /docs index, Pagefind search · commit: —
+- [ ] P4b · S1, S2, S4, S10 · delegated, worktree · docs sections progreso…proyecto · commit: —
 - [ ] P5 · S1, S2, S4 · delegated, worktree · `/novedades` (+ roadmap, RSS), `/preguntas-frecuentes`, `/privacidad`, `/licencias`, `llms.txt`, `llms-full.txt`, Pagefind search · commit: —
 - [ ] P6 · S7 · delegated · English mirror · commit: —
 - [ ] P7 · all · delegated · impeccable finish (detector, finish review, DESIGN.md) and one independent verifier (covers site-base-home T4 too) · commit: —
@@ -34,3 +50,4 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
 - L4 (2026-11-20, user): screenshot of `/en` hero: "los textos no cambian a ingles cuando pasamos a ingles". Parent explained the app UI is Spanish-only (PRD §6.4, §6.13) and offered text+keyboard in English with Spanish labels vs. everything in English; user chose "todo en ingles".
 - L5 (2026-11-23, user): "donde lo dejamos? continua con lo que consideres mas optimo". State found: no task done; P0 had only deps installed, P1 had an uncommitted S8 partial, P1b untouched. Writer trigger (a): P0, P1, P1b relaunched in parallel with disjoint edit surfaces. P2–P5 wait for P0's layout/helper API.
 - L6 (2026-11-23): P1 done: pnpm test 114 passed/1 skipped (corpus check needs app repo), check 0 errors, build ok, islands ~4 KB gzip. S10 RED not observed (tests written first, run after). S9 dropped claims the app does not support (keys and stats do leave to the provider). Gaps: en-US layout comes from P1b; no English preview pages; English app labels are site translations. Merge waits until P0 stops writing in the main checkout.
+- L7 (2026-11-23): P0 done (125 tests, check:seo 0 errors). P1b partial (needed PracticeScreen/HeroSim/HomeHero/ui.ts outside its surface): parent added them to a P1c writer. Parent fixes at the seam: on-page test temp cleanup (95ebb3a), OG cards CORP cross-origin in nginx + _headers (5a9cf1c, nginx -t ok), /en/sim-preview out of sitemap, docs route (59d2fc3). After merges: 211 tests, check 0 errors, build ok, check:seo 0 errors. Fan-out: P1c, P2(+P3), P4a, P4b, P5 in worktrees; og-pages.ts entries are reported to the parent.
