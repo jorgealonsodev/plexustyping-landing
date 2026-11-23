@@ -32,7 +32,7 @@ const switchHref = translated ? mirrorPath(localizePath(path, locale)) : localiz
         <li><a href={href(ROUTES.faq)}>{t.footer.faq}</a></li>
         <li><a href={href(ROUTES.privacy)}>{t.footer.privacy}</a></li>
         <li><a href={href(ROUTES.licenses)}>{t.footer.licenses}</a></li>
-        <li><a href={ROUTES.rss}>{t.footer.rss}</a></li>
+        <li><a href={href(ROUTES.rss)}>{t.footer.rss}</a></li>
         <li><a href={GITHUB_URL} rel="noopener">{t.footer.github}</a></li>
       </ul>
     </nav>
@@ -53,7 +53,7 @@ const switchHref = translated ? mirrorPath(localizePath(path, locale)) : localiz
       <a href={release.url} rel="noopener">PlexusTyping {release.version}</a>, {t.release.published}
       <time datetime={isoDate(release.publishedAt)}>{formatDate(release.publishedAt, locale)}</time> · {t.release.platforms} · {
         t.release.license
-      }
+      }{t.release.appLanguage && <> · {t.release.appLanguage}</>}
     </p>
   </div>
 </footer>

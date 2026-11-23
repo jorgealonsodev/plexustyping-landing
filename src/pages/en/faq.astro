@@ -1,0 +1,62 @@
+---
+// English FAQ (/en/faq; PRD §5, docs/seo-2026.md §C "FAQ"): one <details> per entry of
+// src/content/faq/en, the answer linking to its documentation page; FAQPage JSON-LD with the same answers.
+import { render } from "astro:content";
+import { faqJsonLdItems } from "../../components/prose/faq";
+import ProsePage from "../../layouts/ProsePage.astro";
+import { ROUTES } from "../../data/routes";
+import { localizePath } from "../../i18n/paths";
+import { faqSlug, getFaq } from "../../lib/content";
+import { faqPageNode } from "../../lib/seo/jsonld";
+import { ogImagePath } from "../../lib/og/cards";
+
+const entries = await Promise.all((await getFaq("en")).map(async (e) => ({ e, Content: (await render(e)).Content })));
+const jsonLd = [faqPageNode(faqJsonLdItems(entries.map(({ e }) => ({ question: e.data.question, body: e.body ?? "" }))))];
+---
+
+<ProsePage
+  locale="en"
+  ogImage={ogImagePath("en/preguntas-frecuentes")}
+  path={ROUTES.faq}
+  title="Frequently asked questions · PlexusTyping"
+  description="Short answers about PlexusTyping: price, systems, offline use, what is sent to the AI, SmartScreen, verifying downloads and updates."
+  h1="Frequently asked questions"
+  lead="PlexusTyping is a free, open-source typing tutor for Linux and Windows that works with no account and offline. These are short answers to the most common questions about installing, privacy, AI and languages; each one links to the documentation guide that explains it in detail. The app's interface is in Spanish."
+  pageType="faq"
+  {jsonLd}
+>
+  <div class="faq">
+    {
+      entries.map(({ e, Content }) => (
+        <details id={faqSlug(e)}>
+          <summary>{e.data.question}</summary>
+          <div class="answer">
+            <Content />
+          </div>
+        </details>
+      ))
+    }
+  </div>
+  <p>
+    Can't find your question? See the <a href={localizePath(ROUTES.docs, "en")}>full documentation</a>.
+  </p>
+</ProsePage>
+
+<style>
+  .faq {
+    display: grid;
+    gap: 0.75rem;
+  }
+  details {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .answer {
+    margin-top: 0.75rem;
+  }
+</style>

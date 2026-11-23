@@ -1,0 +1,108 @@
+---
+// English licenses page (/en/licenses), a translation of src/pages/licencias.astro. App: LICENSE-MIT,
+// LICENSE-APACHE and THIRD_PARTY_NOTICES.md of the app repository. Site: this repository (no LICENSE file
+// yet, README "License") and the fontsource packages it bundles (package.json; each package's `license`).
+import ProsePage from "../../layouts/ProsePage.astro";
+import { ROUTES } from "../../data/routes";
+import { APP_REPO_URL, SITE_REPO_URL } from "../../data/site";
+import { localizePath } from "../../i18n/paths";
+import { ogImagePath } from "../../lib/og/cards";
+
+const fonts = [
+  ["Roboto Mono", "@fontsource/roboto-mono 5.3.0", "The Roboto Mono Project Authors"],
+  ["JetBrains Mono", "@fontsource/jetbrains-mono 5.3.0", "The JetBrains Mono Project Authors"],
+  ["Fira Code", "@fontsource/fira-code 5.3.0", "The Fira Code Project Authors"],
+  ["Source Code Pro", "@fontsource/source-code-pro 5.3.1", "Adobe"],
+  ["IBM Plex Mono", "@fontsource/ibm-plex-mono 5.3.0", "IBM Corp."],
+  ["Inconsolata", "@fontsource/inconsolata 5.3.0", "The Inconsolata Project Authors"],
+  ["Atkinson Hyperlegible Mono", "@fontsource/atkinson-hyperlegible-mono 5.3.0", "The Atkinson Hyperlegible Mono Project Authors"],
+  ["Intel One Mono", "@fontsource/intel-one-mono 5.3.0", "The Intel One Mono Project Authors"],
+  ["Lexend Deca", "@fontsource/lexend-deca 5.3.0", "The Lexend Project Authors"],
+  ["OpenDyslexic", "@fontsource/opendyslexic 5.3.0", "Abbie Gonzalez"],
+] as const;
+
+const notices = [
+  ["Color themes", "iTerm2-Color-Schemes (Mark Badolato) and the authors of each theme", "MIT; each theme belongs to its author"],
+  ["Word lists (es, en, pt, fr, de)", "hermitdave/FrequencyWords, by Hermit Dave, from OpenSubtitles 2018", "CC BY-SA 4.0"],
+  ["Sentences (es, en, pt, fr, de)", "Mozilla Common Voice", "CC0 1.0 (public domain)"],
+  ["Practice fonts", "The ten Fontsource packages in the table below", "OFL-1.1"],
+  ["Syntax highlighting", "syntect", "MIT"],
+  ["Syntax definitions", "two-face and bat", "MIT or Apache-2.0; each definition keeps its license"],
+] as const;
+
+const appBlob = (file: string) => `${APP_REPO_URL}/blob/main/${file}`;
+---
+
+<ProsePage
+  locale="en"
+  ogImage={ogImagePath("en/licencias")}
+  path={ROUTES.licenses}
+  title="Licenses and credits · PlexusTyping"
+  description="PlexusTyping is licensed MIT or Apache-2.0. Credits for its themes, word lists, sentences, fonts and highlighting, and this website's licenses."
+  h1="Licenses"
+  lead="PlexusTyping's code is released under the MIT or Apache-2.0 license, at your choice. The themes, word lists, sentences, fonts and syntax highlighting the app includes come from other projects and keep their own license. This page sums up those credits and the licenses of what this website uses."
+  updated={new Date("2026-11-23")}
+>
+  <h2 id="the-app">The app</h2>
+  <p>
+    The code is <strong>MIT or Apache-2.0</strong>: you can use it under either. Full texts:
+    <a href={appBlob("LICENSE-MIT")}>the app's MIT license</a> and
+    <a href={appBlob("LICENSE-APACHE")}>the app's Apache 2.0 license</a>.
+  </p>
+
+  <h3 id="credits">Bundled third-party material</h3>
+  <div class="table" tabindex="0" role="region" aria-label="Third-party material">
+    <table>
+      <thead>
+        <tr><th scope="col">Material</th><th scope="col">Source</th><th scope="col">License</th></tr>
+      </thead>
+      <tbody>
+        {notices.map(([what, from, license]) => (<tr><td>{what}</td><td>{from}</td><td>{license}</td></tr>))}
+      </tbody>
+    </table>
+  </div>
+  <p>
+    The full list, with the authors of each theme and the license texts, is in
+    <a href={appBlob("THIRD_PARTY_NOTICES.md")}>THIRD_PARTY_NOTICES.md in the app's repository</a>. More context in
+    <a href={localizePath("/docs/proyecto/licencias-y-creditos", "en")}>licenses and credits</a> in the documentation.
+  </p>
+
+  <h2 id="this-website">This website</h2>
+  <p>
+    The <a href={SITE_REPO_URL}>code of this website</a> does not declare a license yet. It is built with Astro and Svelte (MIT);
+    Svelte's code only loads in the simulations.
+  </p>
+  <h3 id="fonts">Fonts</h3>
+  <p>
+    The website serves from its own origin the same fonts as the app: JetBrains Mono for monospaced text and all ten in the
+    personalization simulation. All of them are licensed under the SIL Open Font License 1.1 (OFL-1.1).
+  </p>
+  <div class="table" tabindex="0" role="region" aria-label="Fonts of this website">
+    <table>
+      <thead>
+        <tr><th scope="col">Font</th><th scope="col">Package</th><th scope="col">Authors</th></tr>
+      </thead>
+      <tbody>
+        {fonts.map(([name, pkg, authors]) => (<tr><td>{name}</td><td><code>{pkg}</code></td><td>{authors}</td></tr>))}
+      </tbody>
+    </table>
+  </div>
+</ProsePage>
+
+<style>
+  .table {
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+  th,
+  td {
+    padding: 0.5rem 0.75rem 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+</style>

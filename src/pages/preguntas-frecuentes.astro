@@ -5,7 +5,7 @@ import { render } from "astro:content";
 import { faqJsonLdItems } from "../components/prose/faq";
 import ProsePage from "../layouts/ProsePage.astro";
 import { ROUTES } from "../data/routes";
-import { getFaq } from "../lib/content";
+import { faqSlug, getFaq } from "../lib/content";
 import { faqPageNode } from "../lib/seo/jsonld";
 import { ogImagePath } from "../lib/og/cards";
 
@@ -27,7 +27,7 @@ const jsonLd = [faqPageNode(faqJsonLdItems(entries.map(({ e }) => ({ question: e
   <div class="faq">
     {
       entries.map(({ e, Content }) => (
-        <details id={e.id}>
+        <details id={faqSlug(e)}>
           <summary>{e.data.question}</summary>
           <div class="answer">
             <Content />

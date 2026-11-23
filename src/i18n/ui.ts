@@ -20,7 +20,13 @@ export interface UiStrings {
     darkTheme: string;
   };
   /** Release facts under the footer links: date, platforms, licence. */
-  release: { published: string; platforms: string; license: string };
+  release: {
+    published: string;
+    platforms: string;
+    license: string;
+    /** English site only: the released app's interface is Spanish (PRODUCT.md), said on every page. */
+    appLanguage?: string;
+  };
   /** Shared chrome of the content layouts (breadcrumbs, docs meta, sidebar, TOC). */
   layout: {
     breadcrumbs: string;
@@ -115,7 +121,12 @@ export const UI: Record<Locale, UiStrings> = {
       otherLanguage: "Español",
       darkTheme: "Dark theme",
     },
-    release: { published: "released on", platforms: "Linux and Windows", license: "MIT or Apache-2.0" },
+    release: {
+      published: "released on",
+      platforms: "Linux and Windows",
+      license: "MIT or Apache-2.0",
+      appLanguage: "the app's interface is in Spanish",
+    },
     layout: {
       breadcrumbs: "Breadcrumbs",
       home: "Home",

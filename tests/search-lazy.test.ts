@@ -68,7 +68,13 @@ function htmlFiles(dir: string, out: string[] = []): string[] {
 const built = existsSync(join(DIST, "pagefind", "pagefind.js")) && existsSync(join(DIST, "docs"));
 
 describe.skipIf(!built)("built site (after pnpm build)", () => {
-  const pages = built ? [join(DIST, "docs.html"), ...htmlFiles(join(DIST, "docs"))] : [];
+  const pages = built
+    ? [
+        join(DIST, "docs.html"),
+        ...htmlFiles(join(DIST, "docs")),
+        ...(existsSync(join(DIST, "en", "docs")) ? [join(DIST, "en", "docs.html"), ...htmlFiles(join(DIST, "en", "docs"))] : []),
+      ]
+    : [];
 
   it("has a Spanish Pagefind index", () => {
     const entry = JSON.parse(readFileSync(join(DIST, "pagefind", "pagefind-entry.json"), "utf8"));

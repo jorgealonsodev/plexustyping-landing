@@ -112,7 +112,7 @@ const nodes: JsonLdNode[] = [
       )
     }
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="alternate" type="application/rss+xml" title={`${t.nav.news} · ${SITE_NAME}`} href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${t.nav.news} · ${SITE_NAME}`} href={localizePath("/rss.xml", locale)} />
     <script is:inline set:html={THEME_SCRIPT} />
     <script type="speculationrules" is:inline set:html={SPECULATION_RULES} />
     {nodes.length > 0 && <JsonLd data={graph(...nodes)} />}
