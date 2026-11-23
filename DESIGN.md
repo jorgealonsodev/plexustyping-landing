@@ -189,7 +189,7 @@ A single centred column with a fluid gutter (`clamp(1rem, 4vw, 3.5rem)`). Persua
 
 Home sections are separated by `clamp(4rem, 10vw, 7.5rem)`; full-width bands use Surface with hairlines above and below. Grids that hold prose use one `minmax(0, 1fr)` track so a wide table or code block scrolls inside its own box; on phones (≤ 40rem) prose tables become horizontally scrollable blocks and inline code may break anywhere. Every page fits 390px without sideways scrolling (checked across all 161 built pages).
 
-Breakpoints in use: 30rem (phone: full-width hero buttons, icon-only play buttons), 40rem (feature-page window bars drop their dots, prose tables scroll), 48rem (header links move to a second row below it; footer preferences align right), 56rem and 80rem (docs columns). Simulations size themselves with container queries on the app window (44rem, 24rem), copied from the app's own window breakpoints.
+Breakpoints in use: 30rem (phone: full-width hero buttons, icon-only play buttons), 40rem (feature-page window bars drop their dots, prose tables scroll), 24rem (header drops the wordmark text, logo only), 48rem (below it the header links move into the phone drawer; footer preferences align right), 56rem and 80rem (docs columns). Simulations size themselves with container queries on the app window (44rem, 24rem), copied from the app's own window breakpoints.
 
 ## Elevation & Depth
 
@@ -224,7 +224,8 @@ Surface 2 (notes) or Surface (quoted app dialogs in documentation) panels with a
 Full width, hairline row rules, muted 600-weight headers (Surface 2 head on feature pages), 0.9375rem text, top-aligned cells.
 
 ### Navigation
-- **Header:** logo + wordmark text, three muted links (current page in the text colour), primary «Descargar» / «Download» button on the right; the header keeps its place across page transitions (`view-transition-name: site-header`). Below 48rem the links wrap to a second row.
+- **Header:** logo + wordmark text, three muted links (current page in the text colour), primary «Descargar» / «Download» button on the right; the header keeps its place across page transitions (`view-transition-name: site-header`).
+- **Phone drawer (below 48rem):** the three links leave the header row; a 2.75rem ghost button with a three-line icon («Abrir menú» / «Open menu») sits right of «Descargar» and opens a `<nav>` («Menú» / «Menu») that slides in from the right: full height, `min(20rem, 85vw)` wide, Surface with a hairline on its left edge, over a black backdrop (40 % light, 60 % dark). It is a native `popover` opened by `popovertarget`, so it needs no JavaScript; Esc or a tap on the backdrop closes it, and so does the ghost close button («Cerrar menú» / «Close menu») placed where the open button was. Links are 1.125rem, 3rem tall, muted on the docs sidebar's 2px hairline rail; the current section is bold, text-coloured, on an accent rail. The slide (280ms, `@starting-style` + transform) and the backdrop fade are off under reduced motion. Browsers without popover support keep the old second row of links. Below 24rem the wordmark text hides so the row fits 320px.
 - **Docs sidebar:** a search trigger, then uppercase muted section groups and their pages on a 2px hairline rail; the current page is bold, text-coloured, with an accent rail.
 - **Footer:** Surface band with the wordmark, secondary links, the language switch and the theme toggle (rendered only with JavaScript; without it the page follows the system).
 

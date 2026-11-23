@@ -42,6 +42,32 @@ const links = [
       }
     </ul>
     <a class="btn btn-primary cta" href={href(ROUTES.download)} aria-current={ariaCurrent(ROUTES.download)}>{t.nav.download}</a>
+    <button class="btn btn-ghost menu-btn" type="button" popovertarget="site-menu" aria-label={t.menu.open}>
+      <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
+        <path d="M3 5.5h14M3 10h14M3 14.5h14" />
+      </svg>
+    </button>
+  </nav>
+  <!-- Phone menu: a native popover (no JavaScript); Esc and a tap on the backdrop close it (light dismiss). -->
+  <nav class="drawer" id="site-menu" popover aria-label={t.menu.label}>
+    <div class="drawer-bar">
+      <button class="btn btn-ghost menu-btn" type="button" popovertarget="site-menu" popovertargetaction="hide" aria-label={t.menu.close}>
+        <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
+          <path d="M5 5l10 10M15 5L5 15" />
+        </svg>
+      </button>
+    </div>
+    <ul class="drawer-links">
+      {
+        links.map((l) => (
+          <li>
+            <a href={href(l.path)} aria-current={ariaCurrent(l.path)}>
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </nav>
 </header>
 
@@ -91,7 +117,27 @@ const links = [
     margin-left: auto;
   }
 
-  /* Phones: the brand and the download button stay; the section links wrap to a second row. */
+  /* The phone menu button and drawer: hidden until the phone layout below shows them. */
+  .menu-btn {
+    display: none;
+    width: 2.75rem;
+    padding: 0;
+    color: var(--text);
+  }
+  .menu-btn svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+  .drawer {
+    display: none;
+  }
+
+  /*
+   * Phones: the brand and the download button stay. Without popover support (or without @supports
+   * selector()), the section links wrap to a second row, as before.
+   */
   @media (max-width: 47.99rem) {
     .nav {
       flex-wrap: wrap;
@@ -106,6 +152,116 @@ const links = [
       margin: 0;
       gap: 1.25rem;
       font-size: 0.9375rem;
+    }
+
+    /* With popover support the links move into a drawer that slides in from the right. */
+    @supports selector(:popover-open) {
+      .nav {
+        flex-wrap: nowrap;
+        gap: 0.75rem;
+      }
+      .links {
+        display: none;
+      }
+      .menu-btn {
+        display: inline-flex;
+        flex: none;
+      }
+      .drawer {
+        position: fixed;
+        inset: 0 0 0 auto;
+        width: min(20rem, 85vw);
+        height: 100dvh;
+        max-height: none;
+        margin: 0;
+        padding: 0 var(--gutter) 2rem;
+        overflow-y: auto;
+        border: 0;
+        border-left: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        transform: translateX(100%);
+        transition:
+          transform 280ms var(--ease-out),
+          overlay 280ms allow-discrete,
+          display 280ms allow-discrete;
+      }
+      .drawer:popover-open {
+        display: flex;
+        flex-direction: column;
+        transform: none;
+      }
+      .drawer::backdrop {
+        background-color: transparent;
+        transition:
+          background-color 280ms var(--ease-out),
+          overlay 280ms allow-discrete,
+          display 280ms allow-discrete;
+      }
+      .drawer:popover-open::backdrop {
+        background-color: light-dark(rgb(0 0 0 / 0.4), rgb(0 0 0 / 0.6));
+      }
+      @starting-style {
+        .drawer:popover-open {
+          transform: translateX(100%);
+        }
+        .drawer:popover-open::backdrop {
+          background-color: transparent;
+        }
+      }
+      /* Narrow phones (under 384px): the logo alone, so brand, download and menu fit one row down to 320px. */
+      @media (max-width: 23.99rem) {
+        .brand span {
+          display: none;
+        }
+      }
+      /* The page behind an open drawer does not scroll. */
+      :global(html:has(#site-menu:popover-open)) {
+        overflow: hidden;
+      }
+    }
+  }
+
+  /* The close button sits where the open button was: same row height as the header. */
+  .drawer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 4.75rem;
+  }
+  .drawer-links {
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* Same pattern as the docs sidebar: a hairline rail, the current page bold and text-coloured on an accent rail. */
+  .drawer-links a {
+    display: flex;
+    align-items: center;
+    min-height: 3rem;
+    padding: 0.5rem 1rem;
+    border-left: 2px solid var(--border);
+    color: var(--muted);
+    font-size: 1.125rem;
+    text-decoration: none;
+    transition:
+      color 160ms var(--ease-out),
+      background-color 160ms var(--ease-out);
+  }
+  .drawer-links a:hover {
+    color: var(--text);
+    background: var(--surface-2);
+  }
+  .drawer-links a[aria-current] {
+    color: var(--text);
+    font-weight: 700;
+    border-left-color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .drawer,
+    .drawer::backdrop {
+      transition: none;
     }
   }
 </style>

@@ -6,6 +6,8 @@ export interface UiStrings {
   navLabel: string;
   homeLabel: string;
   nav: { features: string; docs: string; news: string; download: string };
+  /** Phone menu (SiteHeader drawer): accessible names of its open and close buttons and of the drawer nav. */
+  menu: { open: string; close: string; label: string };
   footerLabel: string;
   footer: {
     privacy: string;
@@ -68,6 +70,7 @@ export const UI: Record<Locale, UiStrings> = {
     navLabel: "Principal",
     homeLabel: "PlexusTyping, inicio",
     nav: { features: "Funciones", docs: "Documentación", news: "Novedades", download: "Descargar" },
+    menu: { open: "Abrir menú", close: "Cerrar menú", label: "Menú" },
     footerLabel: "Pie de página",
     footer: {
       privacy: "Privacidad",
@@ -110,6 +113,7 @@ export const UI: Record<Locale, UiStrings> = {
     navLabel: "Main",
     homeLabel: "PlexusTyping, home",
     nav: { features: "Features", docs: "Documentation", news: "What's new", download: "Download" },
+    menu: { open: "Open menu", close: "Close menu", label: "Menu" },
     footerLabel: "Footer",
     footer: {
       privacy: "Privacy",
