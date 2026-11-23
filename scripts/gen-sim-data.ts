@@ -7,6 +7,8 @@
 //   (camelCase, keys in code order, a missing layer as null), which the copied Keyboard.svelte draws;
 // - src/sim/data/sequences.ts: for every char of the demo texts, the presses the app's `key_sequences`
 //   command returns for it, computed with the port of Rust's `Layout::locate` (src/sim/keyboard/locate.ts).
+// It also writes the app's English (US) layout, layouts/us-qwerty.toml, to src/sim/data/us-qwerty.en.ts (the /en
+// simulations; their key sequences are computed at run time by src/sim/data/sequences.en.ts).
 // Node 24 runs this TypeScript file directly (type stripping).
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
@@ -81,4 +83,14 @@ writeFileSync(
     `/** The presses for each char of \`text\` (\`null\` if untypeable), like \`key_sequences\` for one text. */\n` +
     `export const sequencesFor = (text: string): (KeyPress[] | null)[] => [...text].map((ch) => KEY_SEQUENCES[ch] ?? null);\n`,
 );
+const usSource = "layouts/us-qwerty.toml";
+const us = parseLayout("us-qwerty", readFileSync(join(app, usSource), "utf8"));
+writeFileSync(
+  join(root, "src/sim/data/us-qwerty.en.ts"),
+  `// Generated from the PlexusTyping app's ${usSource} (app commit ${commit}) with the layout parser of\n` +
+    `// scripts/gen-sim-data.ts: the English (US) layout as the app's get_layout command returns it.\n` +
+    `// Do not edit by hand: regenerate it.\nimport type { Layout } from "../keyboard/types";\n\n` +
+    `export const US_QWERTY: Layout = ${JSON.stringify(us, null, 2)};\n`,
+);
+console.log(`us-qwerty: ${Object.keys(us.keys).length} keys`);
 console.log(`es-qwerty: ${Object.keys(layout.keys).length} keys; sequences for ${chars.length} chars (app ${commit})`);
