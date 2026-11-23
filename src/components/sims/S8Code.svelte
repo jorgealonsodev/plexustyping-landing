@@ -48,13 +48,16 @@
         const code = keystroke.event.ch === "\n" ? "Enter" : keyForChar(layout, keystroke.event.ch);
         if (code) flash = { code, ok: keystroke.event.ch === keystroke.expected };
       }
-      now = demo.lastT;
+      // The constructor reports its still state before `demo` exists: the keystroke carries the time.
+      if (keystroke) now = keystroke.event.tMs;
       tick++;
     },
     onFinished: ({ netWpm, accuracy }) => {
       announcement = t.finished.replace("{wpm}", formatWpm(netWpm)).replace("{accuracy}", percentIn(locale, accuracy));
     },
   });
+  now = demo.lastT;
+
   const view = $derived.by(() => {
     void tick;
     const s = demo.session;
