@@ -2,7 +2,8 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import snapshot from "../src/data/release-snapshot.json";
+// The v0.1.0 release as published (frozen copy): src/data/release-snapshot.json follows new releases (S16).
+import snapshot from "./fixtures/release-v0.1.0.json";
 
 const raw = readFileSync(join(import.meta.dirname, "../src/content/releases/0.1.0.md"), "utf8");
 const fm = raw.match(/^---\n([\s\S]*?)\n---\n/)?.[1] ?? "";
@@ -15,7 +16,7 @@ describe("release 0.1.0", () => {
     expect(field("github")).toBe("https://github.com/jorgealonsodev/plexustyping/releases/tag/v0.1.0");
   });
 
-  it("agrees with the committed release snapshot", () => {
+  it("agrees with the v0.1.0 release data", () => {
     const s = snapshot as { tag_name?: string; published_at?: string };
     expect(s.tag_name).toBe("v0.1.0");
     expect(s.published_at?.slice(0, 10)).toBe(field("date"));

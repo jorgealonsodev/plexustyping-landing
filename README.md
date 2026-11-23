@@ -126,6 +126,18 @@ The container serves plain HTTP on one host port. HTTPS comes from a reverse pro
 
 The service sets `pull_policy: build`, so every redeploy (**Pull and redeploy**, or a GitOps update) rebuilds the image from the new commit instead of reusing the old one.
 
+### Release data refresh
+
+The download pages show the files, sizes and SHA-256 sums of the latest app release. The build reads them from the GitHub API and falls back to the committed snapshot `src/data/release-snapshot.json` (`src/lib/release.ts`); the snapshot keeps itself current:
+
+- **Hourly.** `.github/workflows/refresh-release.yml` runs every hour (at minute 17) on `main`. It runs `pnpm refresh:release` (`scripts/refresh-release-snapshot.ts`), which reads `releases/latest` of `jorgealonsodev/plexustyping` and rewrites the snapshot only when the release changed. A changed snapshot must pass `pnpm build` and `pnpm test`; then `github-actions[bot]` commits only that file to `main` (`chore(release): update the download data to <tag>`) and pushes it. An invalid answer from GitHub fails the run and leaves the snapshot as it was.
+- **Manual run.** In GitHub, **Actions → refresh-release → Run workflow** (branch `main`), for example right after publishing a release.
+- **Locally.** `pnpm refresh:release` does the same without committing; set `GITHUB_TOKEN` for a higher rate limit.
+
+The workflow needs no secret beyond the repository's own `GITHUB_TOKEN`, and nothing in the app repository. Pushes made with `GITHUB_TOKEN` do not trigger other workflows, so the redeploy has to come from Portainer: the stack must redeploy on pushes to `main`, either with its **GitOps updates** in automatic polling mode or with its webhook. Without one of the two, the new snapshot waits for the next manual **Pull and redeploy**.
+
+The download pages also link to GitHub's `releases/latest` page, which always shows the newest release even when the site's data is stale.
+
 ### Behind Nginx Proxy Manager
 
 1. Add a **Proxy Host** for your domain with scheme `http`, forward host `<server-ip>` and forward port `SITE_PORT`.

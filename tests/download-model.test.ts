@@ -4,7 +4,8 @@
  */
 import { describe, expect, it } from "vitest";
 import { downloadModel, installSteps } from "../src/components/download/model";
-import snapshot from "../src/data/release-snapshot.json";
+// The v0.1.0 release as published (frozen copy): src/data/release-snapshot.json follows new releases (S16).
+import snapshot from "./fixtures/release-v0.1.0.json";
 import { parseRelease } from "../src/lib/release";
 
 const release = parseRelease(snapshot, "snapshot");

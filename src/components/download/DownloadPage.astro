@@ -17,7 +17,7 @@ import Base from "../../layouts/Base.astro";
 import { appFeatureList } from "../../lib/content";
 import { formatBytes, formatDate } from "../../lib/format";
 import { ogImagePath } from "../../lib/og/cards";
-import { getRelease } from "../../lib/release";
+import { getRelease, RELEASE_LATEST_URL } from "../../lib/release";
 import { breadcrumbListNode, howToNode, isoDate, softwareApplicationNode } from "../../lib/seo/jsonld";
 
 interface Props {
@@ -97,6 +97,7 @@ const docs = (
             <span>Publicada el <time datetime={isoDate(m.publishedAt)}>{published}</time></span>
             <span>MIT o Apache-2.0</span>
             <a href={m.releaseUrl}>Notas de la versión {m.version} en GitHub</a>
+            <a href={RELEASE_LATEST_URL}>Ver la última versión en GitHub</a>
           </p>
         </header>
       ) : (
@@ -113,6 +114,7 @@ const docs = (
             <span>MIT or Apache-2.0</span>
             <span>App interface in Spanish</span>
             <a href={m.releaseUrl}>Release notes for version {m.version} on GitHub</a>
+            <a href={RELEASE_LATEST_URL}>See the latest release on GitHub</a>
           </p>
         </header>
       )

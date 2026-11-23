@@ -14,7 +14,8 @@
     "preview": "astro preview",
     "test": "vitest run",
     "check": "astro check",
-    "check:seo": "node scripts/check-onpage.ts"
+    "check:seo": "node scripts/check-onpage.ts",
+    "refresh:release": "node scripts/refresh-release-snapshot.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "^6.0.3",

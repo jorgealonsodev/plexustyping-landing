@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import snapshot from "../src/data/release-snapshot.json";
+import committed from "../src/data/release-snapshot.json";
+// The v0.1.0 release as published (frozen copy): src/data/release-snapshot.json follows new releases (S16).
+import snapshot from "./fixtures/release-v0.1.0.json";
 import { loadLatestRelease, parseRelease, RELEASE_API_URL } from "../src/lib/release";
 
 const live = {
@@ -39,7 +41,7 @@ const jsonResponse = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
 
 describe("parseRelease", () => {
-  it("parses the committed snapshot (Log L2: v0.1.0, 2026-11-19, four assets with sizes and SHA-256)", () => {
+  it("parses the v0.1.0 snapshot (Log L2: v0.1.0, 2026-11-19, four assets with sizes and SHA-256)", () => {
     const r = parseRelease(snapshot, "snapshot");
     expect(r.version).toBe("0.1.0");
     expect(r.tag).toBe("v0.1.0");
@@ -95,7 +97,7 @@ describe("loadLatestRelease", () => {
     });
     const r = await loadLatestRelease({ fetch: fetchFn, mode: "auto", warn });
     expect(r.source).toBe("snapshot");
-    expect(r.version).toBe("0.1.0");
+    expect(r.version).toBe(parseRelease(committed, "snapshot").version);
     expect(warn).toHaveBeenCalledWith(expect.stringMatching(/snapshot/));
   });
 

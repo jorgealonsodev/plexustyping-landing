@@ -8,13 +8,16 @@
  * - "github": GitHub only, failing the build when it cannot be read (CI after a release event);
  * - "snapshot": the snapshot only, no network.
  * GITHUB_TOKEN, when set, is sent as a read-only bearer token (higher rate limit).
- * Refresh the snapshot after each release:
- *   curl -s https://api.github.com/repos/jorgealonsodev/plexustyping/releases/latest > (trim to the snapshot's fields)
+ * The snapshot refreshes itself (site-pages S16): .github/workflows/refresh-release.yml runs
+ * scripts/refresh-release-snapshot.ts every hour and on demand, and commits the snapshot to main only when
+ * the latest release changed. To refresh it by hand: `pnpm refresh:release` (it uses this module's parser).
  */
-import snapshot from "../data/release-snapshot.json";
+import snapshot from "../data/release-snapshot.json" with { type: "json" };
 
 export const RELEASE_REPO = "jorgealonsodev/plexustyping";
 export const RELEASE_API_URL = `https://api.github.com/repos/${RELEASE_REPO}/releases/latest`;
+/** GitHub's page for the newest release; it follows new releases even when the built data is stale (S16). */
+export const RELEASE_LATEST_URL = `https://github.com/${RELEASE_REPO}/releases/latest`;
 
 export type ReleaseMode = "auto" | "github" | "snapshot";
 export type ReleaseSource = "github" | "snapshot";
@@ -104,23 +107,30 @@ function envMode(): ReleaseMode {
   return m === "github" || m === "snapshot" ? m : "auto";
 }
 
+/** Fetches the raw latest-release object from the GitHub API (no parsing). Throws on network or HTTP errors. */
+export async function fetchLatestReleaseJson(
+  options: Pick<LoadOptions, "token" | "fetch" | "timeoutMs"> = {},
+): Promise<unknown> {
+  const token = "token" in options ? options.token : process.env.GITHUB_TOKEN;
+  const fetchFn = options.fetch ?? ((u: string, i: RequestInit) => fetch(u, i));
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+    "User-Agent": "plexustyping-landing-build",
+  };
+  if (token) headers.Authorization = `Bearer ${token}`;
+  const res = await fetchFn(RELEASE_API_URL, { headers, signal: AbortSignal.timeout(options.timeoutMs ?? 8000) });
+  if (!res.ok) throw new Error(`release: GitHub API answered ${res.status}`);
+  return res.json();
+}
+
 /** Reads the latest release (see the module comment for modes). */
 export async function loadLatestRelease(options: LoadOptions = {}): Promise<Release> {
   const mode = options.mode ?? envMode();
-  const token = "token" in options ? options.token : process.env.GITHUB_TOKEN;
-  const fetchFn = options.fetch ?? ((u: string, i: RequestInit) => fetch(u, i));
   const warn = options.warn ?? ((m: string) => console.warn(m));
   if (mode === "snapshot") return parseRelease(snapshot, "snapshot");
   try {
-    const headers: Record<string, string> = {
-      Accept: "application/vnd.github+json",
-      "X-GitHub-Api-Version": "2022-11-28",
-      "User-Agent": "plexustyping-landing-build",
-    };
-    if (token) headers.Authorization = `Bearer ${token}`;
-    const res = await fetchFn(RELEASE_API_URL, { headers, signal: AbortSignal.timeout(options.timeoutMs ?? 8000) });
-    if (!res.ok) throw new Error(`release: GitHub API answered ${res.status}`);
-    return parseRelease(await res.json(), "github");
+    return parseRelease(await fetchLatestReleaseJson(options), "github");
   } catch (error) {
     if (mode === "github") throw error;
     warn(`[release] ${error instanceof Error ? error.message : String(error)}; using the committed snapshot`);
