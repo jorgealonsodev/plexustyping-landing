@@ -1,0 +1,32 @@
+{
+  "tag_name": "v0.1.0",
+  "name": "PlexusTyping 0.1.0",
+  "published_at": "2026-11-19T15:31:07Z",
+  "html_url": "https://github.com/jorgealonsodev/plexustyping/releases/tag/v0.1.0",
+  "assets": [
+    {
+      "name": "plexustyping-0.1.0-linux-x86_64.tar.gz",
+      "size": 12358708,
+      "digest": "sha256:dc4e79a5af27a44771daceff4afda6e8ff3092811bbaa863cfbc6dfceb31a2be",
+      "browser_download_url": "https://github.com/jorgealonsodev/plexustyping/releases/download/v0.1.0/plexustyping-0.1.0-linux-x86_64.tar.gz"
+    },
+    {
+      "name": "plexustyping_0.1.0_amd64.deb",
+      "size": 12512330,
+      "digest": "sha256:fea1b0988907d6e01755defa940c46b4e1263156d45e0fe22adf482afc1d000f",
+      "browser_download_url": "https://github.com/jorgealonsodev/plexustyping/releases/download/v0.1.0/plexustyping_0.1.0_amd64.deb"
+    },
+    {
+      "name": "PlexusTyping_0.1.0_x64-setup.exe",
+      "size": 9701277,
+      "digest": "sha256:b36c0512b4ef43d47a105bf2d95b57236ad9d70715e78a5e8395c3738d25baab",
+      "browser_download_url": "https://github.com/jorgealonsodev/plexustyping/releases/download/v0.1.0/PlexusTyping_0.1.0_x64-setup.exe"
+    },
+    {
+      "name": "SHA256SUMS",
+      "size": 299,
+      "digest": "sha256:465a4c2bb32613814e9f2540c9fcc5bc0a6dbd3404c84377590ef684e14749d8",
+      "browser_download_url": "https://github.com/jorgealonsodev/plexustyping/releases/download/v0.1.0/SHA256SUMS"
+    }
+  ]
+}
