@@ -16,7 +16,7 @@
   import { heatScores } from "../sim/keyboard/heat";
   import { type Flash, highlightsFor, keyForChar } from "../sim/keyboard/keys";
   import { type InputEvent, TypingSession, acceptsInput, keyAction, textToEvents } from "../sim/practice/engine";
-  import { formatPercent, formatWpm } from "../sim/practice/format";
+  import { formatWpm } from "../sim/practice/format";
   import PracticeScreen from "../sim/practice/PracticeScreen.svelte";
   import { ReplayDriver, type Script, toInput } from "../sim/replay";
 
@@ -186,7 +186,7 @@
 
   function visitorFinished() {
     const { netWpm, accuracy } = session.result().stats;
-    announcement = t.finished.replace("{wpm}", formatWpm(netWpm)).replace("{accuracy}", formatPercent(accuracy));
+    announcement = t.finished.replace("{wpm}", formatWpm(netWpm)).replace("{accuracy}", PRACTICE_UI[lang].percent(accuracy));
     const next: Phase = phase === "diagnostic" ? "targets" : "diagnostic";
     setTimeout(() => mode === "visitor" && startText(next), 1500);
   }

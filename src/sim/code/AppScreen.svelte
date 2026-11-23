@@ -45,6 +45,7 @@
     oncompositionend,
     capture = true,
     after,
+    percent = formatPercent,
   }: {
     labels: AppLabels;
     kind: "prose" | "code";
@@ -72,6 +73,8 @@
     oncompositionend?: () => void;
     capture?: boolean;
     after?: Snippet;
+    /** Demo edit: accuracy as a percentage in the page's language (the app's Spanish `formatPercent` by default). */
+    percent?: (ratio: number) => string;
   } = $props();
 
   // Demo edit: only the practice area scrolls to the cursor (see PracticeScreen.svelte); code scrolls
@@ -211,7 +214,7 @@
           <dl class="live" aria-label={labels.liveStats}>
             <div><dt>{labels.wpm}</dt><dd>{formatWpm(view.stats.netWpm)}</dd></div>
             <div><dt>{labels.kpm}</dt><dd>{formatWpm(view.stats.kpm)}</dd></div>
-            <div><dt>{labels.accuracy}</dt><dd>{formatPercent(view.stats.accuracy)}</dd></div>
+            <div><dt>{labels.accuracy}</dt><dd>{percent(view.stats.accuracy)}</dd></div>
             <div><dt>{labels.time}</dt><dd>{formatTime(elapsed)}</dd></div>
           </dl>
         </div>

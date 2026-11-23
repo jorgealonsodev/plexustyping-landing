@@ -17,7 +17,7 @@
   import { A11yDemo } from "../../sim/data/s10";
   import { ES_QWERTY } from "../../sim/data/es-qwerty";
   import type { S10Strings } from "../../sim/i18n/s10";
-  import { KEYBOARD_UI } from "../../sim/i18n/app";
+  import { KEYBOARD_UI, PRACTICE_UI } from "../../sim/i18n/app";
   import { type Flash, highlightsFor, keyForChar } from "../../sim/keyboard/keys";
   import type { Layout } from "../../sim/keyboard/types";
   import SettingField from "../../sim/personalize/SettingField.svelte";
@@ -133,6 +133,7 @@
       hint={view.cursor !== 0 ? t.app.hintStarted : t.app.hintStart}
       {layout}
       keyboardStrings={KEYBOARD_UI[locale]}
+      percent={PRACTICE_UI[locale].percent}
       {highlights}
       {flash}
       {colorBlind}
