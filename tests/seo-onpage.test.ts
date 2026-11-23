@@ -322,6 +322,7 @@ describe("checkSite: per page type", () => {
       replaceMain("<span data-app-version>0.1.0</span>", ""),
       replaceMain("Editar en GitHub", "Código"),
       replaceMain('href="/funciones/motor-adaptativo"', 'href="/docs"'),
+      (p: PageOpts) => ({ ...p, title: "Instalar en Linux" }),
     ]) {
       expect(rulesFor(writeSite(mutate(f, change)), f)).toContain("docs");
     }

@@ -50,7 +50,11 @@ describe("JSON-LD helpers (docs/seo-2026.md §B7)", () => {
     });
     expect(n).not.toHaveProperty("aggregateRating");
     expect(n).not.toHaveProperty("review");
-    expect(softwareApplicationNode(site, release, "en").downloadUrl).toBe("https://plexus.example/en/descargar");
+    // One entity on every page that emits it (same @id): its URLs don't change with the page's language (seo-gaps S6).
+    const en = softwareApplicationNode(site, release, "en");
+    expect(en.downloadUrl).toBe("https://plexus.example/descargar");
+    expect(en.url).toBe("https://plexus.example/");
+    expect(n.publisher).toMatchObject({ "@type": "Organization", "@id": "https://plexus.example/#organization", name: "PlexusTyping" });
   });
 
   it("BreadcrumbList numbers absolute items from 1", () => {
@@ -74,6 +78,7 @@ describe("JSON-LD helpers (docs/seo-2026.md §B7)", () => {
       locale: "es",
       datePublished: new Date("2026-11-20T00:00:00Z"),
       dateModified: new Date("2026-11-21T00:00:00Z"),
+      image: "/og/docs/empezar/instalar.png",
     });
     expect(n).toMatchObject({
       "@type": "TechArticle",
@@ -82,10 +87,14 @@ describe("JSON-LD helpers (docs/seo-2026.md §B7)", () => {
       datePublished: "2026-11-20",
       dateModified: "2026-11-21",
       url: "https://plexus.example/docs/empezar/instalar",
-      author: { "@id": "https://plexus.example/#organization" },
-      publisher: { "@id": "https://plexus.example/#organization" },
-      isPartOf: { "@id": "https://plexus.example/#website" },
+      // The Organization is fully described on the home page only; other pages carry a named stub,
+      // because Google doesn't resolve @id across pages (seo-gaps S6).
+      author: { "@type": "Organization", "@id": "https://plexus.example/#organization", name: "PlexusTyping", url: "https://plexus.example/" },
+      publisher: { "@type": "Organization", "@id": "https://plexus.example/#organization", name: "PlexusTyping" },
+      isPartOf: { "@type": "WebSite", "@id": "https://plexus.example/#website", name: "PlexusTyping" },
+      image: "https://plexus.example/og/docs/empezar/instalar.png",
     });
+    expect(n).not.toHaveProperty("about");
   });
 
   it("FAQPage and HowTo build their nested types", () => {

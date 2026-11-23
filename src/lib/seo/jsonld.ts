@@ -8,7 +8,7 @@
  * - FAQPage / HowTo: no rich result any more (2026-05 and 2023); harmless data, optional.
  */
 import { APP_LICENSES, APP_REPO_URL, GITHUB_OWNER_URL, SITE_NAME } from "../../data/site";
-import { type Locale, localizePath } from "../../i18n/paths";
+import type { Locale } from "../../i18n/paths";
 import type { Release } from "../release";
 
 export type JsonLdNode = Record<string, unknown>;
@@ -43,6 +43,14 @@ export function websiteNode(site: URL, locale: Locale): JsonLdNode {
   };
 }
 
+/**
+ * Named reference to the Organization for pages other than the home: Google doesn't resolve an @id
+ * across pages, so a bare {"@id"} would leave author and publisher without a name there.
+ */
+export function organizationRef(site: URL): JsonLdNode {
+  return { "@type": "Organization", "@id": ids(site).organization, name: SITE_NAME, url: abs(site, "/") };
+}
+
 export function organizationNode(site: URL): JsonLdNode {
   return {
     "@type": "Organization",
@@ -60,7 +68,11 @@ export interface SoftwareExtras {
   screenshot?: string[];
 }
 
-export function softwareApplicationNode(site: URL, release: Release, locale: Locale, extras: SoftwareExtras = {}): JsonLdNode {
+/**
+ * The app as one entity (same @id wherever it is emitted): its url and downloadUrl are the Spanish
+ * canonical pages whatever the page's language, and inLanguage is the app's own UI language.
+ */
+export function softwareApplicationNode(site: URL, release: Release, _locale: Locale, extras: SoftwareExtras = {}): JsonLdNode {
   const node: JsonLdNode = {
     "@type": "SoftwareApplication",
     "@id": ids(site).software,
@@ -69,14 +81,14 @@ export function softwareApplicationNode(site: URL, release: Release, locale: Loc
     operatingSystem: "Linux, Windows",
     softwareVersion: release.version,
     datePublished: isoDate(release.publishedAt),
-    downloadUrl: abs(site, localizePath("/descargar", locale)),
-    url: abs(site, localizePath("/", locale)),
+    downloadUrl: abs(site, "/descargar"),
+    url: abs(site, "/"),
     isAccessibleForFree: true,
     inLanguage: "es",
     offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
     license: APP_LICENSES.map((l) => l.url),
     sameAs: [APP_REPO_URL],
-    publisher: { "@id": ids(site).organization },
+    publisher: organizationRef(site),
   };
   if (extras.featureList?.length) node.featureList = extras.featureList;
   if (extras.screenshot?.length) node.screenshot = extras.screenshot.map((s) => abs(site, s));
@@ -104,6 +116,8 @@ export interface ArticleInput {
   locale: Locale;
   datePublished: Date;
   dateModified: Date;
+  /** Site path or absolute URL of the page's Open Graph card. */
+  image?: string;
 }
 
 export function techArticleNode(site: URL, a: ArticleInput): JsonLdNode {
@@ -116,10 +130,10 @@ export function techArticleNode(site: URL, a: ArticleInput): JsonLdNode {
     mainEntityOfPage: abs(site, a.path),
     datePublished: isoDate(a.datePublished),
     dateModified: isoDate(a.dateModified),
-    author: { "@id": ids(site).organization },
-    publisher: { "@id": ids(site).organization },
-    isPartOf: { "@id": ids(site).website },
-    about: { "@id": ids(site).software },
+    author: organizationRef(site),
+    publisher: organizationRef(site),
+    isPartOf: { "@type": "WebSite", "@id": ids(site).website, name: SITE_NAME, url: abs(site, "/") },
+    ...(a.image ? { image: abs(site, a.image) } : {}),
   };
 }
 

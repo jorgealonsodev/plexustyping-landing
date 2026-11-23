@@ -10,6 +10,7 @@ import { downloadModel, installSteps } from "../components/download/model";
 import { OG_PAGES } from "../data/og-pages";
 import { APP_REPO_URL } from "../data/site";
 import Base from "../layouts/Base.astro";
+import { appFeatureList } from "../lib/content";
 import { formatBytes, formatDate } from "../lib/format";
 import { ogImagePath } from "../lib/og/cards";
 import { getRelease } from "../lib/release";
@@ -47,7 +48,7 @@ const docs = [
   description={`Descarga gratis PlexusTyping ${m.version} para Linux (.deb, .tar.gz) y Windows 10/11: tamaños, sumas SHA-256 y cómo instalarlo y verificarlo.`}
   {...ogImage ? { ogImage } : {}}
   jsonLd={[
-    softwareApplicationNode(site, release, "es"),
+    softwareApplicationNode(site, release, "es", { featureList: await appFeatureList("es") }),
     breadcrumbListNode(site, crumbs),
     howToNode({ name: `Instalar PlexusTyping ${m.version} en Ubuntu con el paquete .deb`, steps: installSteps(m) }),
   ]}

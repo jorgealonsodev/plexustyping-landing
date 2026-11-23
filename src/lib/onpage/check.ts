@@ -276,6 +276,7 @@ export function checkSite(distDir: string, options: CheckOptions): Report {
       );
       t("docs", edit, 'needs an "Editar en GitHub" link to the source file');
       t("docs", mainLinks.some((h) => h.startsWith(featuresPrefix)), `needs a link to a related feature (${featuresPrefix}…)`);
+      t("docs", title.endsWith(" · PlexusTyping"), 'the <title> must end in " · PlexusTyping"');
     }
 
     if (type === "download") {

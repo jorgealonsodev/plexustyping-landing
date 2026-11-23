@@ -20,7 +20,7 @@ import Toc from "../components/nav/Toc.astro";
 import Breadcrumbs from "../components/seo/Breadcrumbs.astro";
 import { DOCS_SECTIONS, type DocsSection } from "../data/docs-sections";
 import { FEATURE_LABELS } from "../data/features";
-import type { FeatureSlug } from "../data/routes";
+import { type FeatureSlug, isNoindexPath } from "../data/routes";
 import { type Locale, localizePath } from "../i18n/paths";
 import { ui } from "../i18n/ui";
 import { docsSidebar, editUrl, featurePath, feedbackUrl } from "../lib/content";
@@ -78,16 +78,20 @@ const sidebar = await docsSidebar(locale, localized);
 const pageUrl = new URL(localized, site).href;
 const jsonLd = [
   breadcrumbListNode(site, crumbs),
-  techArticleNode(site, { path: localized, headline: h1, description, locale, datePublished: published, dateModified: updated }),
+  techArticleNode(site, {
+    path: localized,
+    headline: h1,
+    description,
+    locale,
+    datePublished: published,
+    dateModified: updated,
+    ...(ogImage ? { image: ogImage } : {}),
+  }),
 ];
 ---
 
-<Base {title} {description} {locale} {path} {translated} pageType="docs" ogType="article" {jsonLd} {...ogImage ? { ogImage } : {}}>
+<Base {title} {description} {locale} {path} {translated} noindex={isNoindexPath(localized)} pageType="docs" ogType="article" {jsonLd} {...ogImage ? { ogImage } : {}}>
   <div class="docs">
-    <aside class="side">
-      <div class="search"><DocsSearch {locale} /></div>
-      <DocsSidebar sections={sidebar} {locale} />
-    </aside>
     <article class="article" data-pagefind-body>
       <div data-pagefind-ignore><Breadcrumbs {crumbs} {locale} /></div>
       <header class="head">
@@ -120,6 +124,10 @@ const jsonLd = [
         </p>
       </footer>
     </article>
+    <aside class="side">
+      <div class="search"><DocsSearch {locale} /></div>
+      <DocsSidebar sections={sidebar} {locale} />
+    </aside>
     <aside class="toc-side">
       <Toc {headings} {locale} />
     </aside>
@@ -135,9 +143,12 @@ const jsonLd = [
     margin: 0 auto;
     padding: clamp(1.25rem, 3vw, 2.5rem) var(--gutter) 0;
   }
-  /* Phones: the article comes first; the sidebar follows it (no JavaScript disclosure needed). */
+  /*
+   * The article comes before the sidebar in the HTML, so on phones it paints first and the sidebar
+   * follows it without shifting the layout (CLS) while the page streams in; wider grids place the
+   * sidebar in its own column.
+   */
   .side {
-    order: 2;
     padding-top: 1.5rem;
     border-top: 1px solid var(--border);
   }
@@ -206,8 +217,13 @@ const jsonLd = [
       grid-template-columns: 15rem minmax(0, 1fr);
       gap: 3rem;
     }
+    .article {
+      grid-column: 2;
+      grid-row: 1;
+    }
     .side {
-      order: 0;
+      grid-column: 1;
+      grid-row: 1;
       position: sticky;
       top: 1.5rem;
       align-self: start;
@@ -226,6 +242,8 @@ const jsonLd = [
     }
     .toc-side {
       display: block;
+      grid-column: 3;
+      grid-row: 1;
       position: sticky;
       top: 1.5rem;
       align-self: start;

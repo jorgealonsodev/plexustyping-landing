@@ -83,14 +83,30 @@ export async function getFaq(locale: Locale = "es") {
  *   const { Content, headings } = await render(entry);
  *   <DocsLayout {...docsLayoutProps(entry, headings)}><Content /></DocsLayout>
  */
+/**
+ * SoftwareApplication featureList: what the released app does today, from the features collection
+ * (unlimited text ships with 0.1.1, site-pages spec S2). Shared by the home and /descargar so both
+ * copies of the one app entity agree.
+ */
+export async function appFeatureList(locale: Locale): Promise<string[]> {
+  return (await getFeatures(locale)).filter((f) => f.id !== "texto-ilimitado").map((f) => f.data.h1);
+}
+
+const TITLE_SUFFIX_RE = / · PlexusTyping$/;
+
+/** "Main term · PlexusTyping" (docs/seo-2026.md §C): appends the site name when the title lacks it. */
+export function withSiteName(title: string): string {
+  return TITLE_SUFFIX_RE.test(title) ? title : `${title} · PlexusTyping`;
+}
+
 export function docsLayoutProps(entry: DocEntry, headings: MarkdownHeading[]) {
   const d = entry.data;
   return {
     locale: d.lang,
     path: `/docs/${docSlug(entry)}`,
-    title: d.title,
+    title: withSiteName(d.title),
     description: d.description,
-    h1: d.h1 ?? d.title,
+    h1: d.h1 ?? d.title.replace(TITLE_SUFFIX_RE, ""),
     section: d.section,
     published: d.published,
     updated: d.updated,

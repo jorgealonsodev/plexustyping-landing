@@ -2,13 +2,12 @@
 import HomeHero from "../components/HomeHero.astro";
 import HomeSections from "../components/home/HomeSections.astro";
 import Base from "../layouts/Base.astro";
-import { getFeatures } from "../lib/content";
+import { appFeatureList, getFeatures } from "../lib/content";
 import { getRelease } from "../lib/release";
 
 const features = await getFeatures("es");
 const release = await getRelease();
-// featureList: what 0.1.0 does today; unlimited text ships with 0.1.1 (spec S2).
-const featureList = features.filter((f) => f.id !== "texto-ilimitado").map((f) => f.data.h1);
+const featureList = await appFeatureList("es");
 ---
 
 <Base
