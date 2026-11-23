@@ -47,6 +47,16 @@ export interface LlmsData {
   docs: LlmsDoc[];
   releases: LlmsRelease[];
   faq: LlmsFaq[];
+  /** The English mirror under /en (site-pages S7): links only, listed after the Spanish index. */
+  english?: LlmsEnglish;
+}
+
+export interface LlmsEnglish {
+  /** One line under the "English version" heading. */
+  note: string;
+  pages: LlmsLink[];
+  features: LlmsLink[];
+  docs: LlmsLink[];
 }
 
 const abs = (site: URL, path: string) => new URL(path, site).href;
@@ -68,6 +78,22 @@ function bySection(docs: LlmsDoc[]): [string, LlmsDoc[]][] {
   return [...groups];
 }
 
+/** The English mirror's links, at the end of both files. */
+function englishSection(d: LlmsData): string[] {
+  const en = d.english;
+  if (!en) return [];
+  return [
+    "## English version",
+    "",
+    en.note,
+    "",
+    ...en.pages.map((p) => link(d.site, p)),
+    ...en.features.map((f) => link(d.site, f)),
+    ...en.docs.map((x) => link(d.site, x)),
+    "",
+  ];
+}
+
 const releaseLine = (site: URL, r: LlmsRelease) =>
   link(site, { title: `PlexusTyping ${r.version} (${day(r.date)})`, path: r.path, description: r.summary });
 
@@ -82,6 +108,7 @@ export function buildLlmsTxt(d: LlmsData): string {
     ...bySection(d.docs).flatMap(([label, docs]) => section(`Documentación: ${label}`, docs.map((x) => link(d.site, x)))),
     ...section("Novedades", d.releases.map((r) => releaseLine(d.site, r))),
     ...section("Preguntas frecuentes", d.faq.map((q) => link(d.site, { title: q.question, path: q.path }))),
+    ...englishSection(d),
   ];
   return `${out.join("\n").trimEnd()}\n`;
 }
@@ -145,6 +172,7 @@ export function buildLlmsFullTxt(d: LlmsData): string {
     ...docs,
     ...(faq.length ? ["## Preguntas frecuentes", "", ...faq] : []),
     ...(releases.length ? ["## Novedades", "", ...releases] : []),
+    ...englishSection(d),
   ];
   return `${out.join("\n").trimEnd()}\n`;
 }

@@ -16,7 +16,7 @@ Early development, on branch `feat/site-base-home`. Nothing is deployed yet.
 |------|-------|
 | Site base: layout, header, footer, theme toggle, Spanish and English routing, security headers file | Built |
 | Home page hero with the S1 simulation (practice screen, live stats, on-screen keyboard, heatmap) | Built |
-| Pages | `/`, `/en`, `404`, `/sim-preview/s2` to `/sim-preview/s7` |
+| Pages | Every PRD §5 page in Spanish and its English mirror under `/en` (see [Languages](#languages)), `404`, previews under `/sim-preview` |
 | Simulations S2 to S7 (PRD §8) as Svelte islands, each with a preview page at `/sim-preview/s2` to `/sim-preview/s7` | Built |
 | Simulations S8 to S10 | Pending |
 | Rest of the home page (feature sections, download call to action) | Pending |
@@ -147,10 +147,22 @@ docker compose down
 
 | Language | URL | Source |
 |----------|-----|--------|
-| Spanish (default) | `/` | `src/pages/index.astro` |
-| English | `/en` | `src/pages/en/index.astro` |
+| Spanish (default) | `/` | `src/pages/*.astro`, content in `src/content/<collection>/` |
+| English | `/en` | `src/pages/en/**`, content in `src/content/<collection>/en/` |
 
-Both languages use the same slugs, and URLs never end in a slash (`trailingSlash: "never"`, `build.format: "file"`). `src/i18n/paths.ts` maps a path between languages; `src/i18n/ui.ts` holds the UI strings. The app's UI is Spanish only, and the English site must say so.
+English pages use English slugs. `src/i18n/slugs.ts` is the one mapping between both schemes; the language switch, canonical and `hreflang` (`src/i18n/paths.ts`), the sitemap filter and `lastmod`, and the on-page check all read it. Pages and layouts pass the Spanish ("language-neutral") path and `localizePath()` turns it into the English one.
+
+| Spanish | English |
+|---------|---------|
+| `/descargar` | `/en/download` |
+| `/funciones`, `/funciones/<slug>` | `/en/features`, `/en/features/<english-slug>` (for example `/funciones/ia` → `/en/features/ai`) |
+| `/docs`, `/docs/<section>/<page>` | `/en/docs`, `/en/docs/<english-section>/<english-page>` (for example `/docs/ia/que-se-envia` → `/en/docs/ai/what-is-sent`) |
+| `/novedades` | `/en/release-notes` |
+| `/preguntas-frecuentes` | `/en/faq` |
+| `/privacidad`, `/licencias` | `/en/privacy`, `/en/licenses` |
+| `/rss.xml` | `/en/rss.xml` |
+
+English content files keep the Spanish file name under an `en/` folder (`src/content/docs/en/empezar/primer-arranque.md` builds `/en/docs/getting-started/first-launch`), so both languages pair by id; tests fail when an entry lacks its translation. A Spanish edit must be mirrored in its English file; pages whose two languages share one component (download, home sections, feature and docs indexes) keep both copies side by side. URLs never end in a slash (`trailingSlash: "never"`, `build.format: "file"`). `src/i18n/ui.ts` holds the UI strings. The app's UI is Spanish only: the English footer says so on every page, and the English docs give each app label in Spanish with its English meaning. Pagefind builds one index per language from each page's `lang`. `pnpm check:seo` requires every indexable page to have its mirror (`--allow-missing-mirrors` turns that off).
 
 ## Performance budgets
 

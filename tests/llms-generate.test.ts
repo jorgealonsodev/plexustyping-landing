@@ -105,3 +105,28 @@ describe("mdxToMarkdown", () => {
     expect(mdxToMarkdown(src, site)).toBe("```bash\nimport x\n## not a heading\n```");
   });
 });
+
+describe("English entries (site-pages S7)", () => {
+  const english = {
+    note: "English version of the site; the app's interface is in Spanish.",
+    pages: [{ title: "Download", path: "/en/download" }],
+    features: [{ title: "Adaptive engine", path: "/en/features/adaptive-engine", description: "Practice your weak spots." }],
+    docs: [{ title: "Install on Windows", path: "/en/docs/getting-started/install-windows", description: "Per-user installer." }],
+  };
+  const withEn = { ...data, english };
+
+  it("adds an English section with the English pages, features and docs as absolute links", () => {
+    for (const txt of [buildLlmsTxt(withEn), buildLlmsFullTxt(withEn)]) {
+      expect(txt).toContain("## English version");
+      expect(txt).toContain("English version of the site; the app's interface is in Spanish.");
+      expect(txt).toContain("- [Download](https://plexus.example/en/download)");
+      expect(txt).toContain("- [Adaptive engine](https://plexus.example/en/features/adaptive-engine): Practice your weak spots.");
+      expect(txt).toContain("- [Install on Windows](https://plexus.example/en/docs/getting-started/install-windows): Per-user installer.");
+    }
+  });
+
+  it("keeps the Spanish output unchanged without English data", () => {
+    expect(buildLlmsTxt(data)).not.toContain("English version");
+    expect(buildLlmsTxt(withEn).startsWith(buildLlmsTxt(data).trimEnd())).toBe(true);
+  });
+});

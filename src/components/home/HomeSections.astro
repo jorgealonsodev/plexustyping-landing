@@ -117,14 +117,14 @@ const href = (p: string) => localizePath(p, locale);
       </Fragment>
       <div class="close">
         <div class="ctas">
-          <a class="btn btn-primary btn-lg" href="/descargar#linux">Descargar para Linux</a>
+          <a class="btn btn-primary btn-lg" href="/descargar#linux">Descargar para Linux</a>{" "}
           <a class="btn btn-ghost btn-lg" href="/descargar#windows">Descargar para Windows</a>
         </div>
         <dl class="facts">
-          <div><dt>Versión</dt><dd>{release.version}</dd></div>
-          <div><dt>Publicada</dt><dd><time datetime={isoDate(release.publishedAt)}>{formatDate(release.publishedAt, locale)}</time></dd></div>
-          <div><dt>Sistemas</dt><dd>Linux x86_64 (.deb y .tar.gz), Windows 10 y 11 de 64 bits</dd></div>
-          <div><dt>Licencia</dt><dd>MIT o Apache-2.0, <a href={APP_REPO_URL}>código en GitHub</a></dd></div>
+          <div><dt>Versión</dt><dd>{release.version}</dd></div>{" "}
+          <div><dt>Publicada</dt><dd><time datetime={isoDate(release.publishedAt)}>{formatDate(release.publishedAt, locale)}</time></dd></div>{" "}
+          <div><dt>Sistemas</dt><dd>Linux x86_64 (.deb y .tar.gz), Windows 10 y 11 de 64 bits</dd></div>{" "}
+          <div><dt>Licencia</dt><dd>MIT o Apache-2.0, <a href={APP_REPO_URL}>código en GitHub</a></dd></div>{" "}
         </dl>
         <p class="mobile">
           ¿Estás en el móvil? PlexusTyping es una app de escritorio: guarda esta página y ábrela en tu ordenador.
@@ -138,15 +138,15 @@ const href = (p: string) => localizePath(p, locale);
       </Fragment>
       <div class="close">
         <div class="ctas">
-          <a class="btn btn-primary btn-lg" href={`${href("/descargar")}#linux`}>Download for Linux</a>
+          <a class="btn btn-primary btn-lg" href={`${href("/descargar")}#linux`}>Download for Linux</a>{" "}
           <a class="btn btn-ghost btn-lg" href={`${href("/descargar")}#windows`}>Download for Windows</a>
         </div>
         <dl class="facts">
-          <div><dt>Version</dt><dd>{release.version}</dd></div>
-          <div><dt>Released</dt><dd><time datetime={isoDate(release.publishedAt)}>{formatDate(release.publishedAt, locale)}</time></dd></div>
-          <div><dt>Systems</dt><dd>Linux x86_64 (.deb and .tar.gz), Windows 10 and 11, 64-bit</dd></div>
-          <div><dt>License</dt><dd>MIT or Apache-2.0, <a href={APP_REPO_URL}>source on GitHub</a></dd></div>
-          <div><dt>App interface</dt><dd>Spanish only; practice texts in five languages</dd></div>
+          <div><dt>Version</dt><dd>{release.version}</dd></div>{" "}
+          <div><dt>Released</dt><dd><time datetime={isoDate(release.publishedAt)}>{formatDate(release.publishedAt, locale)}</time></dd></div>{" "}
+          <div><dt>Systems</dt><dd>Linux x86_64 (.deb and .tar.gz), Windows 10 and 11, 64-bit</dd></div>{" "}
+          <div><dt>License</dt><dd>MIT or Apache-2.0, <a href={APP_REPO_URL}>source on GitHub</a></dd></div>{" "}
+          <div><dt>App interface</dt><dd>Spanish only; practice texts in five languages</dd></div>{" "}
         </dl>
         <p class="mobile">
           On your phone? PlexusTyping is a desktop app: bookmark this page and open it on your computer.

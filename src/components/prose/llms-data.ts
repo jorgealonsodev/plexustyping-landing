@@ -1,16 +1,26 @@
 /**
- * Gathers the Spanish collections for /llms.txt and /llms-full.txt (src/components/prose/llms.ts).
+ * Gathers the Spanish collections for /llms.txt and /llms-full.txt (src/components/prose/llms.ts), plus
+ * the links of the English mirror (site-pages S7).
  * New docs, feature, FAQ and release files appear in both files on the next build.
  */
 import { DOCS_SECTIONS } from "../../data/docs-sections";
 import { ROUTES } from "../../data/routes";
+import { localizePath } from "../../i18n/paths";
 import { SITE_NAME } from "../../data/site";
-import { docPath, featurePath, getDocs, getFaq, getFeatures, getReleases, releaseAnchor } from "../../lib/content";
+import { docPath, featurePath, featureSlug, getDocs, getFaq, getFeatures, getReleases, releaseAnchor } from "../../lib/content";
 import { markdownToPlainText } from "./faq";
 import type { LlmsData } from "./llms";
 
 export async function collectLlmsData(site: URL): Promise<LlmsData> {
-  const [docs, features, releases, faq] = await Promise.all([getDocs("es"), getFeatures("es"), getReleases("es"), getFaq("es")]);
+  const [docs, features, releases, faq, enDocs, enFeatures] = await Promise.all([
+    getDocs("es"),
+    getFeatures("es"),
+    getReleases("es"),
+    getFaq("es"),
+    getDocs("en"),
+    getFeatures("en"),
+  ]);
+  const en = (p: string) => localizePath(p, "en");
   return {
     site,
     name: SITE_NAME,
@@ -31,7 +41,7 @@ export async function collectLlmsData(site: URL): Promise<LlmsData> {
     ],
     features: features.map((f) => ({
       title: f.data.h1,
-      path: featurePath(f.id.replace(/^en\//, ""), "es"),
+      path: featurePath(featureSlug(f), "es"),
       description: f.data.description,
     })),
     docs: docs.map((d) => ({
@@ -49,5 +59,20 @@ export async function collectLlmsData(site: URL): Promise<LlmsData> {
       github: r.data.github,
     })),
     faq: faq.map((q) => ({ question: q.data.question, answer: markdownToPlainText(q.body ?? ""), path: `/docs/${q.data.doc}` })),
+    english: {
+      note: "The site in English, under /en. The app's interface is in Spanish only; the practice texts can be in Spanish, English, Brazilian Portuguese, French or German.",
+      pages: [
+        { title: "Home", path: en(ROUTES.home) },
+        { title: "Download", path: en(ROUTES.download), description: "Installers for Linux and Windows with their SHA-256 sums." },
+        { title: "Features", path: en(ROUTES.features) },
+        { title: "Documentation", path: en(ROUTES.docs) },
+        { title: "What's new", path: en(ROUTES.news), description: "Release notes and roadmap." },
+        { title: "Frequently asked questions", path: en(ROUTES.faq) },
+        { title: "Privacy", path: en(ROUTES.privacy), description: "What the app stores and what the optional AI sends." },
+        { title: "Licenses", path: en(ROUTES.licenses) },
+      ],
+      features: enFeatures.map((f) => ({ title: f.data.h1, path: featurePath(featureSlug(f), "en"), description: f.data.description })),
+      docs: enDocs.map((d) => ({ title: d.data.h1 ?? d.data.title, path: docPath(d), description: d.data.description })),
+    },
   };
 }
