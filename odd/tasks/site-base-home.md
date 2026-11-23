@@ -18,7 +18,7 @@ Test runner: `pnpm test` (Vitest) and `pnpm build`; Playwright later (PRD §16).
 - [x] T5 · S2, S3, S5 · delegated, parallel worktrees · simulations S2+S6 (keyboard), S3+S4 (practice text; owns PracticeScreen.svelte), S5+S7 (metronome, personalisation), each with a preview page under src/pages/sim-preview/ · commit: f0b4021 (merges cf78dd6, 775dcdb, 28af441)
 - [x] T6 · S2, S3, S5 · delegated · simulations S8, S9, S10 · commit: done as odd/tasks/site-pages.md P1 (eaf49f7, 88981df, a3182d4)
 - [x] T7 · S1 · delegated · assemble the home below the hero (S2, S3 sections, features, download close) · commit: done as odd/tasks/site-pages.md P2 (070b487, e217931, b4ca0dd, d937940)
-- [ ] T4 · S1 · delegated · impeccable finish: detector, finish review, DESIGN.md · commit: — (moved to odd/tasks/site-pages.md P7)
+- [x] T4 · S1 · delegated · impeccable finish: detector, finish review, DESIGN.md · commit: done as odd/tasks/site-pages.md T7
 
 ## Log
 
