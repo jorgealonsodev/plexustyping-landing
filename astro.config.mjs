@@ -30,7 +30,8 @@ export default defineConfig({
     // by Google and left out; lastmod is the git commit date of the page's source.
     sitemap({
       filter: (page) => {
-        return !isNoindexPath(new URL(page).pathname);
+        // A placeholder deploy is noindex everywhere (S1), so its sitemap lists nothing.
+        return !isUnindexableDeploy() && !isNoindexPath(new URL(page).pathname);
       },
       serialize: (item) => {
         const lastmod = lastModifiedFor(new URL(item.url).pathname);

@@ -36,7 +36,15 @@ describe("sitemap lastmod from git (docs/seo-2026.md §B5)", () => {
     expect(sourceCandidates("/descargar")).toContain("src/pages/descargar.astro");
   });
 
-  it("returns the commit date of a committed page and nothing for a page without a source", () => {
+  const shallowCheckout = (() => {
+    try {
+      return execFileSync("git", ["rev-parse", "--is-shallow-repository"], { encoding: "utf8" }).trim() !== "false";
+    } catch {
+      return true;
+    }
+  })();
+
+  it.skipIf(shallowCheckout)("returns the commit date of a committed page and nothing for a page without a source", () => {
     expect(lastModifiedFor("/")).toMatch(/^\d{4}-\d{2}-\d{2}T/);
     expect(lastModifiedFor("/no-such-page")).toBeUndefined();
   });
