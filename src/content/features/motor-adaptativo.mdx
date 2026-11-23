@@ -19,8 +19,6 @@ import FeatureSim from "../../components/features/FeatureSim.astro";
 
 Cada sesión que terminas se repasa pulsación a pulsación en el núcleo de la app, escrito en Rust. Cada carácter y cada bigrama, como «qu» o «rr», guarda una media móvil exponencial (EMA) de dos cosas: los errores, con un peso de 0,7, y la lentitud respecto a tu propio ritmo, con un peso de 0,3. No te compara con nadie: una tecla es lenta si es lenta para ti.
 
-A esa puntuación se suma un bonus de incertidumbre, para que vuelvan de vez en cuando las unidades que has practicado poco. Así una tecla que casi no has escrito no se da por dominada.
-
 ## Cómo elige el texto siguiente
 
 Después de cada sesión, el motor toma las 2 o 3 unidades peores (lo eliges en Ajustes → Práctica), con algo de azar para no repetir siempre las mismas, y pide un texto con la densidad adecuada de esas unidades. Encima del texto verás qué estás practicando, por ejemplo «Practicando: ñ · qu · z».
