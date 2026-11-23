@@ -224,7 +224,7 @@ Surface 2 (notes) or Surface (quoted app dialogs in documentation) panels with a
 Full width, hairline row rules, muted 600-weight headers (Surface 2 head on feature pages), 0.9375rem text, top-aligned cells.
 
 ### Navigation
-- **Header:** logo + wordmark text, three muted links (current page in the text colour), primary «Descargar» / «Download» button on the right; the header keeps its place across page transitions (`view-transition-name: site-header`). Below 48rem the links wrap to a second row.
+- **Header:** logo + wordmark text, the main links as a segmented control copied from the app's Prose/Words/Code mode switch (`ModeSwitch.svelte`: joined 2rem segments on `--surface-2` with a 1px `--border`, 0.375rem rounding on the outer ends only, muted 0.85rem labels; the current section filled with `--accent` and `--on-accent`, driven by `aria-current`; inset focus ring), primary «Descargar» / «Download» button on the right; the header keeps its place across page transitions (`view-transition-name: site-header`). Below 48rem the control moves to its own second row.
 - **Docs sidebar:** a search trigger, then uppercase muted section groups and their pages on a 2px hairline rail; the current page is bold, text-coloured, with an accent rail.
 - **Footer:** Surface band with the wordmark, secondary links, the language switch and the theme toggle (rendered only with JavaScript; without it the page follows the system).
 
