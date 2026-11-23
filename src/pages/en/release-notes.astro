@@ -1,7 +1,7 @@
 ---
 // English release notes (/en/release-notes; PRD §5, §6.13; docs/seo-2026.md §C "Release notes"): one
 // <h2 data-version> per release from src/content/releases/en, newest first, then the roadmap: the
-// unreleased 0.1.1 changes and the planned items, both labelled as not available. Mirrors novedades.astro.
+// planned items, labelled as not available. Mirrors novedades.astro.
 import { render } from "astro:content";
 import ProsePage from "../../layouts/ProsePage.astro";
 import { ROUTES } from "../../data/routes";
@@ -14,22 +14,12 @@ import { ogImagePath } from "../../lib/og/cards";
 const releases = await Promise.all((await getReleases("en")).map(async (r) => ({ r, Content: (await render(r)).Content })));
 const latest = releases[0]?.r.data;
 
-/** Changes on the app's main branch after v0.1.0 (git v0.1.0..main of the app repository). */
-const next = [
-  "Text lengths of 800, 1000, 1500 and 2000 characters.",
-  "“Ilimitado” (unlimited): the text grows while you type; as you near the end the continuation is generated (AI or local corpus) without interrupting you, and Esc or “Terminar” (finish) scores what you typed. If the AI's continuation fails or is slow, it goes on with texts from the local corpus.",
-  "The bar, Monkeytype style, becomes the default cursor and blinks while you are not typing.",
-  "Settings: Esc clears an active search from anywhere in the window.",
-  "Linux (.tar.gz): the launcher names the missing library when only the 32-bit WebKitGTK is installed.",
-];
-
 /** PRD §6.13: planned, not scheduled for a version. */
 const planned = [
   "A control text to measure progress.",
   "A children's mode.",
   "Your own OpenAI-compatible endpoint (Ollama, LM Studio).",
   "AI cost and a monthly spending limit.",
-  "An English interface.",
   "Automatic updates and Authenticode signing on Windows.",
   "An Italian corpus.",
   "A theme that follows the system's light or dark mode.",
@@ -46,9 +36,9 @@ const planned = [
   ogImage={ogImagePath("en/novedades")}
   path={ROUTES.news}
   title="What's new and release notes · PlexusTyping"
-  description="Notes for every PlexusTyping version, with its date and GitHub link, and the roadmap: what arrives in 0.1.1 and what is planned."
+  description="Notes for every PlexusTyping version, with its date and GitHub link: 0.2.0 brings the interface in five languages and unlimited text. And the plans."
   h1="What's new"
-  lead="Here are the notes of every released PlexusTyping version, from the newest to the oldest, with its date and its GitHub page. The app does not update itself: install each version by hand. At the end, the roadmap separates what arrives in the next version from what is planned."
+  lead="Here are the notes of every released PlexusTyping version, from the newest to the oldest, with its date and its GitHub page. The latest, 0.2.0, brings the interface in five languages and unlimited text. The app does not update itself: install each version by hand. At the end, the roadmap gathers what is planned."
   pageType="release-notes"
   {...latest ? { updated: latest.date } : {}}
 >
@@ -73,10 +63,6 @@ const planned = [
 
   <h2 id="roadmap">Roadmap</h2>
   <p>Nothing in this section is available in the released version.</p>
-
-  <h3 id="next-version">Next version 0.1.1 (unreleased)</h3>
-  <p>Changes already made in the app's code that will arrive with 0.1.1:</p>
-  <ul>{next.map((item) => <li>{item}</li>)}</ul>
 
   <h3 id="planned">Planned</h3>
   <p>Planned ideas, with no version or date:</p>

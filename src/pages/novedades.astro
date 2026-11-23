@@ -1,8 +1,8 @@
 ---
 // Release notes (PRD §5, §6.13; docs/seo-2026.md §C "Release notes"): one <h2 data-version> per
 // release from src/content/releases, newest first, each with its <time datetime> and GitHub release,
-// then the roadmap: the unreleased 0.1.1 changes on the app's main branch and the planned items,
-// both labelled as not available.
+// then the roadmap: the planned items (PRD §6.13), labelled as not available. Everything the app's main
+// branch had after v0.1.0 shipped in 0.2.0 (site-pages S17), so there is no unreleased-version list.
 import { render } from "astro:content";
 import ProsePage from "../layouts/ProsePage.astro";
 import { ROUTES } from "../data/routes";
@@ -14,22 +14,12 @@ import { ogImagePath } from "../lib/og/cards";
 const releases = await Promise.all((await getReleases("es")).map(async (r) => ({ r, Content: (await render(r)).Content })));
 const latest = releases[0]?.r.data;
 
-/** Changes on the app's main branch after v0.1.0 (git v0.1.0..main of the app repository). */
-const next = [
-  "Longitudes de texto de 800, 1000, 1500 y 2000 caracteres.",
-  "«Ilimitado»: el texto crece mientras escribes; al acercarte al final se genera la continuación (IA o corpus local) sin interrumpirte, y Esc o «Terminar» puntúan lo escrito. Si la continuación de la IA falla o tarda, sigue con textos del corpus local.",
-  "La barra, al estilo de Monkeytype, pasa a ser el cursor por defecto y parpadea mientras no escribes.",
-  "Ajustes: Esc borra una búsqueda activa desde cualquier punto de la ventana.",
-  "Linux (.tar.gz): el lanzador avisa de la biblioteca que falta cuando solo está instalado WebKitGTK de 32 bits.",
-];
-
 /** PRD §6.13: planned, not scheduled for a version. */
 const planned = [
   "Texto de control para medir el progreso.",
   "Modo infantil.",
   "Endpoint propio compatible con OpenAI (Ollama, LM Studio).",
   "Coste y límite de gasto mensual de la IA.",
-  "Interfaz en inglés.",
   "Actualización automática y firma Authenticode en Windows.",
   "Corpus en italiano.",
   "Tema que sigue el modo claro u oscuro del sistema.",
@@ -46,9 +36,9 @@ const planned = [
   ogImage={ogImagePath("novedades")}
   path={ROUTES.news}
   title="Novedades y notas de versión · PlexusTyping"
-  description="Notas de cada versión de PlexusTyping, con fecha y enlace a GitHub, y la hoja de ruta: lo que llega en la 0.1.1 y lo planeado."
+  description="Notas de cada versión de PlexusTyping, con fecha y enlace a GitHub: la 0.2.0 trae la interfaz en cinco idiomas y el texto ilimitado. Y lo planeado."
   h1="Novedades"
-  lead="Aquí están las notas de cada versión publicada de PlexusTyping, de la más reciente a la más antigua, con su fecha y su página en GitHub. La app no se actualiza sola: instala cada versión a mano. Al final, la hoja de ruta separa lo que llega en la próxima versión de lo planeado."
+  lead="Aquí están las notas de cada versión de PlexusTyping, de la más reciente a la más antigua, con su fecha y su página en GitHub. La última, la 0.2.0, trae la interfaz en cinco idiomas y el texto ilimitado. La app no se actualiza sola: instala cada versión a mano. Al final, la hoja de ruta reúne lo planeado."
   pageType="release-notes"
   {...latest ? { updated: latest.date } : {}}
 >
@@ -73,10 +63,6 @@ const planned = [
 
   <h2 id="hoja-de-ruta">Hoja de ruta</h2>
   <p>Nada de esta sección está disponible en la versión publicada.</p>
-
-  <h3 id="proxima-version">Próxima versión 0.1.1 (sin publicar)</h3>
-  <p>Cambios ya hechos en el código de la app que llegarán con la 0.1.1:</p>
-  <ul>{next.map((item) => <li>{item}</li>)}</ul>
 
   <h3 id="planeado">Planeado</h3>
   <p>Ideas previstas, sin versión ni fecha:</p>
