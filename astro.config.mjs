@@ -32,6 +32,9 @@ export default defineConfig({
       },
     }),
   ],
+  // Code blocks in Markdown stay plain <pre><code> styled by Prose.astro with the app tokens: Shiki
+  // colours tokens with inline style attributes, which the CSP below blocks (no 'unsafe-inline').
+  markdown: { syntaxHighlight: false },
   i18n: {
     locales: ["es", "en"],
     defaultLocale: "es",
@@ -51,6 +54,11 @@ export default defineConfig({
         "form-action 'none'",
         "upgrade-insecure-requests",
       ],
+      // script-src keeps Astro's default 'self' (the lazy docs search module and Pagefind load from the
+      // site itself) and adds 'wasm-unsafe-eval': Pagefind compiles its WebAssembly search core with
+      // WebAssembly.instantiate, which CSP blocks without it. The keyword allows WebAssembly compilation
+      // only, not eval() or new Function(), and no page loads WebAssembly until its search is opened.
+      scriptDirective: { resources: ["'self'", "'wasm-unsafe-eval'"] },
     },
   },
 });

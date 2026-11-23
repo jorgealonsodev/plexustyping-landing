@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "test": "vitest run",
     "check": "astro check",
@@ -38,6 +38,7 @@
     "@resvg/resvg-wasm": "^2.6.2",
     "@types/node": "^24.19.2",
     "node-html-parser": "^9.0.7",
+    "pagefind": "^1.6.0",
     "satori": "^0.63.2",
     "typescript": "^6.0.3",
     "vite": "^7.3.8",

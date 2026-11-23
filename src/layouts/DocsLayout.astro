@@ -3,7 +3,9 @@
  * Documentation page (/docs/<section>/<page>, Read surface; PRD §7; docs/seo-2026.md §C "Docs"):
  * sidebar, breadcrumbs + BreadcrumbList, TechArticle with dates and author, one h1, a visible
  * "Actualizado" date and app version, the Markdown body (its first paragraph is the 40–60 word
- * answer), a table of contents, links to related features, "Editar en GitHub" and "¿Te ha ayudado?".
+ * answer), a table of contents, links to related features, "Editar en GitHub" and "¿Te ha ayudado?",
+ * and the documentation search (DocsSearch). Pagefind indexes the [data-pagefind-body] article: the h1
+ * as the result title and the Markdown body; breadcrumbs, meta, TOC and footer are ignored.
  *
  * Usage (the route file, e.g. src/pages/docs/[...slug].astro):
  *   const { entry } = Astro.props;
@@ -13,6 +15,7 @@
 import type { MarkdownHeading } from "astro";
 import Prose from "../components/Prose.astro";
 import DocsSidebar from "../components/nav/DocsSidebar.astro";
+import DocsSearch from "../components/search/DocsSearch.astro";
 import Toc from "../components/nav/Toc.astro";
 import Breadcrumbs from "../components/seo/Breadcrumbs.astro";
 import { DOCS_SECTIONS, type DocsSection } from "../data/docs-sections";
@@ -82,22 +85,23 @@ const jsonLd = [
 <Base {title} {description} {locale} {path} {translated} pageType="docs" ogType="article" {jsonLd} {...ogImage ? { ogImage } : {}}>
   <div class="docs">
     <aside class="side">
+      <div class="search"><DocsSearch {locale} /></div>
       <DocsSidebar sections={sidebar} {locale} />
     </aside>
-    <article class="article">
-      <Breadcrumbs {crumbs} {locale} />
+    <article class="article" data-pagefind-body>
+      <div data-pagefind-ignore><Breadcrumbs {crumbs} {locale} /></div>
       <header class="head">
-        <p class="eyebrow">{DOCS_SECTIONS[section][locale]}</p>
-        <h1>{h1}</h1>
-        <p class="meta" data-updated>
+        <p class="eyebrow" data-pagefind-ignore>{DOCS_SECTIONS[section][locale]}</p>
+        <h1 data-pagefind-meta="title">{h1}</h1>
+        <p class="meta" data-updated data-pagefind-ignore>
           {t.layout.updated}: <time datetime={isoDate(updated)}>{formatDate(updated, locale)}</time>
           <span aria-hidden="true">·</span>
           {t.layout.appVersion}: <span data-app-version>{appVersion}</span>
         </p>
       </header>
-      <div class="toc-inline"><Toc {headings} {locale} /></div>
+      <div class="toc-inline" data-pagefind-ignore><Toc {headings} {locale} /></div>
       <Prose><slot /></Prose>
-      <footer class="foot">
+      <footer class="foot" data-pagefind-ignore>
         <section aria-labelledby="docs-features">
           <h2 id="docs-features">{t.layout.relatedFeatures}</h2>
           <ul>
@@ -139,6 +143,9 @@ const jsonLd = [
   }
   .toc-side {
     display: none;
+  }
+  .search {
+    margin-bottom: 1.25rem;
   }
   .article {
     display: grid;
