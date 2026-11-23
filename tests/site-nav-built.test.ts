@@ -4,7 +4,7 @@
  * side drawer built on the HTML popover attribute (no JavaScript), with the same three links and the current
  * section marked with aria-current.
  */
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { type HTMLElement, parse } from "node-html-parser";
 import { describe, expect, it } from "vitest";
@@ -28,6 +28,7 @@ const LOCALES = [
     open: "Abrir menú",
     close: "Cerrar menú",
     drawerLabel: "Menú",
+    download: { href: "/descargar", label: "Descargar" },
   },
   {
     locale: "en",
@@ -42,6 +43,7 @@ const LOCALES = [
     open: "Open menu",
     close: "Close menu",
     drawerLabel: "Menu",
+    download: { href: "/en/download", label: "Download" },
   },
 ] as const;
 
@@ -79,6 +81,21 @@ describe.skipIf(!built)("site header navigation (S15)", () => {
         expect(close).not.toBeNull();
         expect(close!.getAttribute("popovertarget")).toBe(drawer.id);
         expect(close!.getAttribute("aria-label")).toBe(l.close);
+      });
+
+      it("offers the download link inside the drawer (the header button hides on phones)", () => {
+        const cta = header().querySelector("nav[popover] a.drawer-cta");
+        expect(cta).not.toBeNull();
+        expect({ href: cta!.getAttribute("href"), label: cta!.text.trim() }).toEqual(l.download);
+      });
+
+      it("hides the header download button and keeps the wordmark in the phone layout", () => {
+        const css = readdirSync("dist/_astro")
+          .filter((f) => f.endsWith(".css"))
+          .map((f) => readFileSync(`dist/_astro/${f}`, "utf8"))
+          .join("\n");
+        expect(css).toMatch(/\.cta\[data-astro-cid-[\w-]+\]\{display:none\}/);
+        expect(css).not.toMatch(/\.brand\[data-astro-cid-[\w-]+\] span\[data-astro-cid-[\w-]+\]\{display:none\}/);
       });
 
       it("marks only the current section in the drawer and in the desktop row", () => {

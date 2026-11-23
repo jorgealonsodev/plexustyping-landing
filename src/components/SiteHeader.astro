@@ -68,6 +68,7 @@ const links = [
         ))
       }
     </ul>
+    <a class="btn btn-primary drawer-cta" href={href(ROUTES.download)} aria-current={ariaCurrent(ROUTES.download)}>{t.nav.download}</a>
   </nav>
 </header>
 
@@ -163,9 +164,14 @@ const links = [
       .links {
         display: none;
       }
+      /* The download button moves into the drawer: the header row keeps only the brand and the menu button. */
+      .cta {
+        display: none;
+      }
       .menu-btn {
         display: inline-flex;
         flex: none;
+        margin-left: auto;
       }
       .drawer {
         position: fixed;
@@ -209,12 +215,6 @@ const links = [
           background-color: transparent;
         }
       }
-      /* Narrow phones (under 384px): the logo alone, so brand, download and menu fit one row down to 320px. */
-      @media (max-width: 23.99rem) {
-        .brand span {
-          display: none;
-        }
-      }
       /* The page behind an open drawer does not scroll. */
       :global(html:has(#site-menu:popover-open)) {
         overflow: hidden;
@@ -228,6 +228,10 @@ const links = [
     align-items: center;
     justify-content: flex-end;
     min-height: 4.75rem;
+  }
+  .drawer-cta {
+    align-self: flex-start;
+    margin-top: 1.5rem;
   }
   .drawer-links {
     margin: 0.5rem 0 0;
