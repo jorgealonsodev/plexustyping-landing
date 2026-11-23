@@ -3,6 +3,7 @@
  * install steps its HowTo JSON-LD describes. Names, sizes and sums come from the release the build read
  * (src/lib/release.ts), never typed by hand (docs/seo-2026.md §D6).
  */
+import type { Locale } from "../../i18n/paths";
 import type { AssetKind, Release, ReleaseAsset } from "../../lib/release";
 
 export interface DownloadModel {
@@ -35,12 +36,21 @@ export function downloadModel(release: Release): DownloadModel {
   };
 }
 
-/** Installing the .deb, as README.md "Install" of the app describes it (HowTo JSON-LD). */
-export function installSteps(m: DownloadModel): { name: string; text: string }[] {
+/** Installing the .deb, as README.md "Install" of the app describes it (HowTo JSON-LD), in the page's language. */
+export function installSteps(m: DownloadModel, locale: Locale = "es"): { name: string; text: string }[] {
+  const deb = m.linux.deb.name;
+  if (locale === "en") {
+    return [
+      { name: "Download the package and SHA256SUMS", text: `Download ${deb} and SHA256SUMS of version ${m.version} into the same folder.` },
+      { name: "Check the SHA-256 sum", text: "In that folder, run sha256sum -c SHA256SUMS --ignore-missing; it must answer “OK” for the package." },
+      { name: "Install the package", text: `Run sudo apt install ./${deb}; apt also installs WebKitGTK 4.1 and GTK 3 if they are missing.` },
+      { name: "Open it", text: "Open PlexusTyping from the applications menu." },
+    ];
+  }
   return [
     {
       name: "Descarga el paquete y SHA256SUMS",
-      text: `Descarga ${m.linux.deb.name} y SHA256SUMS de la versión ${m.version} en la misma carpeta.`,
+      text: `Descarga ${deb} y SHA256SUMS de la versión ${m.version} en la misma carpeta.`,
     },
     {
       name: "Comprueba la suma SHA-256",
@@ -48,7 +58,7 @@ export function installSteps(m: DownloadModel): { name: string; text: string }[]
     },
     {
       name: "Instala el paquete",
-      text: `Ejecuta sudo apt install ./${m.linux.deb.name}; apt instala también WebKitGTK 4.1 y GTK 3 si faltan.`,
+      text: `Ejecuta sudo apt install ./${deb}; apt instala también WebKitGTK 4.1 y GTK 3 si faltan.`,
     },
     { name: "Ábrelo", text: "Abre PlexusTyping desde el menú de aplicaciones." },
   ];

@@ -6,7 +6,7 @@ import { DOCS_SECTIONS } from "../../data/docs-sections";
 import { OG_PAGES } from "../../data/og-pages";
 import type { Locale } from "../../i18n/paths";
 import { UI } from "../../i18n/ui";
-import { type DocEntry, docSlug, getDocs, getFeatures } from "../content";
+import { type DocEntry, docSlug, featureSlug, getDocs, getFeatures } from "../content";
 import type { OgCard } from "./render";
 
 export type OgCardEntry = OgCard & { slug: string };
@@ -39,7 +39,7 @@ export async function ogCards(): Promise<OgCardEntry[]> {
       });
     }
     for (const f of await getFeatures(locale)) {
-      cards.push({ slug: `${prefix(locale)}funciones/${f.id}`, title: f.data.h1, eyebrow: UI[locale].nav.features, locale });
+      cards.push({ slug: `${prefix(locale)}funciones/${featureSlug(f)}`, title: f.data.h1, eyebrow: UI[locale].nav.features, locale });
     }
   }
   cards.push(...OG_PAGES);

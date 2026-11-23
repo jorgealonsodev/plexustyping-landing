@@ -1,10 +1,12 @@
 ---
 /**
  * The nine feature pages as a list of links (name + summary), for /funciones (h2 per feature) and the
- * home's overview (h3). Texto ilimitado carries its "Próxima versión 0.1.1" label (spec S2).
+ * home's overview (h3), in the entries' language. Texto ilimitado carries its "Próxima versión 0.1.1" /
+ * "Next version 0.1.1" label (spec S2).
  */
 import type { CollectionEntry } from "astro:content";
-import { featurePath } from "../../lib/content";
+import type { Locale } from "../../i18n/paths";
+import { featurePath, featureSlug } from "../../lib/content";
 
 interface Props {
   features: CollectionEntry<"features">[];
@@ -14,7 +16,10 @@ interface Props {
 
 const { features, level = 2 } = Astro.props;
 const Heading = level === 2 ? "h2" : "h3";
-const UPCOMING: Record<string, string> = { "texto-ilimitado": "Próxima versión 0.1.1" };
+const UPCOMING: Record<Locale, Record<string, string>> = {
+  es: { "texto-ilimitado": "Próxima versión 0.1.1" },
+  en: { "texto-ilimitado": "Next version 0.1.1" },
+};
 ---
 
 <ul class:list={["features", `level-${level}`]}>
@@ -22,9 +27,9 @@ const UPCOMING: Record<string, string> = { "texto-ilimitado": "Próxima versión
     features.map((f) => (
       <li>
         <Heading class="name">
-          <a href={featurePath(f.id, f.data.lang)}>{f.data.h1}</a>
+          <a href={featurePath(featureSlug(f), f.data.lang)}>{f.data.h1}</a>
         </Heading>
-        {UPCOMING[f.id] && <p class="badge">{UPCOMING[f.id]}</p>}
+        {UPCOMING[f.data.lang][featureSlug(f)] && <p class="badge">{UPCOMING[f.data.lang][featureSlug(f)]}</p>}
         <p class="summary">{f.data.description}</p>
         <svg class="arrow" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14m-5-5 5 5-5 5" />

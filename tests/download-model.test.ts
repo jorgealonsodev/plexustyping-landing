@@ -65,4 +65,17 @@ describe("installSteps", () => {
     expect(steps[1]?.text).toContain("sha256sum -c SHA256SUMS --ignore-missing");
     expect(steps[2]?.text).toContain("sudo apt install ./plexustyping_0.1.0_amd64.deb");
   });
+
+  it("has the same four steps in English for /en/download (site-pages S7)", () => {
+    const steps = installSteps(downloadModel(release), "en");
+    expect(steps.map((s) => s.name)).toEqual([
+      "Download the package and SHA256SUMS",
+      "Check the SHA-256 sum",
+      "Install the package",
+      "Open it",
+    ]);
+    expect(steps[1]?.text).toContain("sha256sum -c SHA256SUMS --ignore-missing");
+    expect(steps[2]?.text).toContain("sudo apt install ./plexustyping_0.1.0_amd64.deb");
+    expect(installSteps(downloadModel(release), "es")).toEqual(installSteps(downloadModel(release)));
+  });
 });

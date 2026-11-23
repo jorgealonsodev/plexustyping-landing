@@ -1,0 +1,99 @@
+---
+// Body of a feature page (src/pages/funciones/[slug].astro, src/pages/en/features/[slug].astro): the
+// rendered MDX entry in the flow layout every feature page shares.
+---
+
+<div class="body">
+  <slot />
+</div>
+
+<style>
+  /* Flow layout: MDX content is a flat run of blocks; headings open more space above than below. */
+  .body {
+    min-width: 0;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+  .body :global(> * + *) {
+    margin-top: 1rem;
+  }
+  .body :global(> h2) {
+    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    font-size: clamp(1.625rem, 1.3rem + 1.2vw, 2.125rem);
+    letter-spacing: -0.015em;
+  }
+  .body :global(> figure) {
+    margin-block: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .body :global(> figure:first-child) {
+    margin-top: 0;
+  }
+  .body :global(> h2 + *) {
+    margin-top: 0.875rem;
+  }
+  .body :global(h3) {
+    margin-top: 0.5rem;
+    font-size: 1.1875rem;
+  }
+  .body :global(p),
+  .body :global(ul),
+  .body :global(ol) {
+    max-width: var(--measure);
+  }
+  .body :global(ul),
+  .body :global(ol) {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.375rem;
+  }
+  .body :global(a) {
+    color: var(--accent);
+  }
+  .body :global(kbd),
+  .body :global(code) {
+    font-family: var(--mono);
+    font-size: 0.875em;
+  }
+  .body :global(kbd) {
+    padding: 0.05em 0.4em;
+    border: 1px solid var(--key-border);
+    border-bottom-width: 2px;
+    border-radius: 0.3rem;
+    background: var(--key-bg);
+    color: var(--key-fg);
+    white-space: nowrap;
+  }
+  .body :global(.badge) {
+    display: inline-block;
+    padding: 0.125rem 0.625rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--warning) 20%, transparent);
+    color: var(--text);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    vertical-align: 0.15em;
+  }
+  .body :global(.note) {
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+  }
+  .body :global(table) {
+    width: 100%;
+    max-width: 48rem;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+  .body :global(th),
+  .body :global(td) {
+    padding: 0.625rem 0.875rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border);
+  }
+  .body :global(thead th) {
+    background: var(--surface-2);
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 /**
- * Feature page (/funciones/<slug>, Persuade surface; docs/seo-2026.md §C "Feature"):
+ * Feature page (/funciones/<slug>, /en/features/<english-slug>; Persuade surface; docs/seo-2026.md §C "Feature"):
  * breadcrumbs + BreadcrumbList, one h1 (the feature), the 40–60 word answer, the page's own
  * sections in the slot (h2 and below, with the simulation or real screenshot in a <figure>),
  * links to its documentation and a visible "Actualizado" date.
@@ -16,7 +16,7 @@ import Breadcrumbs from "../components/seo/Breadcrumbs.astro";
 import type { FeatureSlug } from "../data/routes";
 import { type Locale, localizePath } from "../i18n/paths";
 import { ui } from "../i18n/ui";
-import { getFeatures } from "../lib/content";
+import { featureSlug, getFeatures } from "../lib/content";
 import { featureOgImage } from "../lib/og/cards";
 import { formatDate } from "../lib/format";
 import { breadcrumbListNode, type Crumb, isoDate } from "../lib/seo/jsonld";
@@ -53,7 +53,7 @@ const { locale, slug, title, description, h1, lead, updated, docs, translated = 
 const t = ui(locale);
 const site = Astro.site ?? new URL("https://example.com");
 const path = `/funciones/${slug}`;
-const hasCard = (await getFeatures(locale)).some((f) => f.id === slug);
+const hasCard = (await getFeatures(locale)).some((f) => featureSlug(f) === slug);
 const crumbs: Crumb[] = [
   { name: t.layout.home, path: localizePath("/", locale) },
   { name: t.nav.features, path: localizePath("/funciones", locale) },

@@ -1,11 +1,13 @@
 ---
 /**
- * The Spanish home below the hero (surface brief STORY): S2 weak spots, S3 unlimited text (labeled for
- * 0.1.1), the feature overview linking every /funciones page, and the download close with the release
- * facts as text (docs/seo-2026.md §C "Home").
+ * The home below the hero (surface brief STORY), in Spanish or English: S2 weak spots, S3 unlimited text
+ * (labeled for 0.1.1), the feature overview linking every feature page, and the download close with the
+ * release facts as text (docs/seo-2026.md §C "Home"). Each block keeps its Spanish and English copy side
+ * by side, so a Spanish edit is mirrored in the same place (site-pages S7).
  */
 import type { CollectionEntry } from "astro:content";
 import { APP_REPO_URL } from "../../data/site";
+import { type Locale, localizePath } from "../../i18n/paths";
 import { formatDate } from "../../lib/format";
 import type { Release } from "../../lib/release";
 import { isoDate } from "../../lib/seo/jsonld";
@@ -16,66 +18,143 @@ import HomeSection from "./HomeSection.astro";
 interface Props {
   features: CollectionEntry<"features">[];
   release: Release;
+  locale?: Locale;
 }
 
-const { features, release } = Astro.props;
+const { features, release, locale = "es" } = Astro.props;
+const es = locale === "es";
+const href = (p: string) => localizePath(p, locale);
 ---
 
-<HomeSection id="puntos-debiles" title="Cada texto nace de tus fallos">
-  <Fragment slot="copy">
-    <p>
-      Tras el texto de diagnóstico, PlexusTyping ya sabe qué te cuesta. Mide los errores y la lentitud de cada carácter y de cada
-      par de letras, tiñe el teclado según tus errores y escribe el texto siguiente con esas unidades: «Practicando: ñ · qu · z».
-    </p>
-    <p><a href="/funciones/motor-adaptativo">Cómo funciona el motor adaptativo</a></p>
-  </Fragment>
-  <FeatureSim sim="s2" />
-</HomeSection>
+{
+  es ? (
+    <HomeSection id="puntos-debiles" title="Cada texto nace de tus fallos">
+      <Fragment slot="copy">
+        <p>
+          Tras el texto de diagnóstico, PlexusTyping ya sabe qué te cuesta. Mide los errores y la lentitud de cada carácter y de cada
+          par de letras, tiñe el teclado según tus errores y escribe el texto siguiente con esas unidades: «Practicando: ñ · qu · z».
+        </p>
+        <p><a href="/funciones/motor-adaptativo">Cómo funciona el motor adaptativo</a></p>
+      </Fragment>
+      <FeatureSim sim="s2" />
+    </HomeSection>
+  ) : (
+    <HomeSection id="weak-spots" title="Every text grows out of your mistakes">
+      <Fragment slot="copy">
+        <p>
+          After the diagnostic text, PlexusTyping already knows what costs you. It measures the errors and the slowness of every
+          character and every pair of letters, tints the keyboard by your errors and writes the next text with those units:
+          “Practising: qu · z · x”.
+        </p>
+        <p><a href={href("/funciones/motor-adaptativo")}>How the adaptive engine works</a></p>
+      </Fragment>
+      <FeatureSim sim="s2" {locale} />
+    </HomeSection>
+  )
+}
 
-<HomeSection id="texto-ilimitado" title="Un texto que no se acaba">
-  <Fragment slot="copy">
-    <p class="badge">Próxima versión 0.1.1</p>
-    <p>
-      Con la longitud «Ilimitado», el texto crece mientras escribes: al acercarte al final llega la continuación, de la IA o del
-      corpus local, sin pausas. <kbd>Esc</kbd> o «Terminar» puntúan lo escrito. La versión publicada, la {release.version}, ofrece
-      textos de 100 a 600 caracteres.
-    </p>
-    <p><a href="/funciones/texto-ilimitado">Más sobre el texto ilimitado</a></p>
-  </Fragment>
-  <FeatureSim sim="s3" />
-</HomeSection>
+{
+  es ? (
+    <HomeSection id="texto-ilimitado" title="Un texto que no se acaba">
+      <Fragment slot="copy">
+        <p class="badge">Próxima versión 0.1.1</p>
+        <p>
+          Con la longitud «Ilimitado», el texto crece mientras escribes: al acercarte al final llega la continuación, de la IA o del
+          corpus local, sin pausas. <kbd>Esc</kbd> o «Terminar» puntúan lo escrito. La versión publicada, la {release.version}, ofrece
+          textos de 100 a 600 caracteres.
+        </p>
+        <p><a href="/funciones/texto-ilimitado">Más sobre el texto ilimitado</a></p>
+      </Fragment>
+      <FeatureSim sim="s3" />
+    </HomeSection>
+  ) : (
+    <HomeSection id="unlimited-text" title="A text that never runs out">
+      <Fragment slot="copy">
+        <p class="badge">Next version 0.1.1</p>
+        <p>
+          With the “Ilimitado” (Unlimited) length, the text grows while you type: as you near the end the continuation arrives, from
+          the AI or the local corpus, without a pause. <kbd>Esc</kbd> or “Terminar” (Finish) scores what you typed. The released
+          version, {release.version}, offers texts of 100 to 600 characters.
+        </p>
+        <p><a href={href("/funciones/texto-ilimitado")}>More about unlimited text</a></p>
+      </Fragment>
+      <FeatureSim sim="s3" {locale} />
+    </HomeSection>
+  )
+}
 
-<HomeSection id="funciones" title="Todo lo que hace">
-  <Fragment slot="copy">
-    <p>
-      Sin conexión, sin cuenta y sin telemetría: tus sesiones se quedan en tu ordenador. Cada función tiene su página con una
-      demostración y su documentación.
-    </p>
-  </Fragment>
-  <FeatureIndex {features} level={3} />
-  <p class="all"><a href="/funciones">Ver todas las funciones</a> · <a href="/docs">Leer la documentación</a></p>
-</HomeSection>
+{
+  es ? (
+    <HomeSection id="funciones" title="Todo lo que hace">
+      <Fragment slot="copy">
+        <p>
+          Sin conexión, sin cuenta y sin telemetría: tus sesiones se quedan en tu ordenador. Cada función tiene su página con una
+          demostración y su documentación.
+        </p>
+      </Fragment>
+      <FeatureIndex {features} level={3} />
+      <p class="all"><a href="/funciones">Ver todas las funciones</a> · <a href="/docs">Leer la documentación</a></p>
+    </HomeSection>
+  ) : (
+    <HomeSection id="features" title="Everything it does">
+      <Fragment slot="copy">
+        <p>
+          Offline, with no account and no telemetry: your sessions stay on your computer. Every feature has its own page with a demo
+          and its documentation. The app's interface is in Spanish; the practice texts come in five languages, English among them.
+        </p>
+      </Fragment>
+      <FeatureIndex {features} level={3} />
+      <p class="all"><a href={href("/funciones")}>See all features</a> · <a href={href("/docs")}>Read the documentation</a></p>
+    </HomeSection>
+  )
+}
 
-<HomeSection id="descargar" title="Descárgalo y practica hoy" band>
-  <Fragment slot="copy">
-    <p>Gratis y de código abierto, para Linux y Windows. Sin cuenta: lo instalas y escribes.</p>
-  </Fragment>
-  <div class="close">
-    <div class="ctas">
-      <a class="btn btn-primary btn-lg" href="/descargar#linux">Descargar para Linux</a>
-      <a class="btn btn-ghost btn-lg" href="/descargar#windows">Descargar para Windows</a>
-    </div>
-    <dl class="facts">
-      <div><dt>Versión</dt><dd>{release.version}</dd></div>
-      <div><dt>Publicada</dt><dd><time datetime={isoDate(release.publishedAt)}>{formatDate(release.publishedAt, "es")}</time></dd></div>
-      <div><dt>Sistemas</dt><dd>Linux x86_64 (.deb y .tar.gz), Windows 10 y 11 de 64 bits</dd></div>
-      <div><dt>Licencia</dt><dd>MIT o Apache-2.0, <a href={APP_REPO_URL}>código en GitHub</a></dd></div>
-    </dl>
-    <p class="mobile">
-      ¿Estás en el móvil? PlexusTyping es una app de escritorio: guarda esta página y ábrela en tu ordenador.
-    </p>
-  </div>
-</HomeSection>
+{
+  es ? (
+    <HomeSection id="descargar" title="Descárgalo y practica hoy" band>
+      <Fragment slot="copy">
+        <p>Gratis y de código abierto, para Linux y Windows. Sin cuenta: lo instalas y escribes.</p>
+      </Fragment>
+      <div class="close">
+        <div class="ctas">
+          <a class="btn btn-primary btn-lg" href="/descargar#linux">Descargar para Linux</a>
+          <a class="btn btn-ghost btn-lg" href="/descargar#windows">Descargar para Windows</a>
+        </div>
+        <dl class="facts">
+          <div><dt>Versión</dt><dd>{release.version}</dd></div>
+          <div><dt>Publicada</dt><dd><time datetime={isoDate(release.publishedAt)}>{formatDate(release.publishedAt, locale)}</time></dd></div>
+          <div><dt>Sistemas</dt><dd>Linux x86_64 (.deb y .tar.gz), Windows 10 y 11 de 64 bits</dd></div>
+          <div><dt>Licencia</dt><dd>MIT o Apache-2.0, <a href={APP_REPO_URL}>código en GitHub</a></dd></div>
+        </dl>
+        <p class="mobile">
+          ¿Estás en el móvil? PlexusTyping es una app de escritorio: guarda esta página y ábrela en tu ordenador.
+        </p>
+      </div>
+    </HomeSection>
+  ) : (
+    <HomeSection id="download" title="Download it and practice today" band>
+      <Fragment slot="copy">
+        <p>Free and open source, for Linux and Windows. No account: install it and type.</p>
+      </Fragment>
+      <div class="close">
+        <div class="ctas">
+          <a class="btn btn-primary btn-lg" href={`${href("/descargar")}#linux`}>Download for Linux</a>
+          <a class="btn btn-ghost btn-lg" href={`${href("/descargar")}#windows`}>Download for Windows</a>
+        </div>
+        <dl class="facts">
+          <div><dt>Version</dt><dd>{release.version}</dd></div>
+          <div><dt>Released</dt><dd><time datetime={isoDate(release.publishedAt)}>{formatDate(release.publishedAt, locale)}</time></dd></div>
+          <div><dt>Systems</dt><dd>Linux x86_64 (.deb and .tar.gz), Windows 10 and 11, 64-bit</dd></div>
+          <div><dt>License</dt><dd>MIT or Apache-2.0, <a href={APP_REPO_URL}>source on GitHub</a></dd></div>
+          <div><dt>App interface</dt><dd>Spanish only; practice texts in five languages</dd></div>
+        </dl>
+        <p class="mobile">
+          On your phone? PlexusTyping is a desktop app: bookmark this page and open it on your computer.
+        </p>
+      </div>
+    </HomeSection>
+  )
+}
 
 <style>
   .all {

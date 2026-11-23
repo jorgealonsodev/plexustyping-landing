@@ -13,6 +13,7 @@ interface Props {
 }
 
 const { asset, label, locale, primary = false } = Astro.props;
+const t = locale === "es" ? { file: "Archivo", size: "Tamaño" } : { file: "File", size: "Size" };
 ---
 
 <div class="artifact">
@@ -24,11 +25,11 @@ const { asset, label, locale, primary = false } = Astro.props;
   </a>
   <dl>
     <div>
-      <dt>Archivo</dt>
+      <dt>{t.file}</dt>
       <dd><code>{asset.name}</code></dd>
     </div>
     <div>
-      <dt>Tamaño</dt>
+      <dt>{t.size}</dt>
       <dd>{formatBytes(asset.size, locale)}</dd>
     </div>
     <div class="sum">

@@ -14,6 +14,15 @@ export type DocEntry = CollectionEntry<"docs">;
 /** Id without the language folder: "en/empezar/instalar" -> "empezar/instalar". */
 export const docSlug = (entry: DocEntry) => entry.id.replace(/^en\//, "");
 
+/**
+ * Spanish slug of a feature entry, without the language folder: "en/ia" -> "ia". English entries live in
+ * src/content/features/en/ under the Spanish file name, so both languages pair by slug.
+ */
+export const featureSlug = (entry: { id: string }) => entry.id.replace(/^en\//, "") as FeatureSlug;
+
+/** Id of a FAQ entry without the language folder, for its fragment: "en/gratis" -> "gratis". */
+export const faqSlug = (entry: { id: string }) => entry.id.replace(/^en\//, "");
+
 /** Localized URL path of a documentation page. */
 export const docPath = (entry: DocEntry) => localizePath(`/docs/${docSlug(entry)}`, entry.data.lang);
 
@@ -89,7 +98,7 @@ export async function getFaq(locale: Locale = "es") {
  * copies of the one app entity agree.
  */
 export async function appFeatureList(locale: Locale): Promise<string[]> {
-  return (await getFeatures(locale)).filter((f) => f.id !== "texto-ilimitado").map((f) => f.data.h1);
+  return (await getFeatures(locale)).filter((f) => featureSlug(f) !== "texto-ilimitado").map((f) => f.data.h1);
 }
 
 const TITLE_SUFFIX_RE = / · PlexusTyping$/;
@@ -132,7 +141,7 @@ export async function featureLayoutProps(entry: CollectionEntry<"features">) {
   });
   return {
     locale: d.lang,
-    slug: entry.id.replace(/^en\//, "") as FeatureSlug,
+    slug: featureSlug(entry),
     title: d.title,
     description: d.description,
     h1: d.h1,

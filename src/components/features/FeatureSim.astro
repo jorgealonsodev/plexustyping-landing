@@ -2,7 +2,8 @@
 /**
  * One simulation of PRD §8 in its app-window <figure>, by name, for the feature pages (MDX) and the home.
  * Islands hydrate on visibility (`client:visible`); "layouts" is a server-rendered still (no JavaScript).
- * Spanish strings only; the English mirror passes `locale="en"` (spec S7, S9).
+ * The English mirror passes `locale="en"`: English strings, English corpus and the English (US) keyboard,
+ * also for S8 and S10, whose keyboard layout is a prop that defaults to Spanish (spec S7, S9).
  */
 import S10Accessibility from "../sims/S10Accessibility.svelte";
 import S2WeakSpots from "../sims/S2WeakSpots.svelte";
@@ -14,6 +15,7 @@ import S7Personalize from "../sims/S7Personalize.svelte";
 import S8Code from "../sims/S8Code.svelte";
 import S9Privacy from "../sims/S9Privacy.svelte";
 import type { Locale } from "../../i18n/paths";
+import { KEYBOARDS } from "../../sim/keyboard/locale";
 import { S10_STRINGS } from "../../sim/i18n/s10";
 import { S2_STRINGS } from "../../sim/i18n/s2";
 import { S3_STRINGS } from "../../sim/i18n/s3";
@@ -36,6 +38,34 @@ interface Props {
 
 const { sim, locale = "es", size = "wide" } = Astro.props;
 const demo = locale === "es" ? "Demostración de PlexusTyping" : "PlexusTyping demo";
+/** What each window shows, after "{demo}: " in its accessible name. */
+const NAMES: Record<Locale, Record<Exclude<SimName, "layouts">, string>> = {
+  es: {
+    s2: "tus puntos débiles",
+    s3: "texto ilimitado",
+    s4: "sesión fantasma",
+    s5: "metrónomo",
+    s6: "desbloqueo progresivo",
+    s7: "personalización",
+    s8: "modo código",
+    s9: "IA con privacidad",
+    s10: "accesibilidad",
+  },
+  en: {
+    s2: "your weak spots",
+    s3: "unlimited text",
+    s4: "ghost session",
+    s5: "metronome",
+    s6: "progressive unlock",
+    s7: "personalization",
+    s8: "code mode",
+    s9: "AI with privacy",
+    s10: "accessibility",
+  },
+};
+const label = (name: Exclude<SimName, "layouts">) => `${demo}: ${NAMES[locale][name]}`;
+/** S8 and S10 draw the Spanish layout unless told otherwise; Spanish pages keep that default (no prop). */
+const layoutProp = locale === "es" ? {} : { layout: KEYBOARDS[locale].layout };
 const windowDemo = locale === "es" ? "PlexusTyping · demostración" : "PlexusTyping · demo";
 const s2 = S2_STRINGS[locale];
 const s3 = S3_STRINGS[locale];
@@ -50,64 +80,64 @@ const s10 = S10_STRINGS[locale];
 
 {
   sim === "s2" && (
-    <SimFigure {size} label={`${demo}: tus puntos débiles`} title={s2.title} caption={s2.caption}>
+    <SimFigure {size} label={label("s2")} title={s2.title} caption={s2.caption}>
       <S2WeakSpots client:visible strings={s2} {locale} />
     </SimFigure>
   )
 }
 {
   sim === "s3" && (
-    <SimFigure {size} label={`${demo}: texto ilimitado`} title={s3.windowTitle} caption={s3.caption}>
+    <SimFigure {size} label={label("s3")} title={s3.windowTitle} caption={s3.caption}>
       <S3Unlimited client:visible strings={s3} {locale} />
     </SimFigure>
   )
 }
 {
   sim === "s4" && (
-    <SimFigure {size} label={`${demo}: sesión fantasma`} title={s4.windowTitle} caption={s4.caption}>
+    <SimFigure {size} label={label("s4")} title={s4.windowTitle} caption={s4.caption}>
       <S4Ghost client:visible strings={s4} {locale} />
     </SimFigure>
   )
 }
 {
   sim === "s5" && (
-    <SimFigure {size} label={`${demo}: metrónomo`} title={windowDemo} caption={s5.caption} bar="start" stage={false}>
+    <SimFigure {size} label={label("s5")} title={windowDemo} caption={s5.caption} bar="start" stage={false}>
       <S5Metronome client:visible strings={s5} {locale} />
     </SimFigure>
   )
 }
 {
   sim === "s6" && (
-    <SimFigure {size} label={`${demo}: desbloqueo progresivo`} title={s6.title} caption={s6.caption}>
+    <SimFigure {size} label={label("s6")} title={s6.title} caption={s6.caption}>
       <S6Unlock client:visible strings={s6} {locale} />
     </SimFigure>
   )
 }
 {
   sim === "s7" && (
-    <SimFigure {size} label={`${demo}: personalización`} title={windowDemo} caption={s7.caption} bar="start" stage={false}>
+    <SimFigure {size} label={label("s7")} title={windowDemo} caption={s7.caption} bar="start" stage={false}>
       <S7Personalize client:visible strings={s7} {locale} />
     </SimFigure>
   )
 }
 {
   sim === "s8" && (
-    <SimFigure {size} label={`${demo}: modo código`} title={s8.windowTitle} caption={s8.caption}>
-      <S8Code client:visible strings={s8} {locale} />
+    <SimFigure {size} label={label("s8")} title={s8.windowTitle} caption={s8.caption}>
+      <S8Code client:visible strings={s8} {locale} {...layoutProp} />
     </SimFigure>
   )
 }
 {
   sim === "s9" && (
-    <SimFigure {size} label={`${demo}: IA con privacidad`} title={s9.windowTitle} caption={s9.caption}>
+    <SimFigure {size} label={label("s9")} title={s9.windowTitle} caption={s9.caption}>
       <S9Privacy client:visible strings={s9} {locale} />
     </SimFigure>
   )
 }
 {
   sim === "s10" && (
-    <SimFigure {size} label={`${demo}: accesibilidad`} title={s10.windowTitle} caption={s10.caption}>
-      <S10Accessibility client:visible strings={s10} {locale} />
+    <SimFigure {size} label={label("s10")} title={s10.windowTitle} caption={s10.caption}>
+      <S10Accessibility client:visible strings={s10} {locale} {...layoutProp} />
     </SimFigure>
   )
 }

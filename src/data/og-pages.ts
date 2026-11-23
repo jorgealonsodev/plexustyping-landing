@@ -21,4 +21,11 @@ export const OG_PAGES: OgPageCard[] = [
   { slug: "privacidad", title: "Privacidad", locale: "es" },
   { slug: "licencias", title: "Licencias y créditos", locale: "es" },
   { slug: "docs", title: "Documentación de PlexusTyping", locale: "es" },
+  { slug: "en/descargar", title: "Download PlexusTyping", locale: "en" },
+  { slug: "en/funciones", title: "PlexusTyping features", locale: "en" },
+  { slug: "en/novedades", title: "What's new in PlexusTyping", locale: "en" },
+  { slug: "en/preguntas-frecuentes", title: "Frequently asked questions", locale: "en" },
+  { slug: "en/privacidad", title: "Privacy", locale: "en" },
+  { slug: "en/licencias", title: "Licenses and credits", locale: "en" },
+  { slug: "en/docs", title: "PlexusTyping documentation", locale: "en" },
 ];

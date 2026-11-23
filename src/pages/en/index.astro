@@ -1,6 +1,13 @@
 ---
 import HomeHero from "../../components/HomeHero.astro";
+import HomeSections from "../../components/home/HomeSections.astro";
 import Base from "../../layouts/Base.astro";
+import { appFeatureList, getFeatures } from "../../lib/content";
+import { getRelease } from "../../lib/release";
+
+const features = await getFeatures("en");
+const release = await getRelease();
+const featureList = await appFeatureList("en");
 ---
 
 <Base
@@ -8,6 +15,8 @@ import Base from "../../layouts/Base.astro";
   path="/"
   title="PlexusTyping: typing practice that adapts to your mistakes"
   description="Free, open-source, offline typing tutor for Linux and Windows. It measures which keys and combinations cost you and writes texts to practice them."
+  softwareExtras={{ featureList }}
 >
   <HomeHero locale="en" />
+  <HomeSections {features} {release} locale="en" />
 </Base>
