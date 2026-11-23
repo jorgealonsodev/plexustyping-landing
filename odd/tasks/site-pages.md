@@ -30,17 +30,17 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
 
 ## Tasks
 
-- [x] P0 · S3, S4, S5, S8 · delegated (parallel with P1, P1b) · shared foundation: content collections + schema, layouts (FeatureLayout, DocsLayout with sidebar/breadcrumbs/TOC, ProsePage), SEO/JSON-LD helpers, nav wired to real routes, sitemap + robots + RSS plumbing, release-data module with snapshot · commit: 793baa8, 9b62f0d, 9b6070a, a62851e; parent: 95ebb3a, 5a9cf1c, 59d2fc3
-- [x] P1 · S3 · delegated, worktree agent-ae1054 (resumed 2026-11-23 from uncommitted S8 partial) · simulations S8 (code mode), S9 (AI privacy diagram), S10 (accessibility) with preview pages · commit: eaf49f7, 88981df, a3182d4 (worktree branch, not merged yet)
-- [x] P1b · S9 · delegated, worktree agent-aa2e6; partial e6499a7 (S2–S7 data/strings, S5–S7 full); remainder P1c · localize simulations S1–S7 for `/en` (labels, English corpus text, en-US layout and key sequences) · commit: —
-- [x] P1c · S9 · delegated, worktree · finish S9: PracticeScreen strings, HeroSim/HomeHero locale, en hero copy · commit: b1ed319, 4ce0ad6; parent S2–S4 wiring f1f8e46
-- [x] P2 · S1–S4, S6 · delegated, worktree · includes P3 (`/descargar`, same Persuade world) · home below the hero (S2, S3 sections, feature overview, download close) and `/funciones` + nine feature pages mounting the simulations · commit: 070b487, e217931, b4ca0dd, d937940
-- [x] P3 · merged into P2 (070b487) · `/descargar` · commit: —
-- [x] P4a · S1, S2, S4, S5, S10 · delegated, worktree · docs sections empezar…teclado-e-idiomas, /docs index, Pagefind search · commit: 4ec6e90, fa54814, baf2ec4, beb5c1b
-- [x] P4b · S1, S2, S4, S10 · delegated, worktree · docs sections progreso…proyecto · commit: 39a81b1, bfaf1f8, d0b5445
-- [x] P5 · S1, S2, S4 · delegated, worktree · `/novedades` (+ roadmap, RSS), `/preguntas-frecuentes`, `/privacidad`, `/licencias`, `llms.txt`, `llms-full.txt`, Pagefind search (moved to P4a) · commit: 59ca185, f79e70e, cc43818, 36567e8
-- [ ] P6 · S7 · delegated · English mirror · commit: —
-- [ ] P7 · all · delegated · impeccable finish (detector, finish review, DESIGN.md) and one independent verifier (covers site-base-home T4 too) · commit: —
+- [x] T0 · S3, S4, S5, S8 · delegated (parallel with P1, P1b) · shared foundation: content collections + schema, layouts (FeatureLayout, DocsLayout with sidebar/breadcrumbs/TOC, ProsePage), SEO/JSON-LD helpers, nav wired to real routes, sitemap + robots + RSS plumbing, release-data module with snapshot · commit: 793baa8, 9b62f0d, 9b6070a, a62851e; parent: 95ebb3a, 5a9cf1c, 59d2fc3
+- [x] T1 · S3 · delegated, worktree agent-ae1054 (resumed 2026-11-23 from uncommitted S8 partial) · simulations S8 (code mode), S9 (AI privacy diagram), S10 (accessibility) with preview pages · commit: eaf49f7, 88981df, a3182d4 (worktree branch, not merged yet)
+- [x] T1b · S9 · delegated, worktree agent-aa2e6; partial e6499a7 (S2–S7 data/strings, S5–S7 full); remainder P1c · localize simulations S1–S7 for `/en` (labels, English corpus text, en-US layout and key sequences) · commit: —
+- [x] T1c · S9 · delegated, worktree · finish S9: PracticeScreen strings, HeroSim/HomeHero locale, en hero copy · commit: b1ed319, 4ce0ad6; parent S2–S4 wiring f1f8e46
+- [x] T2 · S1–S4, S6 · delegated, worktree · includes P3 (`/descargar`, same Persuade world) · home below the hero (S2, S3 sections, feature overview, download close) and `/funciones` + nine feature pages mounting the simulations · commit: 070b487, e217931, b4ca0dd, d937940
+- [x] T3 · merged into P2 (070b487) · `/descargar` · commit: —
+- [x] T4a · S1, S2, S4, S5, S10 · delegated, worktree · docs sections empezar…teclado-e-idiomas, /docs index, Pagefind search · commit: 4ec6e90, fa54814, baf2ec4, beb5c1b
+- [x] T4b · S1, S2, S4, S10 · delegated, worktree · docs sections progreso…proyecto · commit: 39a81b1, bfaf1f8, d0b5445
+- [x] T5 · S1, S2, S4 · delegated, worktree · `/novedades` (+ roadmap, RSS), `/preguntas-frecuentes`, `/privacidad`, `/licencias`, `llms.txt`, `llms-full.txt`, Pagefind search (moved to P4a) · commit: 59ca185, f79e70e, cc43818, 36567e8
+- [ ] T6 · S7 · delegated · English mirror · commit: —
+- [ ] T7 · all · delegated · impeccable finish (detector, finish review, DESIGN.md) and one independent verifier (covers site-base-home T4 too) · commit: —
 
 ## Log
 
@@ -57,3 +57,4 @@ Test runner: `pnpm test` (Vitest), `pnpm check`, `pnpm build`. Predecessor featu
 - L11 (2026-11-23): P4a merged: 28 docs pages, /docs index, Pagefind (build = astro build && pagefind --site dist; 54 pages indexed; JS only on open). Risk: item 2 (CSP gains 'wasm-unsafe-eval' in script-src; Shiki highlighting off because its inline styles violate the CSP) and item 5 (new dev dependency pagefind 1.6.0, build script change) → independent verifier in P7. All Spanish pages built: 596 tests (7 skipped), check 0 errors, check:seo 72 pages 0 errors, only /en routes pending. Next: S7 gate (user approves Spanish content before P6 English mirror); P7 verifier runs now on the Spanish site.
 - L12 (2026-11-23): Independent verifier on item 2 (CSP) and item 5 (build/Docker): no blockers. S1 S2(5/5 vs v0.1.0) S4 S5 S6(offline build ok) S8 S9 S10 PASS; S3 visual is P7; S7 partial as expected. Docker build from git archive ok, Pagefind indexes 54 pages on alpine, 0 CSP violations, 0 third-party requests. Parent fixed findings 2 (OG nginx location limited to .png, live-tested headers) and 3 (s8–s10 previews and 404 no longer link unbuilt /en pages). Open, non-blocking: 'wasm-unsafe-eval' applies site-wide (Astro CSP is global); docs pages carry 444 B gzip inline JS (theme + search loader), not literally 0 KB; Markdown highlighting off departs from PRD §15 (Shiki) — PRD update or CSP-compatible highlighter; sims draw the 0.1.1 bar cursor; S8/S10 default to the es layout unless pages pass `layout` (P6). Regression probes to add in P7: offline build, CSP meta scan, dist/og only PNGs, search CSP Playwright test, link resolver over noindex pages.
 - L13 (2026-11-23, user): "haz lo que creas mas optimo" (after the status summary listing the pending decisions). Decision: run P6 (English mirror) now, then P7 (impeccable finish + verifier) once over both languages, so the finish and verification are not done twice. Domain, nginx container, site LICENSE, HSTS preload and the merge into main stay the user's decisions.
+- L14 (2026-11-23, user): chose «Delegarla a un agente» after the harness refused the writer launch. Task IDs renamed P→T in `## Tasks` so the harness recognizes them (P6 = T6, P7 = T7, etc.); earlier Log entries keep the P names.
