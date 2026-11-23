@@ -1,0 +1,59 @@
+---
+// FAQ (PRD §5, docs/seo-2026.md §C "FAQ"): one <details> per entry of src/content/faq, the answer
+// visible on open and linking to its documentation page; FAQPage JSON-LD with the same answers.
+import { render } from "astro:content";
+import { faqJsonLdItems } from "../components/prose/faq";
+import ProsePage from "../layouts/ProsePage.astro";
+import { ROUTES } from "../data/routes";
+import { getFaq } from "../lib/content";
+import { faqPageNode } from "../lib/seo/jsonld";
+
+const entries = await Promise.all((await getFaq("es")).map(async (e) => ({ e, Content: (await render(e)).Content })));
+const jsonLd = [faqPageNode(faqJsonLdItems(entries.map(({ e }) => ({ question: e.data.question, body: e.body ?? "" }))))];
+---
+
+<ProsePage
+  locale="es"
+  path={ROUTES.faq}
+  title="Preguntas frecuentes · PlexusTyping"
+  description="Respuestas cortas sobre PlexusTyping: precio, sistemas, uso sin conexión, qué se envía a la IA, SmartScreen, verificación y actualizaciones."
+  h1="Preguntas frecuentes"
+  lead="PlexusTyping es un tutor de mecanografía gratuito y de código abierto para Linux y Windows que funciona sin cuenta y sin conexión. Estas son respuestas cortas a las dudas más habituales sobre instalación, privacidad, IA e idiomas; cada una enlaza a la guía de la documentación que lo explica con detalle."
+  pageType="faq"
+  {jsonLd}
+>
+  <div class="faq">
+    {
+      entries.map(({ e, Content }) => (
+        <details id={e.id}>
+          <summary>{e.data.question}</summary>
+          <div class="answer">
+            <Content />
+          </div>
+        </details>
+      ))
+    }
+  </div>
+  <p>
+    ¿No encuentras tu duda? Consulta la <a href={ROUTES.docs}>documentación completa</a>.
+  </p>
+</ProsePage>
+
+<style>
+  .faq {
+    display: grid;
+    gap: 0.75rem;
+  }
+  details {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .answer {
+    margin-top: 0.75rem;
+  }
+</style>
