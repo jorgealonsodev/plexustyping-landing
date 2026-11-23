@@ -1,0 +1,94 @@
+---
+// A simulation in the hero's app-window panel (src/components/HomeHero.astro), as a <figure> with its
+// caption. `bar="start"` keeps the title on the left for islands whose controls sit on the bar's right
+// (S5, S7); `stage={false}` mounts those islands without the stage wrapper, as their previews do.
+interface Props {
+  /** Accessible name of the window, e.g. "Demostración de PlexusTyping: modo código". */
+  label: string;
+  /** Text in the window's title bar. */
+  title: string;
+  caption: string;
+  bar?: "center" | "start";
+  stage?: boolean;
+  /** "wide" fills the content column; "hero" matches the hero window (65rem). */
+  size?: "wide" | "hero";
+}
+
+const { label, title, caption, bar = "center", stage = true, size = "wide" } = Astro.props;
+---
+
+<figure class:list={["sim-figure", size]}>
+  <section class="window" aria-label={label}>
+    <div class:list={["bar", bar]} aria-hidden="true">
+      <i class="dot"></i><i class="dot"></i><i class="dot"></i>
+      <span class="bar-title">{title}</span>
+    </div>
+    {stage ? <div class="stage"><slot /></div> : <slot />}
+  </section>
+  <figcaption>{caption}</figcaption>
+</figure>
+
+<style>
+  .sim-figure {
+    margin: 0;
+    min-width: 0;
+  }
+  .hero .window,
+  .hero figcaption {
+    width: min(65rem, 100%);
+    margin-inline: auto;
+  }
+  .window {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 1.875rem 5rem light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.45));
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.375rem;
+    padding: 0 1rem;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .bar-title {
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+  .center .bar-title {
+    margin: 0 auto;
+    padding-right: 3.25rem;
+  }
+  .start .bar-title {
+    margin-left: 0.5rem;
+  }
+  figcaption {
+    max-width: 46rem;
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+  /* The play button shares the bar with the title on narrow screens. */
+  @media (max-width: 40rem) {
+    .dot {
+      display: none;
+    }
+    .center .bar-title {
+      margin: 0;
+      padding-right: 0;
+    }
+    .start .bar-title {
+      margin-left: 0;
+    }
+  }
+</style>

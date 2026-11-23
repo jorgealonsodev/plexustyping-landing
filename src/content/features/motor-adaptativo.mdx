@@ -1,0 +1,36 @@
+---
+title: "Motor adaptativo de mecanografía · PlexusTyping"
+description: "PlexusTyping mide errores y lentitud por tecla y por bigrama, elige tus 2 o 3 puntos débiles y escribe el texto siguiente para practicarlos."
+h1: "Motor adaptativo"
+lead: "El motor adaptativo de PlexusTyping mide en cada sesión qué teclas y qué pares de letras te cuestan, por errores y por lentitud, y escribe el texto siguiente con palabras que los contienen. Es para quien quiere mejorar su mecanografía practicando sus propios fallos en lugar de repetir textos al azar."
+order: 1
+updated: 2026-11-23
+docs:
+  - motor-adaptativo/como-mide-tus-debilidades
+  - motor-adaptativo/como-elige-los-textos
+  - motor-adaptativo/mapa-de-calor
+  - practicar/objetivos-y-puntos-debiles
+---
+import FeatureSim from "../../components/features/FeatureSim.astro";
+
+<FeatureSim sim="s2" />
+
+## Cómo mide tus puntos débiles
+
+Cada sesión que terminas se repasa pulsación a pulsación en el núcleo de la app, escrito en Rust. Cada carácter y cada bigrama, como «qu» o «rr», guarda una media móvil exponencial (EMA) de dos cosas: los errores, con un peso de 0,7, y la lentitud respecto a tu propio ritmo, con un peso de 0,3. No te compara con nadie: una tecla es lenta si es lenta para ti.
+
+A esa puntuación se suma un bonus de incertidumbre, para que vuelvan de vez en cuando las unidades que has practicado poco. Así una tecla que casi no has escrito no se da por dominada.
+
+## Cómo elige el texto siguiente
+
+Después de cada sesión, el motor toma las 2 o 3 unidades peores (lo eliges en Ajustes → Práctica), con algo de azar para no repetir siempre las mismas, y pide un texto con la densidad adecuada de esas unidades. Encima del texto verás qué estás practicando, por ejemplo «Practicando: ñ · qu · z».
+
+El texto sale del corpus local, sin conexión, o de la [IA opcional](/funciones/ia) si la activas. Mientras no hay ninguna sesión guardada, la app empieza por un texto de diagnóstico.
+
+## Mapa de calor del teclado
+
+Con el mapa de calor activado, el teclado en pantalla tiñe cada tecla según su puntuación y la marca con un nivel del 1 al 5, para que no dependa solo del color. La leyenda nombra los niveles: «Errores por tecla: 1 muy pocos, 2 pocos, 3 algunos, 4 bastantes, 5 muchos».
+
+## Lo que ves al terminar
+
+La pantalla de resultados muestra las PPM netas y brutas, la precisión, los errores, los caracteres fallados y tus puntos débiles ya actualizados. Desde ahí, «Siguiente texto» (<kbd>Enter</kbd>) genera un texto nuevo para esos puntos débiles y «Repetir» vuelve al mismo. Tu evolución queda en el [historial de progreso](/funciones/progreso).

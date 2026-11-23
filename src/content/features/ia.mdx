@@ -1,0 +1,44 @@
+---
+title: "IA opcional para textos de práctica · PlexusTyping"
+description: "Textos de práctica con Claude, OpenAI, Gemini, OpenCode Go o tu suscripción de ChatGPT. Lo que escribes nunca se envía. Funciona también sin IA."
+h1: "IA opcional"
+lead: "PlexusTyping puede pedir los textos de práctica a un modelo de IA (Claude, OpenAI, Google Gemini, OpenCode Go o tu suscripción de ChatGPT) en lugar de sacarlos del corpus local. Es opcional: sin IA y sin conexión la app funciona igual. Lo que escribes nunca se envía a ningún proveedor."
+order: 2
+updated: 2026-11-23
+docs:
+  - ia/activar-la-ia
+  - ia/proveedores-y-claves
+  - ia/iniciar-sesion-con-chatgpt
+  - ia/respaldo-cache-y-uso
+  - ia/que-se-envia
+---
+import FeatureSim from "../../components/features/FeatureSim.astro";
+
+## Qué se envía y qué no
+
+Para pedir un texto en prosa, la app envía solo el idioma, la longitud y el tema, si has puesto uno. Con el desbloqueo progresivo añade los caracteres permitidos y, en un texto ilimitado (próxima versión 0.1.1), el final del texto ya generado para continuarlo. En el modo código envía además los objetivos y los caracteres permitidos.
+
+**Nunca se envía lo que escribes.** Las peticiones salen solo del núcleo de la app, escrito en Rust; la interfaz no tiene acceso a la red. Las claves de API se guardan en el llavero del sistema.
+
+<FeatureSim sim="s9" />
+
+## Proveedores
+
+- Claude (Anthropic), OpenAI, Google Gemini y OpenCode Go, cada uno con tu clave de API.
+- «ChatGPT (tu suscripción)»: inicias sesión en el navegador con el acceso oficial de OpenAI y los textos usan la cuota de tu plan, sin clave de API. Un error del plan nunca pasa a gastar tus claves, y «Cerrar sesión» revoca la sesión.
+
+Al elegir un proveedor se selecciona un modelo automáticamente. Cada uno tiene «Probar conexión» y «Guardar clave» o «Borrar clave».
+
+## Cadena de respaldo
+
+Puedes encadenar hasta 5 proveedores, cada uno con su modelo. Si uno falla o tarda, la app pasa al siguiente: 30 segundos de límite por proveedor, 60 por cadena y un reintento. Si ninguno responde, usa un texto del caché o del corpus local y te avisa. Cada texto indica de dónde viene: «Generado con IA · …», «Texto del caché» o «Corpus local».
+
+## Más opciones
+
+- Un tema opcional para los textos.
+- En el modo código, la densidad de objetivos, de 2 a 5 veces.
+- El botón «IA» de la cabecera la enciende o la apaga sin abrir los ajustes.
+- El texto siguiente se prepara mientras escribes el actual.
+- Una tabla de uso con las llamadas y los tokens de cada proveedor, hoy y en total.
+
+Sin IA, los textos salen del corpus local de cada idioma y el [motor adaptativo](/funciones/motor-adaptativo) sigue eligiendo tus puntos débiles.

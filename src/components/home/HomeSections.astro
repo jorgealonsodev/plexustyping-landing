@@ -1,0 +1,137 @@
+---
+/**
+ * The Spanish home below the hero (surface brief STORY): S2 weak spots, S3 unlimited text (labeled for
+ * 0.1.1), the feature overview linking every /funciones page, and the download close with the release
+ * facts as text (docs/seo-2026.md §C "Home").
+ */
+import type { CollectionEntry } from "astro:content";
+import { APP_REPO_URL } from "../../data/site";
+import { formatDate } from "../../lib/format";
+import type { Release } from "../../lib/release";
+import { isoDate } from "../../lib/seo/jsonld";
+import FeatureIndex from "../features/FeatureIndex.astro";
+import FeatureSim from "../features/FeatureSim.astro";
+import HomeSection from "./HomeSection.astro";
+
+interface Props {
+  features: CollectionEntry<"features">[];
+  release: Release;
+}
+
+const { features, release } = Astro.props;
+---
+
+<HomeSection id="puntos-debiles" title="Cada texto nace de tus fallos">
+  <Fragment slot="copy">
+    <p>
+      Tras el texto de diagnóstico, PlexusTyping ya sabe qué te cuesta. Mide los errores y la lentitud de cada carácter y de cada
+      par de letras, tiñe el teclado según tus errores y escribe el texto siguiente con esas unidades: «Practicando: ñ · qu · z».
+    </p>
+    <p><a href="/funciones/motor-adaptativo">Cómo funciona el motor adaptativo</a></p>
+  </Fragment>
+  <FeatureSim sim="s2" />
+</HomeSection>
+
+<HomeSection id="texto-ilimitado" title="Un texto que no se acaba">
+  <Fragment slot="copy">
+    <p class="badge">Próxima versión 0.1.1</p>
+    <p>
+      Con la longitud «Ilimitado», el texto crece mientras escribes: al acercarte al final llega la continuación, de la IA o del
+      corpus local, sin pausas. <kbd>Esc</kbd> o «Terminar» puntúan lo escrito. La versión publicada, la {release.version}, ofrece
+      textos de 100 a 600 caracteres.
+    </p>
+    <p><a href="/funciones/texto-ilimitado">Más sobre el texto ilimitado</a></p>
+  </Fragment>
+  <FeatureSim sim="s3" />
+</HomeSection>
+
+<HomeSection id="funciones" title="Todo lo que hace">
+  <Fragment slot="copy">
+    <p>
+      Sin conexión, sin cuenta y sin telemetría: tus sesiones se quedan en tu ordenador. Cada función tiene su página con una
+      demostración y su documentación.
+    </p>
+  </Fragment>
+  <FeatureIndex {features} level={3} />
+  <p class="all"><a href="/funciones">Ver todas las funciones</a> · <a href="/docs">Leer la documentación</a></p>
+</HomeSection>
+
+<HomeSection id="descargar" title="Descárgalo y practica hoy" band>
+  <Fragment slot="copy">
+    <p>Gratis y de código abierto, para Linux y Windows. Sin cuenta: lo instalas y escribes.</p>
+  </Fragment>
+  <div class="close">
+    <div class="ctas">
+      <a class="btn btn-primary btn-lg" href="/descargar#linux">Descargar para Linux</a>
+      <a class="btn btn-ghost btn-lg" href="/descargar#windows">Descargar para Windows</a>
+    </div>
+    <dl class="facts">
+      <div><dt>Versión</dt><dd>{release.version}</dd></div>
+      <div><dt>Publicada</dt><dd><time datetime={isoDate(release.publishedAt)}>{formatDate(release.publishedAt, "es")}</time></dd></div>
+      <div><dt>Sistemas</dt><dd>Linux x86_64 (.deb y .tar.gz), Windows 10 y 11 de 64 bits</dd></div>
+      <div><dt>Licencia</dt><dd>MIT o Apache-2.0, <a href={APP_REPO_URL}>código en GitHub</a></dd></div>
+    </dl>
+    <p class="mobile">
+      ¿Estás en el móvil? PlexusTyping es una app de escritorio: guarda esta página y ábrela en tu ordenador.
+    </p>
+  </div>
+</HomeSection>
+
+<style>
+  .all {
+    color: var(--muted);
+  }
+  .all a {
+    color: var(--accent);
+  }
+  kbd {
+    padding: 0.05em 0.4em;
+    border: 1px solid var(--key-border);
+    border-bottom-width: 2px;
+    border-radius: 0.3rem;
+    background: var(--key-bg);
+    color: var(--key-fg);
+    font-family: var(--mono);
+    font-size: 0.875em;
+  }
+  .close {
+    display: grid;
+    gap: 2rem;
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+  }
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: 1.25rem 2rem;
+    margin: 0;
+  }
+  .facts dt {
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+  .facts dd {
+    margin: 0.25rem 0 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .facts a {
+    color: var(--accent);
+  }
+  .mobile {
+    display: none;
+    color: var(--muted);
+  }
+  @media (pointer: coarse) and (max-width: 48rem) {
+    .mobile {
+      display: block;
+    }
+  }
+  @media (max-width: 30rem) {
+    .ctas .btn {
+      width: 100%;
+    }
+  }
+</style>

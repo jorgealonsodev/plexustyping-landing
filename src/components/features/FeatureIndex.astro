@@ -1,0 +1,112 @@
+---
+/**
+ * The nine feature pages as a list of links (name + summary), for /funciones (h2 per feature) and the
+ * home's overview (h3). Texto ilimitado carries its "Próxima versión 0.1.1" label (spec S2).
+ */
+import type { CollectionEntry } from "astro:content";
+import { featurePath } from "../../lib/content";
+
+interface Props {
+  features: CollectionEntry<"features">[];
+  /** Heading level of each feature's name. */
+  level?: 2 | 3;
+}
+
+const { features, level = 2 } = Astro.props;
+const Heading = level === 2 ? "h2" : "h3";
+const UPCOMING: Record<string, string> = { "texto-ilimitado": "Próxima versión 0.1.1" };
+---
+
+<ul class:list={["features", `level-${level}`]}>
+  {
+    features.map((f) => (
+      <li>
+        <Heading class="name">
+          <a href={featurePath(f.id, f.data.lang)}>{f.data.h1}</a>
+        </Heading>
+        {UPCOMING[f.id] && <p class="badge">{UPCOMING[f.id]}</p>}
+        <p class="summary">{f.data.description}</p>
+        <svg class="arrow" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14m-5-5 5 5-5 5" />
+        </svg>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    column-gap: clamp(1.5rem, 4vw, 3rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--border);
+  }
+  li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-content: start;
+    gap: 0.5rem 1rem;
+    padding: 1.375rem 0;
+    border-top: 1px solid var(--border);
+  }
+  .name {
+    grid-column: 1;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+  }
+  .level-3 .name {
+    font-size: 1.125rem;
+  }
+  .name a {
+    text-decoration: none;
+  }
+  /* The whole row is the link's target; the heading text stays the accessible name. */
+  .name a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .name a:focus-visible {
+    outline: none;
+  }
+  li:has(a:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 0.25rem;
+  }
+  .badge {
+    grid-column: 1;
+    justify-self: start;
+    padding: 0.0625rem 0.5rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--warning) 20%, transparent);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .summary {
+    grid-column: 1;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+  .arrow {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    color: var(--muted);
+    transition:
+      transform 200ms var(--ease-out),
+      color 200ms var(--ease-out);
+  }
+  li:hover .name a,
+  li:has(a:focus-visible) .name a {
+    color: var(--accent);
+  }
+  li:hover .arrow {
+    color: var(--accent);
+    transform: translateX(0.25rem);
+  }
+</style>

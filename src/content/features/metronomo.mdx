@@ -1,0 +1,39 @@
+---
+title: "Metrónomo para mecanografía · PlexusTyping"
+description: "Metrónomo de 30 a 300 BPM con clic, madera o bip, acento, desvío de ritmo por tecla y tempo adaptativo que se ajusta tras cada texto. F4 lo enciende."
+h1: "Metrónomo"
+lead: "El metrónomo de PlexusTyping marca un pulso de 30 a 300 BPM para que escribas con ritmo regular, mide cuánto se desvía cada pulsación y, si quieres, ajusta el tempo tras cada texto. Es para quien quiere ganar constancia antes que velocidad. Se enciende y se apaga con F4."
+order: 4
+updated: 2026-11-23
+docs:
+  - metronomo/uso-basico
+  - metronomo/panel-rapido
+  - metronomo/tempo-adaptativo
+---
+import FeatureSim from "../../components/features/FeatureSim.astro";
+
+<FeatureSim sim="s5" />
+
+## Un pulso por pulsación
+
+Cada clic es una pulsación esperada: a 60 BPM, una tecla por segundo. Eliges el tempo entre 30 y 300 BPM, el sonido («Clic», «Madera» o «Bip»), el volumen y un acento cada N pulsos, hasta 16. Los cambios se aplican al momento. Junto a las estadísticas en vivo, un punto se ilumina en cada pulso, con otro color en los acentuados.
+
+El sonido sale del núcleo de la app y solo suena mientras hay un texto listo o en curso: se para en la pantalla de resultados y cuando ocultas la ventana. <kbd>F4</kbd> lo enciende y lo apaga desde cualquier sitio.
+
+## Panel rápido
+
+Al pulsar el punto del pulso se abre un panel con lo que más se toca durante la práctica: bajar o subir el tempo, escribirlo, el sonido, el volumen, el acento, el tempo adaptativo y «Apagar F4».
+
+## Desvío de ritmo
+
+Cada carácter que escribes guarda cuántos milisegundos cayó antes o después del clic más cercano. Los resultados muestran «Ritmo: desvío medio ±X ms» y qué parte de las teclas fueron adelantadas o atrasadas.
+
+## Tempo adaptativo
+
+Con «Tempo adaptativo» activado (viene apagado), cada texto escrito entero a un mismo tempo ajusta el del siguiente:
+
+- Sube un paso si la precisión llega al 97 % y el desvío medio no pasa del 15 % del intervalo entre pulsos.
+- Baja un paso si la precisión queda por debajo del 90 % o el desvío supera el 20 %.
+- Si no, se mantiene.
+
+Un paso es el 5 % del tempo, con un mínimo de 2 BPM. Los resultados lo dicen claro: «Tempo: 60 → 63 BPM» o «Tempo: se mantiene en 60 BPM». Los BPM de cada sesión quedan en el [historial](/funciones/progreso).

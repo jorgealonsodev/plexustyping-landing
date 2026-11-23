@@ -1,0 +1,85 @@
+---
+/**
+ * /funciones (PRD §5; Persuade surface): the index of the nine feature pages, in nav order, from the
+ * `features` collection.
+ */
+import FeatureIndex from "../components/features/FeatureIndex.astro";
+import Breadcrumbs from "../components/seo/Breadcrumbs.astro";
+import { OG_PAGES } from "../data/og-pages";
+import Base from "../layouts/Base.astro";
+import { getFeatures } from "../lib/content";
+import { ogImagePath } from "../lib/og/cards";
+import { breadcrumbListNode } from "../lib/seo/jsonld";
+
+const site = Astro.site ?? new URL("https://example.com");
+const features = await getFeatures("es");
+const crumbs = [
+  { name: "Inicio", path: "/" },
+  { name: "Funciones", path: "/funciones" },
+];
+const ogImage = OG_PAGES.some((p) => p.slug === "funciones") ? ogImagePath("funciones") : undefined;
+---
+
+<Base
+  locale="es"
+  path="/funciones"
+  pageType="feature-index"
+  translated={false}
+  title="Funciones de PlexusTyping, tutor de mecanografía"
+  description="Motor adaptativo, IA opcional, modo código, metrónomo, ocho distribuciones, accesibilidad, temas y progreso: todo lo que hace PlexusTyping, gratis."
+  {...ogImage ? { ogImage } : {}}
+  jsonLd={[breadcrumbListNode(site, crumbs)]}
+>
+  <div class="page" data-content>
+    <Breadcrumbs {crumbs} locale="es" />
+    <header class="intro">
+      <h1>Funciones de PlexusTyping</h1>
+      <p class="lead" data-lead>
+        PlexusTyping es un tutor de mecanografía gratuito y de código abierto para Linux y Windows. Mide qué teclas y combinaciones
+        de letras te cuestan y escribe el texto siguiente para practicarlas, sin conexión y sin cuenta. Estas son todas sus
+        funciones, cada una con una demostración y su documentación.
+      </p>
+    </header>
+    <FeatureIndex {features} />
+    <p class="cta">
+      <a class="btn btn-primary btn-lg" href="/descargar">Descargar PlexusTyping</a>
+      <span>Gratis para Linux y Windows · MIT o Apache-2.0</span>
+    </p>
+  </div>
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    width: min(72rem, 100%);
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3rem) var(--gutter) clamp(3rem, 8vw, 5rem);
+  }
+  .intro {
+    display: grid;
+    gap: 1rem;
+    max-width: 48rem;
+  }
+  h1 {
+    font-size: clamp(2.25rem, 1.4rem + 3.5vw, 3.75rem);
+    letter-spacing: -0.025em;
+  }
+  .lead {
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem);
+    color: var(--muted);
+    max-width: var(--measure);
+  }
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    color: var(--muted);
+  }
+  @media (max-width: 30rem) {
+    .cta .btn {
+      width: 100%;
+    }
+  }
+</style>

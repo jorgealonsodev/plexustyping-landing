@@ -1,0 +1,129 @@
+---
+/**
+ * One simulation of PRD §8 in its app-window <figure>, by name, for the feature pages (MDX) and the home.
+ * Islands hydrate on visibility (`client:visible`); "layouts" is a server-rendered still (no JavaScript).
+ * Spanish strings only; the English mirror passes `locale="en"` (spec S7, S9).
+ */
+import S10Accessibility from "../sims/S10Accessibility.svelte";
+import S2WeakSpots from "../sims/S2WeakSpots.svelte";
+import S3Unlimited from "../sims/S3Unlimited.svelte";
+import S4Ghost from "../sims/S4Ghost.svelte";
+import S5Metronome from "../sims/S5Metronome.svelte";
+import S6Unlock from "../sims/S6Unlock.svelte";
+import S7Personalize from "../sims/S7Personalize.svelte";
+import S8Code from "../sims/S8Code.svelte";
+import S9Privacy from "../sims/S9Privacy.svelte";
+import type { Locale } from "../../i18n/paths";
+import { S10_STRINGS } from "../../sim/i18n/s10";
+import { S2_STRINGS } from "../../sim/i18n/s2";
+import { S3_STRINGS } from "../../sim/i18n/s3";
+import { S4_STRINGS } from "../../sim/i18n/s4";
+import { S5_STRINGS } from "../../sim/i18n/s5";
+import { S6_STRINGS } from "../../sim/i18n/s6";
+import { S7_STRINGS } from "../../sim/i18n/s7";
+import { S8_STRINGS } from "../../sim/i18n/s8";
+import { S9_STRINGS } from "../../sim/i18n/s9";
+import LayoutKeyboards from "./LayoutKeyboards.svelte";
+import SimFigure from "./SimFigure.astro";
+
+export type SimName = "s2" | "s3" | "s4" | "s5" | "s6" | "s7" | "s8" | "s9" | "s10" | "layouts";
+
+interface Props {
+  sim: SimName;
+  locale?: Locale;
+  size?: "wide" | "hero";
+}
+
+const { sim, locale = "es", size = "wide" } = Astro.props;
+const demo = locale === "es" ? "Demostración de PlexusTyping" : "PlexusTyping demo";
+const windowDemo = locale === "es" ? "PlexusTyping · demostración" : "PlexusTyping · demo";
+const s2 = S2_STRINGS[locale];
+const s3 = S3_STRINGS[locale];
+const s4 = S4_STRINGS[locale];
+const s5 = S5_STRINGS[locale];
+const s6 = S6_STRINGS[locale];
+const s7 = S7_STRINGS[locale];
+const s8 = S8_STRINGS[locale];
+const s9 = S9_STRINGS[locale];
+const s10 = S10_STRINGS[locale];
+---
+
+{
+  sim === "s2" && (
+    <SimFigure {size} label={`${demo}: tus puntos débiles`} title={s2.title} caption={s2.caption}>
+      <S2WeakSpots client:visible strings={s2} {locale} />
+    </SimFigure>
+  )
+}
+{
+  sim === "s3" && (
+    <SimFigure {size} label={`${demo}: texto ilimitado`} title={s3.windowTitle} caption={s3.caption}>
+      <S3Unlimited client:visible strings={s3} {locale} />
+    </SimFigure>
+  )
+}
+{
+  sim === "s4" && (
+    <SimFigure {size} label={`${demo}: sesión fantasma`} title={s4.windowTitle} caption={s4.caption}>
+      <S4Ghost client:visible strings={s4} {locale} />
+    </SimFigure>
+  )
+}
+{
+  sim === "s5" && (
+    <SimFigure {size} label={`${demo}: metrónomo`} title={windowDemo} caption={s5.caption} bar="start" stage={false}>
+      <S5Metronome client:visible strings={s5} {locale} />
+    </SimFigure>
+  )
+}
+{
+  sim === "s6" && (
+    <SimFigure {size} label={`${demo}: desbloqueo progresivo`} title={s6.title} caption={s6.caption}>
+      <S6Unlock client:visible strings={s6} {locale} />
+    </SimFigure>
+  )
+}
+{
+  sim === "s7" && (
+    <SimFigure {size} label={`${demo}: personalización`} title={windowDemo} caption={s7.caption} bar="start" stage={false}>
+      <S7Personalize client:visible strings={s7} {locale} />
+    </SimFigure>
+  )
+}
+{
+  sim === "s8" && (
+    <SimFigure {size} label={`${demo}: modo código`} title={s8.windowTitle} caption={s8.caption}>
+      <S8Code client:visible strings={s8} {locale} />
+    </SimFigure>
+  )
+}
+{
+  sim === "s9" && (
+    <SimFigure {size} label={`${demo}: IA con privacidad`} title={s9.windowTitle} caption={s9.caption}>
+      <S9Privacy client:visible strings={s9} {locale} />
+    </SimFigure>
+  )
+}
+{
+  sim === "s10" && (
+    <SimFigure {size} label={`${demo}: accesibilidad`} title={s10.windowTitle} caption={s10.caption}>
+      <S10Accessibility client:visible strings={s10} {locale} />
+    </SimFigure>
+  )
+}
+{
+  sim === "layouts" && (
+    <SimFigure
+      {size}
+      label={locale === "es" ? "Teclado en pantalla de PlexusTyping en dos distribuciones" : "PlexusTyping's on-screen keyboard in two layouts"}
+      title={windowDemo}
+      caption={
+        locale === "es"
+          ? "El teclado en pantalla de la app con dos de sus ocho distribuciones: Español (España) en forma ISO y English (US) en forma ANSI, con las etiquetas de Shift y AltGr y las teclas muertas subrayadas."
+          : "The app's on-screen keyboard in two of its eight layouts: Español (España) in ISO shape and English (US) in ANSI shape, with Shift and AltGr labels and dead keys underlined."
+      }
+    >
+      <LayoutKeyboards />
+    </SimFigure>
+  )
+}

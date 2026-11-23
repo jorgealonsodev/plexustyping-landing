@@ -1,0 +1,39 @@
+---
+title: "Texto ilimitado para practicar mecanografía · PlexusTyping"
+description: "Próxima versión 0.1.1: un texto que crece mientras escribes, con la continuación generada sin interrumpirte. Esc o «Terminar» puntúan lo escrito."
+h1: "Texto ilimitado"
+lead: "Llega en la próxima versión 0.1.1: con la longitud «Ilimitado», el texto de práctica crece mientras escribes. Al acercarte al final, PlexusTyping genera la continuación con IA o con el corpus local y la añade sin interrumpirte. Sirve para sesiones largas de prosa o palabras; Esc o «Terminar» puntúan lo escrito."
+order: 3
+updated: 2026-11-23
+docs:
+  - practicar/longitud-y-texto-ilimitado
+  - practicar/modos
+---
+import FeatureSim from "../../components/features/FeatureSim.astro";
+
+<p class="note"><span class="badge">Próxima versión 0.1.1</span> La versión publicada, la 0.1.0, ofrece textos de 100 a 600 caracteres. El texto ilimitado y las longitudes de 800 a 2000 caracteres llegan con la 0.1.1.</p>
+
+<FeatureSim sim="s3" />
+
+## Cómo crece el texto
+
+Empiezas con un texto de unos 600 caracteres. Cuando llegas a la mitad, o cuando quedan 400 caracteres o menos por delante, la app pide en segundo plano una continuación de unos 600 caracteres y la añade tras un espacio, sin que dejes de escribir. Siempre hay texto por delante.
+
+En prosa, la continuación la escribe la IA a partir de los últimos 400 caracteres, en el mismo idioma. Sin IA, o si falla, sigue un texto del corpus local con una nota que lo explica. En el modo palabras siempre siguen más palabras del corpus. El modo código no usa esta opción y mantiene su límite de líneas.
+
+Si llegas al final antes que la continuación, el texto espera con «Generando más texto…» y sigue en cuanto llega.
+
+## Cómo termina la sesión
+
+<kbd>Esc</kbd> o el botón «Terminar» cierran la sesión y puntúan lo que has escrito como una sesión completa: resultados, historial, estadísticas, meta diaria y desbloqueo progresivo. Si terminas sin escribir nada, se descarta y se carga otro texto. «Repetir» vuelve a poner solo el texto que escribiste, como un texto normal.
+
+Los textos ilimitados no corren contra la sesión fantasma, y el tempo adaptativo del [metrónomo](/funciones/metronomo) no cambia después de ellos.
+
+## Longitudes disponibles
+
+| Versión | Longitudes |
+| --- | --- |
+| 0.1.0 (publicada) | 100, 200, 300 (por defecto), 450 y 600 caracteres |
+| 0.1.1 (próxima) | Además 800, 1000, 1500 y 2000 caracteres, e «Ilimitado» |
+
+Para continuar el texto solo se envía a la IA el texto ya generado, nunca lo que escribes. Más detalles en [IA opcional](/funciones/ia).

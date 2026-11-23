@@ -1,0 +1,37 @@
+---
+title: "Mecanografía accesible · PlexusTyping"
+description: "Temas WCAG AA y dos de alto contraste a 7:1, lector de pantalla con aria-live, modo daltónico Okabe–Ito, tipografía ajustable y movimiento reducido."
+h1: "Accesibilidad"
+lead: "PlexusTyping se puede usar entero con el teclado y con lector de pantalla, que anuncia la letra siguiente y cada error. Todos sus temas cumplen WCAG AA, los dos de alto contraste llegan a 7:1, y tiene modo daltónico, tipografía ajustable y movimiento reducido. Es para quien necesita adaptar la práctica a su vista."
+order: 7
+updated: 2026-11-23
+docs:
+  - accesibilidad/teclado
+  - accesibilidad/lector-de-pantalla
+  - accesibilidad/modo-daltonico
+  - accesibilidad/alto-contraste
+  - accesibilidad/movimiento-reducido
+---
+import FeatureSim from "../../components/features/FeatureSim.astro";
+
+<FeatureSim sim="s10" />
+
+## Todo con el teclado
+
+La app se maneja entera con el teclado: <kbd>Tab</kbd> recorre los controles y <kbd>F6</kbd> lleva a la cabecera. Los atajos cubren lo demás: <kbd>Ctrl</kbd>+<kbd>,</kbd> abre los ajustes, <kbd>Ctrl</kbd>+<kbd>F</kbd> busca un ajuste, <kbd>Ctrl</kbd>+<kbd>H</kbd> abre el historial, <kbd>F2</kbd> el teclado en pantalla, <kbd>F4</kbd> el metrónomo y <kbd>F5</kbd> carga un texto nuevo.
+
+## Lector de pantalla
+
+Con «Anunciar con lector de pantalla» activado (en Ajustes → Accesibilidad), una región `aria-live` educada anuncia el carácter siguiente tras cada pulsación («siguiente: a», con nombres como «espacio», «salto de línea» o «coma»), cada tecla equivocada («error: esperaba e, pulsaste r»), el comienzo de cada texto y la línea de resultados. Apagado, no anuncia nada.
+
+## Modo daltónico
+
+El «Modo daltónico» cambia los destellos del teclado al azul `#0072B2` y el naranja `#E69F00` de la paleta Okabe–Ito, iguales en todos los temas, y subraya en negrita la etiqueta de la tecla equivocada. El mapa de calor ya marca cada tecla con su nivel, del 1 al 5, así que tampoco depende del color.
+
+## Contraste y tipografía
+
+Todos los temas cumplen WCAG AA. «Alto contraste oscuro» y «Alto contraste claro» llegan a 7:1 en el texto y a 4,5:1 en la interfaz, y nunca atenúan el texto pendiente. Puedes cambiar la fuente, entre ellas Atkinson Hyperlegible Mono, Lexend Deca y OpenDyslexic, el tamaño (80–200 %), el espaciado entre letras y el interlineado. Lo explica [Personalización](/funciones/personalizacion).
+
+## Movimiento reducido
+
+Si tu sistema pide movimiento reducido, ninguna transición ni animación se ejecuta en la app. Una tecla pulsada se subraya en el color del destello en lugar de destellar, el cursor deja de parpadear y el punto del metrónomo sigue marcando cada pulso, sin transición.
