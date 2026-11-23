@@ -2,8 +2,10 @@
  * Read helpers over the content collections (src/content.config.ts): ordering, URLs, the docs
  * sidebar, and the GitHub links every docs page carries (PRD §7).
  */
+import type { MarkdownHeading } from "astro";
 import { type CollectionEntry, getCollection } from "astro:content";
 import { DOCS_SECTION_KEYS, DOCS_SECTIONS, type DocsSection } from "../data/docs-sections";
+import type { FeatureSlug } from "../data/routes";
 import { SITE_REPO_BRANCH, SITE_REPO_URL } from "../data/site";
 import { type Locale, localizePath } from "../i18n/paths";
 
@@ -74,4 +76,52 @@ export async function getReleases(locale: Locale = "es") {
 export async function getFaq(locale: Locale = "es") {
   const all = await getCollection("faq", (e) => e.data.lang === locale);
   return all.sort((a, b) => a.data.order - b.data.order);
+}
+
+/**
+ * DocsLayout props of a `docs` entry:
+ *   const { Content, headings } = await render(entry);
+ *   <DocsLayout {...docsLayoutProps(entry, headings)}><Content /></DocsLayout>
+ */
+export function docsLayoutProps(entry: DocEntry, headings: MarkdownHeading[]) {
+  const d = entry.data;
+  return {
+    locale: d.lang,
+    path: `/docs/${docSlug(entry)}`,
+    title: d.title,
+    description: d.description,
+    h1: d.h1 ?? d.title,
+    section: d.section,
+    published: d.published,
+    updated: d.updated,
+    appVersion: d.appVersion,
+    headings,
+    sourcePath: entry.filePath ?? `src/content/docs/${entry.id}.md`,
+    features: d.features,
+    translated: false,
+    ogImage: `/og/${d.lang === "en" ? "en/" : ""}docs/${docSlug(entry)}.png`,
+  };
+}
+
+/**
+ * FeatureLayout props of a `features` entry; doc links take their label from the docs collection
+ * (the page's h1), falling back to the id while that page is not written yet.
+ */
+export async function featureLayoutProps(entry: CollectionEntry<"features">) {
+  const d = entry.data;
+  const docs = await getDocs(d.lang);
+  const links = d.docs.map((id) => {
+    const doc = docs.find((x) => docSlug(x) === id);
+    return { href: localizePath(`/docs/${id}`, d.lang), label: doc ? (doc.data.h1 ?? doc.data.title) : id };
+  });
+  return {
+    locale: d.lang,
+    slug: entry.id.replace(/^en\//, "") as FeatureSlug,
+    title: d.title,
+    description: d.description,
+    h1: d.h1,
+    lead: d.lead,
+    updated: d.updated,
+    docs: links as [(typeof links)[number], ...typeof links],
+  };
 }

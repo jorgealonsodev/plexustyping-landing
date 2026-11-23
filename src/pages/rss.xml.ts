@@ -11,6 +11,7 @@ export const GET: APIRoute = async ({ site }) => {
     description: "Notas de versión de PlexusTyping, el tutor de mecanografía adaptativo para Linux y Windows.",
     site: site ?? "https://example.com",
     customData: "<language>es</language>",
+    trailingSlash: false,
     items: releases.map((r) => ({
       title: `PlexusTyping ${r.data.version}`,
       pubDate: r.data.date,

@@ -1,0 +1,122 @@
+---
+/**
+ * Read-surface page outside the docs (FAQ, release notes, privacy, licences, index pages):
+ * breadcrumbs + BreadcrumbList, one h1, the 40–60 word answer (spec S4), the body in the slot and an
+ * optional "Actualizado" date. `pageType` picks the on-page template (docs/seo-2026.md §C):
+ * "faq" needs each <details> answer to link to its doc; "release-notes" needs <h2 data-version> with
+ * <time datetime>, newest first, RSS and GitHub links; "prose", "docs-index" and "feature-index" need the base set.
+ *
+ *   <ProsePage locale="es" path="/privacidad" title="Privacidad · PlexusTyping" description="…"
+ *     h1="Privacidad" lead="…" updated={new Date("2026-11-20")}>…</ProsePage>
+ */
+import Prose from "../components/Prose.astro";
+import Breadcrumbs from "../components/seo/Breadcrumbs.astro";
+import type { PageType } from "../data/routes";
+import { type Locale, localizePath } from "../i18n/paths";
+import { ui } from "../i18n/ui";
+import { formatDate } from "../lib/format";
+import { breadcrumbListNode, type Crumb, isoDate, type JsonLdNode } from "../lib/seo/jsonld";
+import Base from "./Base.astro";
+
+interface Props {
+  locale: Locale;
+  /** Language-neutral path, e.g. "/privacidad". */
+  path: string;
+  title: string;
+  description: string;
+  h1: string;
+  /** First paragraph, 40–60 words. */
+  lead: string;
+  pageType?: Extract<PageType, "prose" | "faq" | "release-notes" | "docs-index" | "feature-index">;
+  updated?: Date;
+  /** Extra JSON-LD (e.g. faqPageNode); BreadcrumbList is added. */
+  jsonLd?: JsonLdNode[];
+  translated?: boolean;
+  ogImage?: string;
+  /** Wrap the slot in the long-form typography (default true; index pages with their own grid pass false). */
+  prose?: boolean;
+}
+
+const {
+  locale,
+  path,
+  title,
+  description,
+  h1,
+  lead,
+  pageType = "prose",
+  updated,
+  jsonLd = [],
+  translated = false,
+  ogImage,
+  prose = true,
+} = Astro.props;
+const t = ui(locale);
+const site = Astro.site ?? new URL("https://example.com");
+const crumbs: Crumb[] = [
+  { name: t.layout.home, path: localizePath("/", locale) },
+  { name: h1, path: localizePath(path, locale) },
+];
+---
+
+<Base
+  {title}
+  {description}
+  {locale}
+  {path}
+  {translated}
+  {pageType}
+  jsonLd={[breadcrumbListNode(site, crumbs), ...jsonLd]}
+  {...ogImage ? { ogImage } : {}}
+>
+  <article class="page">
+    <Breadcrumbs {crumbs} {locale} />
+    <header class="head">
+      <h1>{h1}</h1>
+      <p class="lead" data-lead>{lead}</p>
+      {
+        updated && (
+          <p class="updated" data-updated>
+            {t.layout.updated}: <time datetime={isoDate(updated)}>{formatDate(updated, locale)}</time>
+          </p>
+        )
+      }
+    </header>
+    {
+      prose ? (
+        <Prose>
+          <slot />
+        </Prose>
+      ) : (
+        <slot />
+      )
+    }
+  </article>
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: 1.75rem;
+    width: min(56rem, 100%);
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3rem) var(--gutter) 0;
+  }
+  .head {
+    display: grid;
+    gap: 1rem;
+  }
+  h1 {
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+    letter-spacing: -0.02em;
+  }
+  .lead {
+    max-width: var(--measure);
+    font-size: 1.1875rem;
+    color: var(--muted);
+  }
+  .updated {
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+</style>

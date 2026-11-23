@@ -1,0 +1,227 @@
+---
+/**
+ * Documentation page (/docs/<section>/<page>, Read surface; PRD §7; docs/seo-2026.md §C "Docs"):
+ * sidebar, breadcrumbs + BreadcrumbList, TechArticle with dates and author, one h1, a visible
+ * "Actualizado" date and app version, the Markdown body (its first paragraph is the 40–60 word
+ * answer), a table of contents, links to related features, "Editar en GitHub" and "¿Te ha ayudado?".
+ *
+ * Usage (the route file, e.g. src/pages/docs/[...slug].astro):
+ *   const { entry } = Astro.props;
+ *   const { Content, headings } = await render(entry);
+ *   <DocsLayout {...docsLayoutProps(entry, headings)}><Content /></DocsLayout>
+ */
+import type { MarkdownHeading } from "astro";
+import Prose from "../components/Prose.astro";
+import DocsSidebar from "../components/nav/DocsSidebar.astro";
+import Toc from "../components/nav/Toc.astro";
+import Breadcrumbs from "../components/seo/Breadcrumbs.astro";
+import { DOCS_SECTIONS, type DocsSection } from "../data/docs-sections";
+import { FEATURE_LABELS } from "../data/features";
+import type { FeatureSlug } from "../data/routes";
+import { type Locale, localizePath } from "../i18n/paths";
+import { ui } from "../i18n/ui";
+import { docsSidebar, editUrl, featurePath, feedbackUrl } from "../lib/content";
+import { formatDate } from "../lib/format";
+import { breadcrumbListNode, type Crumb, isoDate, techArticleNode } from "../lib/seo/jsonld";
+import Base from "./Base.astro";
+
+export interface DocsLayoutProps {
+  locale: Locale;
+  /** Language-neutral path, e.g. "/docs/empezar/instalar-linux-deb". */
+  path: string;
+  title: string;
+  description: string;
+  h1: string;
+  section: DocsSection;
+  published: Date;
+  updated: Date;
+  /** App version the page applies to, e.g. "0.1.0". */
+  appVersion: string;
+  headings: MarkdownHeading[];
+  /** Repository-relative source file, for "Editar en GitHub". */
+  sourcePath: string;
+  /** Related feature pages (at least one). */
+  features: FeatureSlug[];
+  translated?: boolean;
+  ogImage?: string;
+}
+type Props = DocsLayoutProps;
+
+const {
+  locale,
+  path,
+  title,
+  description,
+  h1,
+  section,
+  published,
+  updated,
+  appVersion,
+  headings,
+  sourcePath,
+  features,
+  translated = false,
+  ogImage,
+} = Astro.props;
+const t = ui(locale);
+const site = Astro.site ?? new URL("https://example.com");
+const localized = localizePath(path, locale);
+const crumbs: Crumb[] = [
+  { name: t.layout.home, path: localizePath("/", locale) },
+  { name: t.nav.docs, path: localizePath("/docs", locale) },
+  { name: h1, path: localized },
+];
+const sidebar = await docsSidebar(locale, localized);
+const pageUrl = new URL(localized, site).href;
+const jsonLd = [
+  breadcrumbListNode(site, crumbs),
+  techArticleNode(site, { path: localized, headline: h1, description, locale, datePublished: published, dateModified: updated }),
+];
+---
+
+<Base {title} {description} {locale} {path} {translated} pageType="docs" ogType="article" {jsonLd} {...ogImage ? { ogImage } : {}}>
+  <div class="docs">
+    <aside class="side">
+      <DocsSidebar sections={sidebar} {locale} />
+    </aside>
+    <article class="article">
+      <Breadcrumbs {crumbs} {locale} />
+      <header class="head">
+        <p class="eyebrow">{DOCS_SECTIONS[section][locale]}</p>
+        <h1>{h1}</h1>
+        <p class="meta" data-updated>
+          {t.layout.updated}: <time datetime={isoDate(updated)}>{formatDate(updated, locale)}</time>
+          <span aria-hidden="true">·</span>
+          {t.layout.appVersion}: <span data-app-version>{appVersion}</span>
+        </p>
+      </header>
+      <div class="toc-inline"><Toc {headings} {locale} /></div>
+      <Prose><slot /></Prose>
+      <footer class="foot">
+        <section aria-labelledby="docs-features">
+          <h2 id="docs-features">{t.layout.relatedFeatures}</h2>
+          <ul>
+            {
+              features.map((f) => (
+                <li>
+                  <a href={featurePath(f, locale)}>{FEATURE_LABELS[f][locale]}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+        <p class="links">
+          <a href={editUrl(sourcePath)} rel="noopener">{t.layout.editOnGithub}</a>
+          <a href={feedbackUrl(h1, pageUrl, locale)} rel="noopener">{t.layout.feedback}</a>
+        </p>
+      </footer>
+    </article>
+    <aside class="toc-side">
+      <Toc {headings} {locale} />
+    </aside>
+  </div>
+</Base>
+
+<style>
+  .docs {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+    width: min(88rem, 100%);
+    margin: 0 auto;
+    padding: clamp(1.25rem, 3vw, 2.5rem) var(--gutter) 0;
+  }
+  /* Phones: the article comes first; the sidebar follows it (no JavaScript disclosure needed). */
+  .side {
+    order: 2;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .toc-side {
+    display: none;
+  }
+  .article {
+    display: grid;
+    gap: 1.5rem;
+    min-width: 0;
+  }
+  .head {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  h1 {
+    font-size: clamp(2rem, 1.4rem + 2.2vw, 2.875rem);
+    letter-spacing: -0.02em;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+  .foot {
+    display: grid;
+    gap: 1.25rem;
+    max-width: var(--measure);
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .foot h2 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+  .foot ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .foot a {
+    color: var(--accent);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  @media (min-width: 56rem) {
+    .docs {
+      grid-template-columns: 15rem minmax(0, 1fr);
+      gap: 3rem;
+    }
+    .side {
+      order: 0;
+      position: sticky;
+      top: 1.5rem;
+      align-self: start;
+      max-height: calc(100dvh - 3rem);
+      overflow-y: auto;
+      padding-top: 0;
+      border-top: 0;
+    }
+  }
+  @media (min-width: 80rem) {
+    .docs {
+      grid-template-columns: 15rem minmax(0, 1fr) 13rem;
+    }
+    .toc-inline {
+      display: none;
+    }
+    .toc-side {
+      display: block;
+      position: sticky;
+      top: 1.5rem;
+      align-self: start;
+    }
+  }
+</style>

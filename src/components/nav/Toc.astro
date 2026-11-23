@@ -1,0 +1,59 @@
+---
+// "En esta página": h2 and h3 of a docs page, from render(entry).headings. Rendered only with two or more.
+import type { MarkdownHeading } from "astro";
+import type { Locale } from "../../i18n/paths";
+import { ui } from "../../i18n/ui";
+
+interface Props {
+  headings: MarkdownHeading[];
+  locale: Locale;
+}
+const { headings, locale } = Astro.props;
+const t = ui(locale);
+const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{
+  items.length >= 2 && (
+    <nav class="toc" aria-labelledby="toc-title">
+      <p class="title" id="toc-title">
+        {t.layout.toc}
+      </p>
+      <ul>
+        {items.map((h) => (
+          <li class={`d${h.depth}`}>
+            <a href={`#${h.slug}`}>{h.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<style>
+  .toc {
+    font-size: 0.875rem;
+  }
+  .title {
+    margin-bottom: 0.5rem;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.375rem;
+  }
+  .d3 {
+    padding-left: 0.875rem;
+  }
+  a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--text);
+  }
+</style>
