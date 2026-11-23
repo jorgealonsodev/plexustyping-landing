@@ -98,7 +98,7 @@ describe("PracticeScreen strings (S9)", () => {
       "Keystrokes/min",
       "Accuracy",
       "Time",
-      "Practising:",
+      "Practicing:",
       'aria-label="Practice text"',
       ">AI<",
       "Caps Lock",
@@ -120,7 +120,7 @@ describe("HeroSim locale (S9)", () => {
     const pack = DEMO_PACKS.en;
     expect(text(html)).toContain(pack.targetText);
     expect(html).toContain(pack.targetSource);
-    expect(text(html)).toContain("Practising:");
+    expect(text(html)).toContain("Practicing:");
     expect(html).toContain("Errors per key");
     for (const t of pack.targets) expect(html).toMatch(new RegExp(`<kbd[^>]*>${t}</kbd>`));
     expect(html).toContain('lang="en"');

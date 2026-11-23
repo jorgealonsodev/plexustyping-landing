@@ -32,11 +32,11 @@ export const S2_STRINGS: Record<Locale, SimStrings> = {
   en: {
     title: "PlexusTyping · demo",
     caption:
-      "Your weak spots. As you type, the keyboard is tinted by each key's errors and slowness; the next text practises those keys and combinations (qu, z, x). Demo data. The released app's interface is in Spanish; the demo shows it translated.",
+      "Your weak spots. As you type, the keyboard is tinted by each key's errors and slowness; the next text practices those keys and combinations (qu, z, x). Demo data. The released app's interface is in Spanish; the demo shows it translated.",
     play: "Play",
     pause: "Pause",
     description:
-      "Demo with sample data, in English on the English (US) keyboard: PlexusTyping's practice screen types the diagnostic text and the on-screen keyboard is tinted on the keys with the most errors, with the legend “Errors per key” from 1 (very few) to 5 (many). Then a new text arrives with the line “Practising: qu · z · x” and words that contain them, such as quiet, pizza and next.",
+      "Demo with sample data, in English on the English (US) keyboard: PlexusTyping's practice screen types the diagnostic text and the on-screen keyboard is tinted on the keys with the most errors, with the legend “Errors per key” from 1 (very few) to 5 (many). Then a new text arrives with the line “Practicing: qu · z · x” and words that contain them, such as quiet, pizza and next.",
     paused: "Demo paused.",
     playing: "Playing the demo.",
   },

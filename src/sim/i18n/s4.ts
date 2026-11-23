@@ -33,7 +33,7 @@ export const S4_STRINGS: Record<Locale, S4Strings> = {
     play: "Play",
     pause: "Pause",
     description:
-      "Demo with sample data: PlexusTyping's ghost session. A recorded session types a text practised before while a translucent ghost cursor replays the previous record on that same text. Top right, the difference with the record in seconds: red with “+” when behind, blue with “−” when ahead. After a correction it falls behind, then overtakes the ghost; at the end the result shows “Previous record: 63 WPM” and “New record for this text!”. The released app's interface is in Spanish; the demo shows it translated.",
+      "Demo with sample data: PlexusTyping's ghost session. A recorded session types a text practiced before while a translucent ghost cursor replays the previous record on that same text. Top right, the difference with the record in seconds: red with “+” when behind, blue with “−” when ahead. After a correction it falls behind, then overtakes the ghost; at the end the result shows “Previous record: 63 WPM” and “New record for this text!”. The released app's interface is in Spanish; the demo shows it translated.",
     paused: "Demo paused.",
     playing: "Playing the demo.",
     windowTitle: "PlexusTyping · demo",

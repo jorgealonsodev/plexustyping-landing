@@ -83,12 +83,12 @@ export const S10_STRINGS: Record<Locale, S10Strings> = {
     play: "Play",
     pause: "Pause",
     description:
-      "Demo with sample data: PlexusTyping's accessibility aids. A recorded session types a sentence with one corrected typo. With «Announce with screen reader», the app announces in a polite aria-live region the next character, errors, each new text and the result; the transcript shows those announcements. «Colour-blind mode» turns the keyboard flashes blue and orange and underlines a wrong key. With the system's reduced motion there are no flashes or animations: the pressed key is only underlined. The three switches change the demo. Inside the demo the app's labels are translated; the app's own interface is in Spanish.",
+      "Demo with sample data: PlexusTyping's accessibility aids. A recorded session types a sentence with one corrected typo. With “Announce with screen reader”, the app announces in a polite aria-live region the next character, errors, each new text and the result; the transcript shows those announcements. “Color-blind mode” turns the keyboard flashes blue and orange and underlines a wrong key. With the system's reduced motion there are no flashes or animations: the pressed key is only underlined. The three switches change the demo. Inside the demo the app's labels are translated; the app's own interface is in Spanish.",
     paused: "Demo paused.",
     playing: "Playing the demo.",
     windowTitle: "PlexusTyping · demo",
     caption:
-      "Accessibility: screen reader announcements, colour-blind mode and reduced motion, plus high-contrast themes and text size. Sample data; the app's interface is in Spanish.",
+      "Accessibility: screen reader announcements, color-blind mode and reduced motion, plus high-contrast themes and text size. Sample data; the app's interface is in Spanish.",
     settingsTitle: "Accessibility",
     settings: {
       screenReader: {
@@ -96,7 +96,7 @@ export const S10_STRINGS: Record<Locale, S10Strings> = {
         hint: "Announces the next character, errors, each new text and the result (aria-live).",
       },
       colorBlind: {
-        label: "Colour-blind mode",
+        label: "Color-blind mode",
         hint: "Blue and orange flashes instead of green and red; a wrong key is underlined.",
       },
       reducedMotion: {

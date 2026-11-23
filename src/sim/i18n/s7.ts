@@ -41,7 +41,7 @@ export const S7_STRINGS: Record<Locale, S7Strings> = {
     play: "Play",
     pause: "Pause",
     description:
-      "Demo of PlexusTyping's personalisation on a sample text (the released app's interface is in Spanish; the demo shows it translated): the app's 59 themes, including the two high-contrast ones (“High contrast dark” and “High contrast light”), its 10 bundled fonts, the five cursor styles (bar, highlight, block, underline and outline), the blinking cursor and the dimmed pending text. The controls are real selectors: choose and the text changes at once.",
+      "Demo of PlexusTyping's personalization on a sample text (the released app's interface is in Spanish; the demo shows it translated): the app's 59 themes, including the two high-contrast ones (“High contrast dark” and “High contrast light”), its 10 bundled fonts, the five cursor styles (bar, highlight, block, underline and outline), the blinking cursor and the dimmed pending text. The controls are real selectors: choose and the text changes at once.",
     paused: "Demo paused.",
     playing: "Playing the demo.",
     themeApplied: "Theme: {name}.",
@@ -92,7 +92,7 @@ export const SETTINGS_UI: Record<Locale, SettingsUi> = {
   },
   en: {
     title: "Settings",
-    theme: { label: "Theme", hint: "Colours of the whole app; applied at once." },
+    theme: { label: "Theme", hint: "Colors of the whole app; applied at once." },
     themeGroups: { highContrast: "High contrast", dark: "Dark", light: "Light" },
     themeNames: { "alto-contraste-oscuro": "High contrast dark", "alto-contraste-claro": "High contrast light" },
     font: { label: "Font", hint: "Typeface of the practice text, prose and code; the rest of the app does not change." },

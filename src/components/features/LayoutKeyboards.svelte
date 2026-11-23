@@ -7,11 +7,18 @@
   import "../../sim/app.css";
   import { ES_QWERTY } from "../../sim/data/es-qwerty";
   import { US_QWERTY } from "../../sim/data/us-qwerty.en";
+  import type { Locale } from "../../i18n/paths";
+  import { KEYBOARD_UI } from "../../sim/i18n/app";
   import Keyboard from "../../sim/keyboard/Keyboard.svelte";
 
+  /** The page's language: key names in Spanish on the Spanish pages, translated on the English ones (site-pages S9). */
+  let { locale = "es" }: { locale?: Locale } = $props();
+
+  const ui = KEYBOARD_UI[locale];
   const boards = [
-    { layout: ES_QWERTY, name: "Español (España) · ISO", lang: "es" },
-    { layout: US_QWERTY, name: "English (US) · ANSI", lang: "en" },
+    // The ISO board's right Alt is AltGr, named so in English too (the en names are the US board's).
+    { layout: ES_QWERTY, name: "Español (España) · ISO", lang: "es", strings: { ...ui, names: { ...ui.names, AltRight: locale === "es" ? ui.names.AltRight : "AltGr" } } },
+    { layout: US_QWERTY, name: "English (US) · ANSI", lang: "en", strings: ui },
   ];
 </script>
 
@@ -22,7 +29,7 @@
       <div class="pt-frame" inert>
         <div class="pt-app">
           <footer>
-            <Keyboard layout={b.layout} highlights={[]} flash={null} />
+            <Keyboard layout={b.layout} highlights={[]} flash={null} strings={b.strings} />
           </footer>
         </div>
       </div>

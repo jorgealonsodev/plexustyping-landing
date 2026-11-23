@@ -57,7 +57,7 @@ export const PRACTICE_UI: Record<Locale, PracticeUi> = {
     kpm: "Keystrokes/min",
     accuracy: "Accuracy",
     time: "Time",
-    practising: "Practising:",
+    practising: "Practicing:",
     practiceText: "Practice text",
     localCorpus: "Local corpus",
     percent: (ratio) => `${Math.round(ratio * 1000) / 10}%`,

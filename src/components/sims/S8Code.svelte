@@ -12,6 +12,7 @@
   import { CodeDemo, SNIPPETS } from "../../sim/data/s8";
   import { ES_QWERTY } from "../../sim/data/es-qwerty";
   import { type S8Strings, percentIn } from "../../sim/i18n/s8";
+  import { KEYBOARD_UI } from "../../sim/i18n/app";
   import { type Flash, highlightsFor, keyForChar } from "../../sim/keyboard/keys";
   import type { Layout } from "../../sim/keyboard/types";
   import { acceptsInput, keyAction, textToEvents } from "../../sim/practice/engine";
@@ -186,6 +187,7 @@
       source={`${snippet.name} · ${t.app.source}`}
       {hint}
       {layout}
+      keyboardStrings={KEYBOARD_UI[locale]}
       {highlights}
       {flash}
       {classes}

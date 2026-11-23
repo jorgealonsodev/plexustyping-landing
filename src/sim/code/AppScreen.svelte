@@ -18,6 +18,7 @@
   import { formatPercent, formatTime, formatWpm } from "../practice/format";
   import type { PracticeView } from "../practice/PracticeScreen.svelte";
   import CodeText from "./CodeText.svelte";
+  import type { KeyboardUi } from "../i18n/app";
   import type { AppLabels } from "./labels";
   import type { TokenClass } from "./syntax";
 
@@ -36,6 +37,7 @@
     language = "",
     onlanguage,
     colorBlind = false,
+    keyboardStrings,
     textId,
     field = $bindable(),
     oninput,
@@ -61,6 +63,8 @@
     language?: string;
     onlanguage?: (id: string) => void;
     colorBlind?: boolean;
+    /** Demo edit: the keyboard's key names and legend in the page's language (Keyboard.svelte `strings`). */
+    keyboardStrings?: KeyboardUi;
     textId: string;
     field?: HTMLTextAreaElement | undefined;
     oninput?: (e: Event) => void;
@@ -232,7 +236,7 @@
     </div>
 
     <footer>
-      <Keyboard {layout} {highlights} {flash} {colorBlind} />
+      <Keyboard {layout} {highlights} {flash} {colorBlind} strings={keyboardStrings} />
     </footer>
   </div>
 </div>

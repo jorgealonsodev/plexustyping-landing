@@ -145,7 +145,7 @@ export const UI: Record<Locale, UiStrings> = {
       play: "Play",
       pause: "Pause",
       description:
-        "Demo with sample data: the PlexusTyping practice screen typing on its own (the released app's interface is in Spanish; the demo shows it translated). It shows the live stats (words per minute, keystrokes per minute, accuracy and time), the text with right and wrong characters, and the on-screen keyboard highlighting the next key. After the diagnostic text, the keyboard is tinted by each key's errors and the next text practises qu, z and x. You can type yourself: click the demo or Tab to its typing field; Esc restarts the text.",
+        "Demo with sample data: the PlexusTyping practice screen typing on its own (the released app's interface is in Spanish; the demo shows it translated). It shows the live stats (words per minute, keystrokes per minute, accuracy and time), the text with right and wrong characters, and the on-screen keyboard highlighting the next key. After the diagnostic text, the keyboard is tinted by each key's errors and the next text practices qu, z and x. You can type yourself: click the demo or Tab to its typing field; Esc restarts the text.",
       paused: "Demo paused.",
       playing: "Demo playing.",
       restarted: "Text restarted.",

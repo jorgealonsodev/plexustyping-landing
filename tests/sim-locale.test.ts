@@ -147,7 +147,7 @@ describe("English pages: practice text from the app's English corpus", () => {
 
 describe("English pages: the app's interface labels translated", () => {
   it("practice screen and results", () => {
-    expect(PRACTICE_UI.en).toMatchObject({ wpm: "WPM", accuracy: "Accuracy", time: "Time", practising: "Practising:" });
+    expect(PRACTICE_UI.en).toMatchObject({ wpm: "WPM", accuracy: "Accuracy", time: "Time", practising: "Practicing:" });
     expect(PRACTICE_UI.en.percent(0.905)).toBe("90.5%");
     expect(RESULTS_UI.en).toMatchObject({ title: "Result", netWpm: "Net WPM", noFailed: "No mistakes.", enter: "Enter" });
     expect(DEMO_PACKS.en.diagnosticSource).toBe("Diagnostic text");
