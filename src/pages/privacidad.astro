@@ -1,0 +1,74 @@
+---
+// Privacy (PRD §5, §6.3, §6.10, §12). The site part comes from this repository (astro.config.mjs CSP,
+// src/scripts/theme.ts, deploy/nginx); the app part from the app repository (README "AI texts",
+// "Where data lives"; crates/plexustyping-ai/src/prompt.rs).
+import ProsePage from "../layouts/ProsePage.astro";
+import { ROUTES } from "../data/routes";
+---
+
+<ProsePage
+  locale="es"
+  path={ROUTES.privacy}
+  title="Privacidad · PlexusTyping"
+  description="Esta web no usa cookies, analítica ni terceros. La app guarda todo en tu equipo y la IA opcional nunca recibe lo que escribes."
+  h1="Privacidad"
+  lead="Esta web no usa cookies, analítica ni servicios de terceros: es HTML estático servido desde un único origen. La app guarda tus sesiones, estadísticas y ajustes solo en tu equipo, sin cuenta ni telemetría. Si activas la IA opcional, el proveedor recibe lo mínimo para generar un texto y nunca lo que escribes."
+  updated={new Date("2026-11-23")}
+>
+  <h2 id="esta-web">Esta web</h2>
+  <ul>
+    <li>
+      <strong>Sin cookies ni analítica.</strong> No hay contadores de visitas, píxeles ni herramientas de seguimiento.
+    </li>
+    <li>
+      <strong>Sin terceros al cargar la página.</strong> Las fuentes, los estilos y los scripts se sirven desde esta
+      misma web, y su política de seguridad de contenidos (CSP) bloquea cualquier otra petición.
+    </li>
+    <li>
+      <strong>Tema claro u oscuro.</strong> Si usas el botón de tema, tu elección (<code>light</code> o
+      <code>dark</code>) se guarda en el almacenamiento local de tu navegador y no se envía a ningún sitio.
+    </li>
+    <li>
+      <strong>Registro del servidor.</strong> Como cualquier servidor web, guarda un registro técnico de cada petición:
+      dirección IP, fecha, página pedida, código de respuesta, página de origen y navegador.
+    </li>
+    <li>
+      <strong>Enlaces a GitHub.</strong> Las descargas, el código fuente y los enlaces «Editar en GitHub» o «¿Te ha
+      ayudado?» llevan a GitHub. Solo se contacta con GitHub si pulsas uno de ellos, y entonces se aplica su política
+      de privacidad.
+    </li>
+  </ul>
+
+  <h2 id="la-app">La app</h2>
+  <ul>
+    <li>
+      <strong>Todo se queda en tu equipo.</strong> Sesiones, pulsaciones, estadísticas, perfiles y ajustes se guardan en
+      una base de datos local (en Linux, en <code>~/.local/share/com.plexustyping.app/</code>). No hay cuenta ni telemetría.
+    </li>
+    <li>
+      <strong>Funciona sin IA y sin conexión</strong> con el corpus local incluido en la app.
+    </li>
+    <li>
+      <strong>La IA es opcional.</strong> Si la activas, en prosa solo se envían el idioma, la longitud y el tema del
+      texto, y los caracteres permitidos cuando usas el desbloqueo progresivo. En modo código se envían también el
+      lenguaje, los caracteres objetivo y los permitidos. <strong>Nunca se envía lo que escribes.</strong>
+    </li>
+    <li>
+      <strong>Claves en el llavero del sistema.</strong> Las claves de API se guardan en el llavero del sistema operativo,
+      nunca en texto plano ni en la base de datos. El inicio de sesión de «ChatGPT (tu suscripción)» se guarda en un
+      archivo privado de tu equipo.
+    </li>
+    <li>
+      <strong>Las peticiones salen solo del núcleo de la app</strong> hacia el proveedor que elijas; la interfaz no tiene
+      acceso a la red. Cada proveedor trata esos datos según su propia política.
+    </li>
+  </ul>
+  <p>
+    En la próxima versión 0.1.1 (sin publicar), el modo «Ilimitado» envía además el final del texto ya generado para
+    pedir su continuación.
+  </p>
+  <p>
+    Lista detallada en <a href="/docs/ia/que-se-envia">qué se envía al proveedor de IA</a> y ubicación de cada archivo en
+    <a href="/docs/ajustes/donde-se-guardan-los-datos">dónde se guardan los datos</a>.
+  </p>
+</ProsePage>

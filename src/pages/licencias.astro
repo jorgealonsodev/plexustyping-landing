@@ -1,0 +1,105 @@
+---
+// Licences (PRD §5, §6.12). App: LICENSE-MIT, LICENSE-APACHE and THIRD_PARTY_NOTICES.md of the app
+// repository. Site: this repository (no LICENSE file yet, README "License") and the fontsource
+// packages it bundles (package.json; each package's `license` field).
+import ProsePage from "../layouts/ProsePage.astro";
+import { ROUTES } from "../data/routes";
+import { APP_REPO_URL, SITE_REPO_URL } from "../data/site";
+
+const fonts = [
+  ["Roboto Mono", "@fontsource/roboto-mono 5.3.0", "The Roboto Mono Project Authors"],
+  ["JetBrains Mono", "@fontsource/jetbrains-mono 5.3.0", "The JetBrains Mono Project Authors"],
+  ["Fira Code", "@fontsource/fira-code 5.3.0", "The Fira Code Project Authors"],
+  ["Source Code Pro", "@fontsource/source-code-pro 5.3.1", "Adobe"],
+  ["IBM Plex Mono", "@fontsource/ibm-plex-mono 5.3.0", "IBM Corp."],
+  ["Inconsolata", "@fontsource/inconsolata 5.3.0", "The Inconsolata Project Authors"],
+  ["Atkinson Hyperlegible Mono", "@fontsource/atkinson-hyperlegible-mono 5.3.0", "The Atkinson Hyperlegible Mono Project Authors"],
+  ["Intel One Mono", "@fontsource/intel-one-mono 5.3.0", "The Intel One Mono Project Authors"],
+  ["Lexend Deca", "@fontsource/lexend-deca 5.3.0", "The Lexend Project Authors"],
+  ["OpenDyslexic", "@fontsource/opendyslexic 5.3.0", "Abbie Gonzalez"],
+] as const;
+
+const notices = [
+  ["Temas de color", "iTerm2-Color-Schemes (Mark Badolato) y los autores de cada tema", "MIT; cada tema pertenece a su autor"],
+  ["Listas de palabras (es, en, pt, fr, de)", "hermitdave/FrequencyWords, de Hermit Dave, a partir de OpenSubtitles 2018", "CC BY-SA 4.0"],
+  ["Frases (es, en, pt, fr, de)", "Mozilla Common Voice", "CC0 1.0 (dominio público)"],
+  ["Fuentes de práctica", "Los diez paquetes de Fontsource de la tabla anterior", "OFL-1.1"],
+  ["Resaltado de sintaxis", "syntect", "MIT"],
+  ["Definiciones de sintaxis", "two-face y bat", "MIT o Apache-2.0; cada definición conserva su licencia"],
+] as const;
+
+const appBlob = (file: string) => `${APP_REPO_URL}/blob/main/${file}`;
+---
+
+<ProsePage
+  locale="es"
+  path={ROUTES.licenses}
+  title="Licencias y créditos · PlexusTyping"
+  description="PlexusTyping usa licencia MIT o Apache-2.0. Créditos de temas, listas de palabras, frases, fuentes y resaltado, y licencias de esta web."
+  h1="Licencias"
+  lead="El código de PlexusTyping se publica con licencia MIT o Apache-2.0, a tu elección. Los temas, las listas de palabras, las frases, las fuentes y el resaltado de sintaxis que incluye la app vienen de otros proyectos y conservan su propia licencia. Esta página resume esos créditos y las licencias de lo que usa esta web."
+  updated={new Date("2026-11-23")}
+>
+  <h2 id="la-app">La app</h2>
+  <p>
+    El código es <strong>MIT o Apache-2.0</strong>: puedes usarlo bajo cualquiera de las dos. Textos completos:
+    <a href={appBlob("LICENSE-MIT")}>licencia MIT de la app</a> y
+    <a href={appBlob("LICENSE-APACHE")}>licencia Apache 2.0 de la app</a>.
+  </p>
+
+  <h3 id="creditos">Material de terceros incluido</h3>
+  <div class="table" tabindex="0" role="region" aria-label="Material de terceros">
+    <table>
+      <thead>
+        <tr><th scope="col">Material</th><th scope="col">Origen</th><th scope="col">Licencia</th></tr>
+      </thead>
+      <tbody>
+        {notices.map(([what, from, license]) => (<tr><td>{what}</td><td>{from}</td><td>{license}</td></tr>))}
+      </tbody>
+    </table>
+  </div>
+  <p>
+    La lista completa, con los autores de cada tema y los textos de las licencias, está en
+    <a href={appBlob("THIRD_PARTY_NOTICES.md")}>THIRD_PARTY_NOTICES.md del repositorio de la app</a>. Más contexto en
+    <a href="/docs/proyecto/licencias-y-creditos">Licencias y créditos</a> de la documentación.
+  </p>
+
+  <h2 id="esta-web">Esta web</h2>
+  <p>
+    El <a href={SITE_REPO_URL}>código de esta web</a> todavía no declara una licencia. Está hecha con Astro y Svelte
+    (MIT); el código de Svelte solo se carga en las simulaciones.
+  </p>
+  <h3 id="fuentes">Fuentes</h3>
+  <p>
+    La web sirve desde su propio origen las mismas fuentes que la app: JetBrains Mono en el texto monoespaciado y las diez en
+    la simulación de personalización. Todas tienen licencia SIL Open Font License 1.1 (OFL-1.1).
+  </p>
+  <div class="table" tabindex="0" role="region" aria-label="Fuentes de esta web">
+    <table>
+      <thead>
+        <tr><th scope="col">Fuente</th><th scope="col">Paquete</th><th scope="col">Autores</th></tr>
+      </thead>
+      <tbody>
+        {fonts.map(([name, pkg, authors]) => (<tr><td>{name}</td><td><code>{pkg}</code></td><td>{authors}</td></tr>))}
+      </tbody>
+    </table>
+  </div>
+</ProsePage>
+
+<style>
+  .table {
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+  th,
+  td {
+    padding: 0.5rem 0.75rem 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+</style>
